@@ -43,4 +43,8 @@ void World::performSimulationStep(float32 timestep)
 	world_->ClearForces();
 
 	emit simulationStepHappened();
+
+	if ( QThread::currentThread() != engine_ ) {
+		qDebug() << "world not running in engine!";
+	}
 }
