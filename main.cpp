@@ -3,11 +3,13 @@
 #include <QtGui>
 #include <QGLWidget>
 
+#include "world.h"
 #include "engine.h"
 #include "circlebody.h"
 #include "circlebodyview.h"
 #include "polygonbody.h"
 #include "polygonbodyview.h"
+#include "flaky.h"
 
 
 int main(int argc, char *argv[])
@@ -31,8 +33,8 @@ int main(int argc, char *argv[])
 	view.show();
 
 	/* our engine! it takes care for the bodies we give to it. */
-	Engine* engine = new Engine();
-	engine->start();
+	World* world = new World();
+	Engine* engine = new Engine(world);
 
 	/* build a cage */
 	QPolygonF edgePoly;
@@ -50,10 +52,10 @@ int main(int argc, char *argv[])
 	bodyTop->setStatic();
 	bodyBottom->setStatic();
 
-	engine->addBody(bodyLeft);
-	engine->addBody(bodyRight);
-	engine->addBody(bodyTop);
-	engine->addBody(bodyBottom);
+	world->addBody(bodyLeft);
+	world->addBody(bodyRight);
+	world->addBody(bodyTop);
+	world->addBody(bodyBottom);
 
 	scene.addItem(new PolygonBodyView(*bodyLeft));
 	scene.addItem(new PolygonBodyView(*bodyRight));
@@ -61,34 +63,25 @@ int main(int argc, char *argv[])
 	scene.addItem(new PolygonBodyView(*bodyBottom));
 
 	/* our little being. let's call it flaky */
-	QPolygonF flakyPoly;
-	flakyPoly <<
-			QPointF(0.06f, 0.0f) <<
-			QPointF(-0.03f, 0.03f) <<
-			QPointF(-0.03f, -0.03f);
-
-	PolygonBody* flaky = new PolygonBody(QPointF(0, 0), 0.0f, flakyPoly);
-	flaky->setId("flaky");
-
-	engine->addBody(flaky);
-
-	scene.addItem( new PolygonBodyView(*flaky) );
+	Flaky flaky;
+	world->addBody(flaky.body());
+	scene.addItem( new PolygonBodyView(*flaky.body()) );
 
 	/* finally, build a set of other things. */
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 0; i < 400; ++i) {
 		CircleBody* circleBody = new CircleBody(
 				QPointF(
 					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
 					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f
 				),
 				0.02f);
-		engine->addBody(circleBody);
+		world->addBody(circleBody);
 
 		CircleBodyView* circleBodyView = new CircleBodyView(*circleBody);
 		scene.addItem(circleBodyView);
 	}
 
-
+	engine->start();
 
 	return app.exec();
 }
