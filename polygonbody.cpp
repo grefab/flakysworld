@@ -4,9 +4,6 @@ PolygonBody::PolygonBody(QPointF position, qreal rotation, QPolygonF polygon, QO
 		Body(position, rotation, parent),
 		polygon_(polygon)
 {
-	bodyDef_.type = b2_staticBody;
-
-
 	/* The shape of our body */
 	int n = polygon_.size();
 	b2Vec2 vertices[n];

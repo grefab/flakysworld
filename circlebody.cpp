@@ -11,7 +11,7 @@ CircleBody::CircleBody(QPointF position, qreal radius, QObject *parent) :
 	fixtureDef_.shape = &shapeDef_;
 	fixtureDef_.density = 1.0f;
 	fixtureDef_.friction = 0.5f;
-	fixtureDef_.restitution = 0.008f;
+	fixtureDef_.restitution = 0.2f;
 }
 
 qreal CircleBody::radius() const {

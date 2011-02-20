@@ -11,6 +11,9 @@ Body::Body(QPointF position, qreal rotation, QObject *parent) :
 	bodyDef_.type = b2_dynamicBody;
 	bodyDef_.position.Set(position.x(), position.y()); // bring in sync with QGraphisObject rotation
 	bodyDef_.angle = rotation; // bring in sync with QGraphisObject rotation
+
+	bodyDef_.linearDamping = 0.2f;
+	bodyDef_.angularDamping = 0.2f;
 }
 
 void Body::setWorld(b2World *world)
@@ -36,6 +39,11 @@ QPointF Body::position() const
 qreal Body::rotation() const
 {
 	return body_->GetAngle();
+}
+
+void Body::setStatic()
+{
+	bodyDef_.type = b2_staticBody;
 }
 
 QString Body::id() const

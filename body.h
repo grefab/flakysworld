@@ -23,6 +23,9 @@ public:
 	QPointF position() const;
 	qreal rotation() const;
 
+	/* bodies are dynamic by default. before adding a body to a world this function has impact. */
+	void setStatic();
+
 	QString id() const;
 	void setId(QString newId);
 

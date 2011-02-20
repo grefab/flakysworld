@@ -35,17 +35,20 @@ int main(int argc, char *argv[])
 	engine->start();
 
 	/* build a cage */
-	QPolygonF poly;
-	poly <<
-			QPointF(-0.05f, 0.5f) <<
-			QPointF(-0.05f, -0.5f) <<
-			QPointF(0.05f, -0.5f) <<
-			QPointF(0.05f, 0.5f);
+	QPolygonF edgePoly;
+	edgePoly <<
+			QPointF(0.0f, 0.5f) <<
+			QPointF(0.0f, -0.5f);
 
-	PolygonBody* bodyLeft = new PolygonBody(QPointF(-0.55f, 0.0f), 0, poly);
-	PolygonBody* bodyRight = new PolygonBody(QPointF(0.55f, 0.0f), 0, poly);
-	PolygonBody* bodyTop = new PolygonBody(QPointF(0.0f, 0.55f), PI / 2.0f, poly);
-	PolygonBody* bodyBottom = new PolygonBody(QPointF(0.0f, -0.55f), PI / 2.0f, poly);
+	PolygonBody* bodyLeft = new PolygonBody(QPointF(-0.5f, 0.0f), 0, edgePoly);
+	PolygonBody* bodyRight = new PolygonBody(QPointF(0.5f, 0.0f), 0, edgePoly);
+	PolygonBody* bodyTop = new PolygonBody(QPointF(0.0f, 0.5f), PI / 2.0f, edgePoly);
+	PolygonBody* bodyBottom = new PolygonBody(QPointF(0.0f, -0.5f), PI / 2.0f, edgePoly);
+
+	bodyLeft->setStatic();
+	bodyRight->setStatic();
+	bodyTop->setStatic();
+	bodyBottom->setStatic();
 
 	engine->addBody(bodyLeft);
 	engine->addBody(bodyRight);
@@ -58,15 +61,21 @@ int main(int argc, char *argv[])
 	scene.addItem(new PolygonBodyView(*bodyBottom));
 
 	/* our little being. let's call it flaky */
-	CircleBody* flaky = new CircleBody(QPointF(0, 0), 0.04f);
+	QPolygonF flakyPoly;
+	flakyPoly <<
+			QPointF(0.06f, 0.0f) <<
+			QPointF(-0.03f, 0.03f) <<
+			QPointF(-0.03f, -0.03f);
+
+	PolygonBody* flaky = new PolygonBody(QPointF(0, 0), 0.0f, flakyPoly);
 	flaky->setId("flaky");
 
 	engine->addBody(flaky);
 
-	scene.addItem( new CircleBodyView(*flaky) );
+	scene.addItem( new PolygonBodyView(*flaky) );
 
 	/* finally, build a set of other things. */
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 100; ++i) {
 		CircleBody* circleBody = new CircleBody(
 				QPointF(
 					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
