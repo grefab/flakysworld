@@ -5,7 +5,6 @@
 #include "polygonbody.h"
 #include "bodycontroller.h"
 
-
 class Flaky : public QObject
 {
 	Q_OBJECT

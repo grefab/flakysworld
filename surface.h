@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include "graphicsview.h"
+#include <QLabel>
 
 namespace Ui {
 	class Surface;
@@ -19,6 +20,7 @@ public:
 
 	QGraphicsScene* scene() { return &scene_; }
 	GraphicsView* view();
+	QLabel* fpsLabel();
 
 protected:
 	QGraphicsScene scene_;

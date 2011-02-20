@@ -14,6 +14,9 @@ public:
 
 	void start();
 
+signals:
+	void updateFPS(int fps);
+
 protected slots:
 	void simulationStep();
 	void printFPS();

@@ -29,3 +29,8 @@ GraphicsView* Surface::view()
 {
 	return ui->graphicsView;
 }
+
+QLabel* Surface::fpsLabel()
+{
+	return ui->lFPS;
+}

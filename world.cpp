@@ -2,6 +2,8 @@
 #include <QThread>
 #include "engine.h"
 
+#include <QDebug>
+
 World::World(QObject *parent) :
 	QObject(parent)
 {

@@ -2,7 +2,6 @@
 #include <QTimer>
 #include <QTimerEvent>
 #include "bodycontroller.h"
-#include <QDebug>
 
 const float FPS = 50;
 
@@ -48,6 +47,6 @@ void Engine::simulationStep()
 
 void Engine::printFPS()
 {
-	qDebug() << stepsPerformed_;
+	emit updateFPS(stepsPerformed_);
 	stepsPerformed_ = 0;
 }

@@ -8,8 +8,6 @@ static const float PI = 3.14159265359;
 #include <Box2D.h>
 #include <QPointF>
 
-#include <QDebug>
-
 class Body : public QObject
 {
 	Q_OBJECT

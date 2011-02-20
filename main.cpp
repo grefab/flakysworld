@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QtGui>
 
 #include "surface.h"
@@ -21,6 +20,8 @@ int main(int argc, char *argv[])
 	World* world = new World();
 	Engine* engine = new Engine(world);
 	Universe* universe = new Universe(world, engine);
+
+	QObject::connect(engine, SIGNAL(updateFPS(int)), surface.fpsLabel(), SLOT(setNum(int)));
 
 	/* build a corresponding view for each body */
 	foreach(Body* body, world->bodies()) {
