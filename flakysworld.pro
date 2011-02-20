@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     flaky.cpp \
     world.cpp \
     graphicsview.cpp \
-    universe.cpp
+    universe.cpp \
+    surface.cpp
 INCLUDEPATH += /usr/local/include/Box2D
 LIBPATH += /usr/local/lib
 LIBS += -lBox2D
@@ -30,4 +31,8 @@ HEADERS += \
     flaky.h \
     world.h \
     graphicsview.h \
-    universe.h
+    universe.h \
+    surface.h
+
+FORMS += \
+    surface.ui

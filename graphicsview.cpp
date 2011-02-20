@@ -6,6 +6,11 @@ GraphicsView::GraphicsView(QGraphicsScene * scene, QWidget* parent) :
 {
 }
 
+GraphicsView::GraphicsView(QWidget* parent) :
+	QGraphicsView(parent)
+{
+}
+
 void GraphicsView::keyPressEvent( QKeyEvent * event )
 {
 	emit keyPressed((Qt::Key)event->key());
