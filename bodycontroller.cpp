@@ -8,14 +8,12 @@ BodyController::BodyController(Body* body, QObject* parent) :
 	connect(this, SIGNAL(applyForce(QPointF,QPointF)), body_, SLOT(applyForce(QPointF,QPointF)));
 }
 
-void BodyController::push()
+void BodyController::push(const QPointF& force, const QPointF& localPoint)
 {
-	QPointF impulse(0.01f, 0);
 	QTransform transformation;
 	transformation.rotateRadians(body_->rotation());
 
-	QPointF appliedPulse = transformation.map(impulse);
+	QPointF appliedForce = transformation.map(force);
 
-	emit applyForce(appliedPulse, QPointF(0, 0.02f));
-	emit applyForce(appliedPulse, QPointF(0, -0.02f));
+	emit applyForce(appliedForce, localPoint);
 }

@@ -2,7 +2,7 @@
 #include <QTimerEvent>
 #include "bodycontroller.h"
 
-const float FPS = 50;
+const float FPS = 25;
 
 Engine::Engine(QObject *parent) :
 		QThread(parent),
@@ -63,7 +63,8 @@ void Engine::timerEvent(QTimerEvent *event)
 		stepsPerformed_ = 0;
 
 
-		BodyController(bodies_["flaky"]).push();
+		BodyController(bodies_["flaky"]).push(QPointF(0.01, 0), QPointF(-0.03, 0.03));
+		BodyController(bodies_["flaky"]).push(QPointF(0.01, 0), QPointF(-0.03, -0.03));
 	}
 }
 

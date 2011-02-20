@@ -11,7 +11,7 @@ class BodyController : public QObject
 public:
 	BodyController(Body* body, QObject* parent = 0);
 
-	void push();
+	void push(const QPointF& force, const QPointF& localPoint);
 
 signals:
 	void applyForce(const QPointF& force, const QPointF& localPoint);
