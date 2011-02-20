@@ -11,7 +11,9 @@ SOURCES += main.cpp \
     polygonbodyview.cpp \
     bodycontroller.cpp \
     flaky.cpp \
-    world.cpp
+    world.cpp \
+    graphicsview.cpp \
+    universe.cpp
 INCLUDEPATH += /usr/local/include/Box2D
 LIBPATH += /usr/local/lib
 LIBS += -lBox2D
@@ -26,4 +28,6 @@ HEADERS += \
     polygonbodyview.h \
     bodycontroller.h \
     flaky.h \
-    world.h
+    world.h \
+    graphicsview.h \
+    universe.h

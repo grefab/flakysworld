@@ -33,6 +33,11 @@ b2World* World::world()
 	return world_;
 }
 
+QList<Body*> World::bodies() const
+{
+	return bodies_.values();
+}
+
 void World::performSimulationStep(float32 timestep)
 {
 	const int32 B2_VELOCITYITERATIONS = 10;

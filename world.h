@@ -22,6 +22,7 @@ public:
 	Body* addBody(Body* body);
 
 	b2World* world();
+	QList<Body*> bodies() const;
 
 signals:
 	void simulationStepHappened();
