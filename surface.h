@@ -22,11 +22,17 @@ public:
 	GraphicsView* view();
 	QLabel* fpsLabel();
 
+signals:
+	void engageTriggered(qreal leftThruster, qreal rightThruster);
+
 protected:
 	QGraphicsScene scene_;
 
 private:
 	Ui::Surface *ui;
+
+private slots:
+	void on_btn_engage_clicked();
 };
 
 #endif // SURFACE_H

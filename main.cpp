@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
 	QObject::connect(surface.view(), SIGNAL(keyPressed(Qt::Key)), universe, SLOT(keyPressHandler(Qt::Key)));
 	QObject::connect(surface.view(), SIGNAL(keyReleased(Qt::Key)), universe, SLOT(keyReleaseHandler(Qt::Key)));
 
+	/* and our engage button */
+	QObject::connect(&surface, SIGNAL(engageTriggered(qreal,qreal)), universe->flaky(), SLOT(accelerate(qreal,qreal)));
+
 	/* preparation is done. let if flow! */
 	return app.exec();
 }
