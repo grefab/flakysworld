@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	scene.addItem( new PolygonBodyView(*flaky.body()) );
 
 	/* finally, build a set of other things. */
-	for (int i = 0; i < 400; ++i) {
+	for (int i = 0; i < 100; ++i) {
 		CircleBody* circleBody = new CircleBody(
 				QPointF(
 					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,

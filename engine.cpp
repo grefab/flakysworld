@@ -4,7 +4,7 @@
 #include "bodycontroller.h"
 #include <QDebug>
 
-const float FPS = 25;
+const float FPS = 50;
 
 Engine::Engine(World* world, QObject *parent) :
 		QThread(parent),
@@ -23,7 +23,7 @@ Engine::~Engine()
 
 void Engine::start()
 {
-	QThread::start(IdlePriority);
+	QThread::start(HighestPriority);
 }
 
 void Engine::run()
@@ -50,7 +50,4 @@ void Engine::printFPS()
 {
 	qDebug() << stepsPerformed_;
 	stepsPerformed_ = 0;
-
-	BodyController(world_->bodies_["flaky"]).push(QPointF(0.01, 0), QPointF(-0.03, 0.03));
-	BodyController(world_->bodies_["flaky"]).push(QPointF(0.01, 0), QPointF(-0.03, -0.03));
 }

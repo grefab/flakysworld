@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "polygonbody.h"
+#include "bodycontroller.h"
+
 
 class Flaky : public QObject
 {
@@ -18,9 +20,12 @@ signals:
 	void seeing();
 
 public slots:
+	void accelerate(qreal leftThruster, qreal rightThruster);
 
 protected:
 	PolygonBody* body_;
+	BodyController* bodyController_;
+
 };
 
 #endif // FLAKY_H

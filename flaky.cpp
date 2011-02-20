@@ -12,13 +12,26 @@ Flaky::Flaky(QObject *parent) :
 
 	body_ = new PolygonBody(QPointF(0, 0), 0.0f, flakyPoly);
 	body_->setId("flaky");
+
+	bodyController_ = new BodyController(body_);
 }
 
 Flaky::~Flaky()
 {
+	delete bodyController_;
+	delete body_;
 }
 
 PolygonBody* Flaky::body()
 {
 	return body_;
+}
+
+void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
+{
+	/* left thruster */
+	bodyController_->push(QPointF(leftThruster, 0), QPointF(-0.03, 0.03));
+
+	/* right thruster */
+	bodyController_->push(QPointF(rightThruster, 0), QPointF(-0.03, -0.03));
 }
