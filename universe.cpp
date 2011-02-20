@@ -8,7 +8,20 @@ Universe::Universe(World* world, Engine* engine, QObject *parent) :
 	engine_(engine)
 {
 	setup();
+
+	engine_->start();
 }
+
+void Universe::keyPressHandler(Qt::Key key)
+{
+	flaky_.accelerate(0.01, 0.01);
+}
+
+void Universe::keyReleaseHandler(Qt::Key key)
+{
+
+}
+
 
 void Universe::setup()
 {
@@ -33,7 +46,7 @@ void Universe::setup()
 	world_->addBody(bodyTop);
 	world_->addBody(bodyBottom);
 
-	/* our little being. let's call it flaky */
+	/* our little being. jump into the world, flaky! */
 	world_->addBody(flaky_.body());
 
 	/* finally, build a set of other things. */

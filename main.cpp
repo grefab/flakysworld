@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
 	Engine* engine = new Engine(world);
 	Universe* universe = new Universe(world, engine);
 
+	/* build a corresponding view for each body */
 	foreach(Body* body, world->bodies()) {
 		CircleBody* circleBody = dynamic_cast<CircleBody*>(body);
 		if ( circleBody ) {
@@ -48,18 +49,10 @@ int main(int argc, char *argv[])
 		}
 	}
 
-/*
-	scene.addItem(new PolygonBodyView(*bodyLeft));
-	scene.addItem(new PolygonBodyView(*bodyRight));
-	scene.addItem(new PolygonBodyView(*bodyTop));
-	scene.addItem(new PolygonBodyView(*bodyBottom));
-	scene.addItem( new PolygonBodyView(*flaky.body()) );
+	/* connect our key events */
+	QObject::connect(&view, SIGNAL(keyPressed(Qt::Key)), universe, SLOT(keyPressHandler(Qt::Key)));
+	QObject::connect(&view, SIGNAL(keyReleased(Qt::Key)), universe, SLOT(keyReleaseHandler(Qt::Key)));
 
-	CircleBodyView* circleBodyView = new CircleBodyView(*circleBody);
-	scene.addItem(circleBodyView);
-*/
-
-	engine->start();
-
+	/* preparation is done. let if flow! */
 	return app.exec();
 }

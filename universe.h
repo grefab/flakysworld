@@ -13,9 +13,14 @@ class Universe : public QObject
 public:
 	explicit Universe(World* world, Engine* engine, QObject *parent = 0);
 
+public slots:
+	void keyPressHandler(Qt::Key key);
+	void keyReleaseHandler(Qt::Key key);
+
 protected:
 	void setup();
 
+	/* flaky has always been and needs no construction. */
 	Flaky flaky_;
 
 	World* world_;
