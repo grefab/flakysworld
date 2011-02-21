@@ -16,6 +16,7 @@ protected:
 	explicit Body(QPointF position, qreal rotation, QObject *parent = 0);
 
 public:
+	const b2World& world() const;
 	void setWorld(b2World* world);
 
 	QPointF position() const;

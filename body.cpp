@@ -16,6 +16,11 @@ Body::Body(QPointF position, qreal rotation, QObject *parent) :
 	bodyDef_.angularDamping = 0.2f;
 }
 
+const b2World& Body::world() const
+{
+	return *world_;
+}
+
 void Body::setWorld(b2World *world)
 {
 	if ( world_ ) {
