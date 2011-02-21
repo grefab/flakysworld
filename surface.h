@@ -18,6 +18,7 @@ public:
 	explicit Surface(QWidget *parent = 0);
 	~Surface();
 
+	/* needed for connecting signals */
 	QGraphicsScene* scene() { return &scene_; }
 	GraphicsView* view();
 	QLabel* fpsLabel();

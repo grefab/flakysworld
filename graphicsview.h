@@ -2,6 +2,8 @@
 #define GRAPHICSVIEW_H
 
 #include <QGraphicsView>
+#include <QWheelEvent>
+#include <QResizeEvent>
 
 class GraphicsView : public QGraphicsView
 {
@@ -16,8 +18,11 @@ signals:
 	void keyReleased( Qt::Key key );
 
 protected:
-	void keyPressEvent( QKeyEvent * event );
-	void keyReleaseEvent( QKeyEvent * event );
+	void keyPressEvent( QKeyEvent *event );
+	void keyReleaseEvent( QKeyEvent *event );
+
+	void wheelEvent(QWheelEvent *event);
+	void resizeEvent(QResizeEvent * event);
 };
 
 #endif // GRAPHICSVIEW_H

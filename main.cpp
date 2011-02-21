@@ -36,6 +36,9 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	/* show everything */
+	surface.view()->fitInView(surface.scene()->sceneRect(), Qt::KeepAspectRatio);
+
 	/* connect our key events */
 	QObject::connect(surface.view(), SIGNAL(keyPressed(Qt::Key)), universe, SLOT(keyPressHandler(Qt::Key)));
 	QObject::connect(surface.view(), SIGNAL(keyReleased(Qt::Key)), universe, SLOT(keyReleaseHandler(Qt::Key)));
