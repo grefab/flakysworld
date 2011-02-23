@@ -14,8 +14,14 @@ class Body : public QObject
 {
 	Q_OBJECT
 
+public:
+	enum Type {
+		Static,
+		Dynamic
+	};
+
 protected:
-	explicit Body(World* world, QPointF position, qreal rotation, b2BodyType type = b2_dynamicBody, QObject *parent = 0);
+	explicit Body(World* world, QPointF position, qreal rotation, Type type = Dynamic, QObject *parent = 0);
 
 public:
 	const b2World& world() const;

@@ -10,7 +10,7 @@ Flaky::Flaky(World* world, QObject *parent) :
 			QPointF(-0.03f, 0.03f) <<
 			QPointF(-0.03f, -0.03f);
 
-	body_ = new PolygonBody(world, QPointF(0, 0), 0.0f, flakyPoly, b2_dynamicBody);
+	body_ = new PolygonBody(world, QPointF(0, 0), 0.0f, flakyPoly, Body::Dynamic);
 	body_->setId("flaky");
 
 	bodyController_ = new BodyController(body_);
