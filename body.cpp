@@ -2,25 +2,26 @@
 #include <QUuid>
 #include "world.h"
 
-Body::Body(World* world, QPointF position, qreal rotation, QObject *parent) :
+Body::Body(World* world, QPointF position, qreal rotation, b2BodyType type, QObject *parent) :
 	QObject(parent),
 	world_(world->world())
 {
 	id_ = QUuid::createUuid().toString();
 
 	/* b2Body is an abstract entity of an element in the physics world */
-	bodyDef_.type = b2_dynamicBody;
+	b2BodyDef bodyDef;
+	bodyDef.type = type;
 
-	bodyDef_.position.Set(position.x(), position.y()); // bring in sync with QGraphisObject rotation
-	bodyDef_.angle = rotation; // bring in sync with QGraphisObject rotation
+	bodyDef.position.Set(position.x(), position.y()); // bring in sync with QGraphisObject rotation
+	bodyDef.angle = rotation; // bring in sync with QGraphisObject rotation
 
-	bodyDef_.linearDamping = 0.2f;
-	bodyDef_.angularDamping = 0.2f;
+	bodyDef.linearDamping = 0.2f;
+	bodyDef.angularDamping = 0.2f;
 
-	bodyDef_.userData = this;
+	bodyDef.userData = this;
 
 	/* bring ourselves into the world */
-	body_ = world_->CreateBody(&bodyDef_);
+	body_ = world_->CreateBody(&bodyDef);
 }
 
 const b2World& Body::world() const
@@ -38,11 +39,6 @@ QPointF Body::position() const
 qreal Body::rotation() const
 {
 	return body_->GetAngle();
-}
-
-void Body::setStatic()
-{
-	bodyDef_.type = b2_staticBody;
 }
 
 void Body::addFixture(const b2FixtureDef& fixtureDef)

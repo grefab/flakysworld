@@ -7,7 +7,7 @@
 class PolygonBody : public Body
 {
 public:
-	PolygonBody(World* world, QPointF position, qreal rotation, QPolygonF polygon, QObject *parent = 0);
+	PolygonBody(World* world, QPointF position, qreal rotation, QPolygonF polygon, b2BodyType type, QObject *parent = 0);
 
 	QPolygonF polygon() const;
 

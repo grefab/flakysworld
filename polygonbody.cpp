@@ -1,7 +1,7 @@
 #include "polygonbody.h"
 
-PolygonBody::PolygonBody(World* world, QPointF position, qreal rotation, QPolygonF polygon, QObject *parent) :
-		Body(world, position, rotation, parent),
+PolygonBody::PolygonBody(World* world, QPointF position, qreal rotation, QPolygonF polygon, b2BodyType type, QObject *parent) :
+		Body(world, position, rotation, type, parent),
 		polygon_(polygon)
 {
 	/* The shape of our body */

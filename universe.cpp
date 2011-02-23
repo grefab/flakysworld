@@ -34,15 +34,10 @@ void Universe::setup()
 			QPointF(0.0f, 0.5f) <<
 			QPointF(0.0f, -0.5f);
 
-	PolygonBody* bodyLeft = new PolygonBody(world_, QPointF(-0.5f, 0.0f), 0, edgePoly);
-	PolygonBody* bodyRight = new PolygonBody(world_, QPointF(0.5f, 0.0f), 0, edgePoly);
-	PolygonBody* bodyTop = new PolygonBody(world_, QPointF(0.0f, 0.5f), PI / 2.0f, edgePoly);
-	PolygonBody* bodyBottom = new PolygonBody(world_, QPointF(0.0f, -0.5f), PI / 2.0f, edgePoly);
-
-	bodyLeft->setStatic();
-	bodyRight->setStatic();
-	bodyTop->setStatic();
-	bodyBottom->setStatic();
+	PolygonBody* bodyLeft = new PolygonBody(world_, QPointF(-0.5f, 0.0f), 0, edgePoly, b2_staticBody);
+	PolygonBody* bodyRight = new PolygonBody(world_, QPointF(0.5f, 0.0f), 0, edgePoly, b2_staticBody);
+	PolygonBody* bodyTop = new PolygonBody(world_, QPointF(0.0f, 0.5f), PI / 2.0f, edgePoly, b2_staticBody);
+	PolygonBody* bodyBottom = new PolygonBody(world_, QPointF(0.0f, -0.5f), PI / 2.0f, edgePoly, b2_staticBody);
 
 	world_->addBody(bodyLeft);
 	world_->addBody(bodyRight);
@@ -60,7 +55,8 @@ void Universe::setup()
 					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
 					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f
 				),
-				0.02f);
+				0.02f,
+				b2_dynamicBody);
 		world_->addBody(circleBody);
 	}
 }

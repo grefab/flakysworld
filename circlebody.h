@@ -6,7 +6,7 @@
 class CircleBody : public Body
 {
 public:
-	CircleBody(World* world, QPointF position, qreal radius, QObject *parent = 0);
+	CircleBody(World* world, QPointF position, qreal radius, b2BodyType type, QObject *parent = 0);
 
 	qreal radius() const;
 

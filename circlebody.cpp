@@ -1,7 +1,7 @@
 #include "circlebody.h"
 
-CircleBody::CircleBody(World* world, QPointF position, qreal radius, QObject *parent) :
-		Body(world, position, 0, parent),
+CircleBody::CircleBody(World* world, QPointF position, qreal radius, b2BodyType type, QObject *parent) :
+		Body(world, position, 0, type, parent),
 		radius_(radius)
 {
 	/* The shape of our body */

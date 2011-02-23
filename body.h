@@ -15,7 +15,7 @@ class Body : public QObject
 	Q_OBJECT
 
 protected:
-	explicit Body(World* world, QPointF position, qreal rotation, QObject *parent = 0);
+	explicit Body(World* world, QPointF position, qreal rotation, b2BodyType type = b2_dynamicBody, QObject *parent = 0);
 
 public:
 	const b2World& world() const;
@@ -24,7 +24,6 @@ public:
 	qreal rotation() const;
 
 	/* bodies are dynamic by default. before adding a body to a world this function has impact. */
-	void setStatic();
 	void addFixture(const b2FixtureDef& fixtureDef);
 	const b2Fixture* fixture() const;
 
@@ -45,8 +44,6 @@ protected:
 	b2World *world_;
 	b2Body *body_;
 	b2Fixture* fixture_;
-
-	b2BodyDef bodyDef_;
 
 private:
 	QString id_;
