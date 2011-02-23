@@ -38,7 +38,6 @@ void Engine::run()
 	exec();
 }
 
-
 void Engine::simulationStep()
 {
 	world_->performSimulationStep(1.0f / FPS);

@@ -23,6 +23,7 @@ protected:
 	World* world_;
 
 private slots:
+	/* used internally by our timers */
 	void simulationStep();
 	void printFPS();
 

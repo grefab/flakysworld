@@ -2,12 +2,12 @@
 #include <QKeyEvent>
 
 GraphicsView::GraphicsView(QGraphicsScene * scene, QWidget* parent) :
-	QGraphicsView(scene, parent)
+		QGraphicsView(scene, parent)
 {
 }
 
 GraphicsView::GraphicsView(QWidget* parent) :
-	QGraphicsView(parent)
+		QGraphicsView(parent)
 {
 }
 

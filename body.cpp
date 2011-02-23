@@ -3,8 +3,8 @@
 #include "world.h"
 
 Body::Body(World* world, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
-	QObject(parent),
-	world_(world->world())
+		QObject(parent),
+		world_(world->world())
 {
 	id_ = QUuid::createUuid().toString();
 
@@ -57,7 +57,6 @@ const b2Fixture* Body::fixture() const
 {
 	return fixture_;
 }
-
 
 QString Body::id() const
 {

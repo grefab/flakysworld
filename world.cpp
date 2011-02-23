@@ -5,7 +5,7 @@
 #include <QDebug>
 
 World::World(QObject *parent) :
-	QObject(parent)
+		QObject(parent)
 {
 	world_ = new b2World(/* gravity = */ b2Vec2(0.0f, 0.0f), /* doSleep = */ true);
 }
@@ -43,7 +43,7 @@ void World::performSimulationStep(float32 timestep)
 {
 	const int32 B2_VELOCITYITERATIONS = 10;
 	const int32 B2_POSITIONITERATIONS = 10;
-//	const float32 B2_TIMESTEP = 1.0f / FPS;
+	//	const float32 B2_TIMESTEP = 1.0f / FPS;
 
 	world_->Step(timestep, B2_VELOCITYITERATIONS, B2_POSITIONITERATIONS);
 	world_->ClearForces();

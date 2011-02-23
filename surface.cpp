@@ -3,8 +3,8 @@
 #include <QGLWidget>
 
 Surface::Surface(QWidget *parent) :
-	QMainWindow(parent),
-	ui(new Ui::Surface)
+		QMainWindow(parent),
+		ui(new Ui::Surface)
 {
 	ui->setupUi(this);
 

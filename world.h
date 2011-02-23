@@ -24,6 +24,7 @@ public:
 	b2World* world();
 	QList<Body*> bodies() const;
 
+	/* this contains the nearest hit from the ray cast origin. */
 	struct RayHit
 	{
 		RayHit(Body* body, QPointF point, qreal fraction) :

@@ -2,7 +2,7 @@
 #include <QPolygonF>
 
 Flaky::Flaky(World* world, QObject *parent) :
-	QObject(parent)
+		QObject(parent)
 {
 	QPolygonF flakyPoly;
 	flakyPoly <<

@@ -3,7 +3,7 @@
 #include "polygonbody.h"
 
 Universe::Universe(QObject *parent) :
-	QObject(parent)
+		QObject(parent)
 {
 	world_ = new World();
 	engine_ = new Engine(world_);
@@ -55,9 +55,9 @@ void Universe::setup()
 		CircleBody* circleBody = new CircleBody(
 				world_,
 				QPointF(
-					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
-					-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f
-				),
+						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
+						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f
+						),
 				0.02f,
 				Body::Dynamic);
 		world_->addBody(circleBody);
