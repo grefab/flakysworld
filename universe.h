@@ -11,9 +11,11 @@ class Universe : public QObject
 {
 	Q_OBJECT
 public:
-	explicit Universe(World* world, Engine* engine, QObject *parent = 0);
+	explicit Universe(QObject *parent = 0);
 
-	Flaky* flaky() { return &flaky_; }
+	Flaky* flaky() { return flaky_; }
+	World* world() { return world_; }
+	Engine* engine() { return engine_; }
 
 public slots:
 	void keyPressHandler(Qt::Key key);
@@ -22,9 +24,7 @@ public slots:
 protected:
 	void setup();
 
-	/* flaky has always been and needs no construction. */
-	Flaky flaky_;
-
+	Flaky* flaky_;
 	World* world_;
 	Engine* engine_;
 };

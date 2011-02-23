@@ -1,7 +1,7 @@
 #include "flaky.h"
 #include <QPolygonF>
 
-Flaky::Flaky(QObject *parent) :
+Flaky::Flaky(World* world, QObject *parent) :
 	QObject(parent)
 {
 	QPolygonF flakyPoly;
@@ -10,7 +10,7 @@ Flaky::Flaky(QObject *parent) :
 			QPointF(-0.03f, 0.03f) <<
 			QPointF(-0.03f, -0.03f);
 
-	body_ = new PolygonBody(QPointF(0, 0), 0.0f, flakyPoly);
+	body_ = new PolygonBody(world, QPointF(0, 0), 0.0f, flakyPoly);
 	body_->setId("flaky");
 
 	bodyController_ = new BodyController(body_);

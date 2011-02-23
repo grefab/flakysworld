@@ -1,8 +1,6 @@
 #include <QtGui>
 
 #include "surface.h"
-#include "world.h"
-#include "engine.h"
 #include "universe.h"
 #include "circlebodyview.h"
 #include "polygonbodyview.h"
@@ -17,14 +15,12 @@ int main(int argc, char *argv[])
 	surface.show();
 
 	/* our engine! it takes care for the bodies we give to it. */
-	World* world = new World();
-	Engine* engine = new Engine(world);
-	Universe* universe = new Universe(world, engine);
+	Universe* universe = new Universe();
 
-	QObject::connect(engine, SIGNAL(updateFPS(int)), surface.fpsLabel(), SLOT(setNum(int)));
+	QObject::connect(universe->engine(), SIGNAL(updateFPS(int)), surface.fpsLabel(), SLOT(setNum(int)));
 
 	/* build a corresponding view for each body */
-	foreach(Body* body, world->bodies()) {
+	foreach(Body* body, universe->world()->bodies()) {
 		CircleBody* circleBody = dynamic_cast<CircleBody*>(body);
 		if ( circleBody ) {
 			surface.scene()->addItem( new CircleBodyView(*circleBody) );

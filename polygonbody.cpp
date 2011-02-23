@@ -1,7 +1,7 @@
 #include "polygonbody.h"
 
-PolygonBody::PolygonBody(QPointF position, qreal rotation, QPolygonF polygon, QObject *parent) :
-		Body(position, rotation, parent),
+PolygonBody::PolygonBody(World* world, QPointF position, qreal rotation, QPolygonF polygon, QObject *parent) :
+		Body(world, position, rotation, parent),
 		polygon_(polygon)
 {
 	/* The shape of our body */
@@ -14,10 +14,13 @@ PolygonBody::PolygonBody(QPointF position, qreal rotation, QPolygonF polygon, QO
 	shapeDef_.Set(vertices, n);
 
 	/* Fixture is the physical representation of a shape */
-	fixtureDef_.shape = &shapeDef_;
-	fixtureDef_.density = 1.0f;
-	fixtureDef_.friction = 0.5f;
-	fixtureDef_.restitution = 0.2f;
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shapeDef_;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.5f;
+	fixtureDef.restitution = 0.2f;
+
+	addFixture(fixtureDef);
 }
 
 QPolygonF PolygonBody::polygon() const {

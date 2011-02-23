@@ -20,7 +20,6 @@ Body* World::addBody(Body* body)
 	/* it's ours now! */
 	body->moveToThread(engine_);
 	body->setParent(this);
-	body->setWorld(world_);
 	bodies_.insert(body->id(), body);
 
 	/* update body if necessary */

@@ -5,11 +5,13 @@
 #include "polygonbody.h"
 #include "bodycontroller.h"
 
+class World;
+
 class Flaky : public QObject
 {
 	Q_OBJECT
 public:
-	explicit Flaky(QObject *parent = 0);
+	explicit Flaky(World* world, QObject *parent = 0);
 	~Flaky();
 
 	PolygonBody* body();

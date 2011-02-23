@@ -1,17 +1,20 @@
 #include "circlebody.h"
 
-CircleBody::CircleBody(QPointF position, qreal radius, QObject *parent) :
-		Body(position, 0, parent),
+CircleBody::CircleBody(World* world, QPointF position, qreal radius, QObject *parent) :
+		Body(world, position, 0, parent),
 		radius_(radius)
 {
 	/* The shape of our body */
 	shapeDef_.m_radius = radius;
 
 	/* Fixture is the physical representation of a shape */
-	fixtureDef_.shape = &shapeDef_;
-	fixtureDef_.density = 1.0f;
-	fixtureDef_.friction = 0.5f;
-	fixtureDef_.restitution = 0.2f;
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shapeDef_;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.5f;
+	fixtureDef.restitution = 0.2f;
+
+	addFixture(fixtureDef);
 }
 
 qreal CircleBody::radius() const {
