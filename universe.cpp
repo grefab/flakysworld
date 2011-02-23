@@ -10,6 +10,9 @@ Universe::Universe(QObject *parent) :
 
 	flaky_ = new Flaky(world_);
 
+	/* tell flaky when the world changes */
+	connect(world_, SIGNAL(simulationStepHappened()), flaky_, SLOT(worldChanged()));
+
 	setup();
 
 	engine_->start();

@@ -48,7 +48,7 @@ protected:
 	b2World *world_;
 
 private:
-	/* so we know about our engine */
+	/* so we know about our engine, just used for thread comparison. */
 	void setEngine(Engine* engine) { engine_ = engine; }
 	Engine* engine_;
 };

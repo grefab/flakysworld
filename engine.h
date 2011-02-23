@@ -15,16 +15,16 @@ public:
 	void start();
 
 signals:
-	void updateFPS(int fps);
-
-protected slots:
-	void simulationStep();
-	void printFPS();
+	void updatedFPS(int fps);
 
 protected:
 	void run();
 
 	World* world_;
+
+private slots:
+	void simulationStep();
+	void printFPS();
 
 private:
 	unsigned long stepsPerformed_;

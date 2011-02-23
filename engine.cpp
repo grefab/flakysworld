@@ -47,6 +47,6 @@ void Engine::simulationStep()
 
 void Engine::printFPS()
 {
-	emit updateFPS(stepsPerformed_);
+	emit updatedFPS(stepsPerformed_);
 	stepsPerformed_ = 0;
 }

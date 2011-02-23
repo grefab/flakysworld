@@ -4,6 +4,7 @@
 #include <QObject>
 #include "polygonbody.h"
 #include "bodycontroller.h"
+#include <QVariant>
 
 class World;
 
@@ -17,15 +18,21 @@ public:
 	PolygonBody* body();
 
 signals:
-	/* is emitted when visual input changes */
-	void seeing();
+	/* is emitted when sensorical input changes */
+	void sensorsUpdated( QVariant sensorData );
 
 public slots:
 	void accelerate(qreal leftThruster, qreal rightThruster);
 
+	/* so we can update our sensors */
+	void worldChanged();
+
 protected:
 	PolygonBody* body_;
 	BodyController* bodyController_;
+
+private:
+	QVariant useEyes();
 
 };
 

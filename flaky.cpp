@@ -35,3 +35,13 @@ void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
 	/* right thruster */
 	bodyController_->push(QPointF(rightThruster, 0), QPointF(-0.03, -0.03));
 }
+
+void Flaky::worldChanged()
+{
+	emit sensorsUpdated(useEyes());
+}
+
+QVariant Flaky::useEyes()
+{
+	return QVariant();
+}
