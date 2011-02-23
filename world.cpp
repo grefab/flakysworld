@@ -54,3 +54,38 @@ void World::performSimulationStep(float32 timestep)
 		qDebug() << "world not running in engine!";
 	}
 }
+
+World::RayHit World::rayCast(const QPointF& from, const QPointF& to) const
+{
+	class RayCastCallback : public b2RayCastCallback
+	{
+	public:
+		RayCastCallback() : fixture_(NULL) {}
+
+		float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
+			fixture_ = fixture;
+			point_ = point;
+			normal_ = normal;
+			fraction_ = fraction;
+
+			/* using this we find the closest intersection point to our ray origin. */
+			return fraction;
+		}
+
+		b2Fixture* fixture_;
+		b2Vec2 point_;
+		b2Vec2 normal_;
+		float32 fraction_;
+	} callback;
+
+	world_->RayCast(&callback, b2Vec2(from.x(), from.y()), b2Vec2(to.x(), to.y()));
+
+	return RayHit(
+			/* find body for fixture found */
+			bodies_.value( static_cast<Body*>(callback.fixture_->GetBody()->GetUserData())->id() ),
+
+			/* convert b2 parameters into our struct */
+			QPointF(callback.point_.x, callback.point_.y),
+			callback.fraction_
+			);
+}

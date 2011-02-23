@@ -24,11 +24,25 @@ public:
 	b2World* world();
 	QList<Body*> bodies() const;
 
+	struct RayHit
+	{
+		RayHit(Body* body, QPointF point, qreal fraction) :
+				body(body),
+				point(point),
+				fraction(fraction)
+		{}
+
+		Body* body;
+		QPointF point;
+		qreal fraction;
+	};
+
 signals:
 	void simulationStepHappened();
 
 protected:
 	void performSimulationStep(float32 timestep);
+	RayHit rayCast(const QPointF& from, const QPointF& to) const;
 
 	QHash<QString, Body*> bodies_;
 	b2World *world_;
