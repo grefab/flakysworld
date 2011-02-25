@@ -29,7 +29,6 @@ public:
 	QPointF position() const;
 	qreal rotation() const;
 
-	/* bodies are dynamic by default. before adding a body to a world this function has impact. */
 	void addFixture(const b2FixtureDef& fixtureDef);
 	const b2Fixture* fixture() const;
 
