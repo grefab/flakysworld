@@ -17,6 +17,8 @@ public:
 	/* we need the position and orientation of the eye */
 	void performSensing() const;
 
+	const QList<QLineF>& rays() const { return rays_; }
+
 signals:
 	void hasSeen(QList<qreal> output) const;
 
