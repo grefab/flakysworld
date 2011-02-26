@@ -43,14 +43,9 @@ qreal Body::rotation() const
 	return body_->GetAngle();
 }
 
-void Body::addFixture(const b2FixtureDef& fixtureDef)
+b2Fixture* Body::addFixture(const b2FixtureDef& fixtureDef)
 {
-	fixture_ = body_->CreateFixture(&fixtureDef);
-}
-
-const b2Fixture* Body::fixture() const
-{
-	return fixture_;
+	return body_->CreateFixture(&fixtureDef);
 }
 
 QString Body::id() const
@@ -63,7 +58,7 @@ void Body::setId(QString newId)
 	id_ = newId;
 }
 
-void Body::simulationStep()
+void Body::simulationStep() const
 {
 	/* only update when we need */
 	if( body_->IsAwake() ) {

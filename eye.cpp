@@ -2,9 +2,8 @@
 #include <QTransform>
 
 
-Eye::Eye(World* world, qreal lengthOfSight, QObject *parent) :
+Eye::Eye(qreal lengthOfSight, QObject *parent) :
 	QObject(parent),
-	world_(world),
 	lengthOfSight_(lengthOfSight)
 {
 
@@ -15,7 +14,7 @@ Eye::Eye(World* world, qreal lengthOfSight, QObject *parent) :
 	}
 }
 
-void Eye::performSensing(QPointF position, qreal rotation)
+void Eye::performSensing(const World& world, QPointF position, qreal rotation) const
 {
 	/* the rays are sent from the origin (0,0) and have to be translated
 	 * and rotated to reflect the real world's position.
@@ -30,7 +29,7 @@ void Eye::performSensing(QPointF position, qreal rotation)
 
 	foreach(QLineF ray, rays_) {
 		QLineF transformedRay = trans.map(rot.map(ray));
-		World::RayHit hitpoint = world_->rayCast(transformedRay);
+		World::RayHit hitpoint = world.rayCast(transformedRay);
 
 		output.append(hitpoint.fraction);
 	}

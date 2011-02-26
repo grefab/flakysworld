@@ -27,29 +27,26 @@ public:
 	QPointF position() const;
 	qreal rotation() const;
 
-	void addFixture(const b2FixtureDef& fixtureDef);
-	const b2Fixture* fixture() const;
-
-	QString id() const;
 	void setId(QString newId);
+	QString id() const;
 
 signals:
 	/* a view can connect to this to take care for updates */
-	void changedPosition(QPointF position, qreal rotation);
+	void changedPosition(QPointF position, qreal rotation) const;
 
 protected slots:
-	void simulationStep();
+	void simulationStep() const;
 
 	/* here comes the stuff a controller needs to manipulate a body */
 	void applyForce(const QPointF& force, const QPointF& localPoint);
 
 protected:
-	b2World *world_;
-	b2Body *body_;
-	b2Fixture* fixture_;
+	b2Fixture* addFixture(const b2FixtureDef& fixtureDef);
 
 private:
 	QString id_;
+	b2World *world_;
+	b2Body *body_;
 };
 
 #endif // BODY_H
