@@ -26,7 +26,7 @@ void Eye::performSensing(QPointF position, qreal rotation)
 	QTransform rot;
 	rot.rotate(rotation);
 
-	QVariantList output;
+	QList<qreal> output;
 
 	foreach(QLineF ray, rays_) {
 		QLineF transformedRay = trans.map(rot.map(ray));
