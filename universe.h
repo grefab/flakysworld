@@ -12,6 +12,7 @@ class Universe : public QObject
 	Q_OBJECT
 public:
 	explicit Universe(QObject *parent = 0);
+	~Universe();
 
 	Flaky* flaky() { return flaky_; }
 	World* world() { return world_; }

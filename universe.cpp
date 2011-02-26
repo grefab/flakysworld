@@ -16,6 +16,13 @@ Universe::Universe(QObject *parent) :
 	engine_->start();
 }
 
+Universe::~Universe()
+{
+	delete engine_;
+	delete flaky_;
+	delete world_;
+}
+
 void Universe::keyPressHandler(Qt::Key key)
 {
 	Q_UNUSED(key);
