@@ -1,4 +1,5 @@
 #include "flaky.h"
+#include "world.h"
 #include <QPolygonF>
 
 Flaky::Flaky(World* world, QObject *parent) :
@@ -14,6 +15,12 @@ Flaky::Flaky(World* world, QObject *parent) :
 	body_->setId("flaky");
 
 	bodyController_ = new BodyController(body_);
+
+	/* we need to adjust our sensors when the body has moved. */
+	connect(body_, SIGNAL(changedPosition(QPointF,qreal)), this, SLOT(bodyMoved(QPointF,qreal)));
+
+	/* when the world has changed, we want new sensor input. */
+	connect(world, SIGNAL(worldChanged()), this, SLOT(worldChanged()));
 }
 
 Flaky::~Flaky()
@@ -36,12 +43,16 @@ void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
 	bodyController_->push(QPointF(rightThruster, 0), QPointF(-0.03, -0.03));
 }
 
-void Flaky::worldChanged()
+void Flaky::bodyMoved(QPointF position, qreal rotation)
 {
-	emit sensorsUpdated(useEyes());
+	foreach(Sensor* sensor, sensors_) {
+		sensor->setMapToWorld(body_->getWorldMap());
+	}
 }
 
-QVariant Flaky::useEyes()
+void Flaky::worldChanged()
 {
-	return QVariant();
+	foreach(Sensor* sensor, sensors_) {
+		sensor->performSensing();
+	}
 }

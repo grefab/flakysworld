@@ -2,19 +2,20 @@
 #define EYE_H
 
 #include <QObject>
+#include "sensor.h"
 #include "world.h"
-#include <QPointF>
 #include <QList>
 #include <QLineF>
 
-class Eye : public QObject
+class Eye : public Sensor
 {
 	Q_OBJECT
+
 public:
-	explicit Eye(qreal lengthOfSight, QObject *parent = 0);
+	explicit Eye(const World& world, const QPointF position, qreal rotation, qreal lengthOfSight, QObject *parent = 0);
 
 	/* we need the position and orientation of the eye */
-	void performSensing(const World& world, QPointF position, qreal rotation) const;
+	void performSensing() const;
 
 signals:
 	void hasSeen(QList<qreal> output) const;

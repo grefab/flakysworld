@@ -2,9 +2,11 @@
 #include "world.h"
 #include <QUuid>
 
-Sensor::Sensor(const World& world, QObject *parent) :
+Sensor::Sensor(const World& world, const QPointF position, qreal rotation, QObject *parent) :
 	QObject(parent),
-	world_(world)
+	world_(world),
+	position_(position),
+	rotation_(rotation)
 {
 	id_ = QUuid::createUuid().toString();
 }

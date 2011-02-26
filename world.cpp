@@ -51,6 +51,8 @@ void World::performSimulationStep(float32 timestep)
 		body->simulationStepHappened();
 	}
 
+	emit worldChanged();
+
 	if ( QThread::currentThread() != engine_ ) {
 		qDebug() << "world not running in engine!";
 	}

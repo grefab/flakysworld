@@ -7,6 +7,7 @@ static const float PI = 3.14159265359;
 #include <QString>
 #include <Box2D.h>
 #include <QPointF>
+#include <QTransform>
 
 class World;
 
@@ -33,6 +34,9 @@ public:
 
 	void setId(QString newId);
 	QString id() const;
+
+	QPointF getWorldPoint(const QPointF& localPoint) const;
+	QTransform getWorldMap() const;
 
 signals:
 	/* a view can connect to this to take care for updates */

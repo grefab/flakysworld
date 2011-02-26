@@ -71,6 +71,24 @@ void Body::simulationStepHappened() const
 	}
 }
 
+QPointF Body::getWorldPoint(const QPointF& localPoint) const
+{
+	const b2Vec2 b2LocalPoint(localPoint.x(), localPoint.y());
+	const b2Vec2 b2WorldPoint = body_->GetWorldPoint(b2LocalPoint);
+
+	return QPointF(b2WorldPoint.x, b2WorldPoint.y);
+}
+
+QTransform Body::getWorldMap() const
+{
+	QTransform trans;
+	trans.translate(position().x(), position().y());
+	trans.rotate(rotation());
+
+	return trans;
+}
+
+
 void Body::applyForce(const QPointF& force, const QPointF& localPoint)
 {
 	b2Vec2 b2Force(force.x(), force.y());

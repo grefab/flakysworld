@@ -41,6 +41,9 @@ public:
 
 	RayHit rayCast(const QLineF& ray) const;
 
+signals:
+	void worldChanged();
+
 protected:
 	void performSimulationStep(float32 timestep);
 
