@@ -13,8 +13,8 @@ BodyView::BodyView(const Body& body, QGraphicsItem *parent) :
 
 void BodyView::bodyChanged(QTransform transformation)
 {
-	setTransform(transformation);
+	/* mirroring on the x axis to take care for Qt's screen coordinates. */
+	static const QTransform mirror(1, 0, 0, 0, -1, 0, 0, 0, 1);
 
-//	setPos(QPointF(position.x(), -position.y()));
-//	setRotation(-rotation * 360.0 / (2 * PI));
+	setTransform(transformation * mirror);
 }
