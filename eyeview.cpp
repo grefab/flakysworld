@@ -1,5 +1,6 @@
 #include "eyeview.h"
 #include <QPainter>
+#include <QVector>
 
 EyeView::EyeView(const Eye& eye, QGraphicsItem *parent) :
 		QGraphicsObject(parent),
@@ -26,16 +27,20 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	/* draw a small indicator that we can see the plain eye */
 	painter->drawPolygon(polygon_);
 
+	/* make the rays a bit transparent */
+	painter->setPen(QPen(QColor(0, 0, 0, 64)));
+
 	/* draw the rays */
-	QList<QLineF> drawLines = rays_;
+	QVector<QLineF> drawLines = rays_.toVector();
 	for( int i = 0; i < drawLines.size(); ++i) {
-		QLineF line = drawLines[i];
+		QLineF& line = drawLines[i];
 		qreal fraction = output_[i];
 
 		line.setLength(line.length() * fraction);
-
-		painter->drawLine(line);
 	}
+
+	painter->drawLines(drawLines);
+
 }
 
 QRectF EyeView::boundingRect() const
