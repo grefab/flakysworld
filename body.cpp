@@ -31,11 +31,6 @@ Body::Body(World* world, QPointF position, qreal rotation, Body::Type type, QObj
 	body_ = world_->CreateBody(&bodyDef);
 }
 
-const b2World& Body::world() const
-{
-	return *world_;
-}
-
 QPointF Body::position() const
 {
 	const b2Vec2& position = body_->GetPosition();
