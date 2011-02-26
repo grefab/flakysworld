@@ -5,11 +5,11 @@
 #include "eye.h"
 #include <QList>
 
-class Eyeview : public QGraphicsObject
+class EyeView : public QGraphicsObject
 {
 	Q_OBJECT
 public:
-	explicit Eyeview(const Eye& eye, QGraphicsItem *parent = 0);
+	explicit EyeView(const Eye& eye, QGraphicsItem *parent = 0);
 
 protected:
 	const Eye& eye_;
