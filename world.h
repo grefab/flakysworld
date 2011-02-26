@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <Box2D.h>
+#include <QLineF>
 #include <QHash>
 #include "body.h"
 
@@ -38,12 +39,13 @@ public:
 		qreal fraction;
 	};
 
+	RayHit rayCast(const QLineF& ray) const;
+
 signals:
 	void simulationStepHappened();
 
 protected:
 	void performSimulationStep(float32 timestep);
-	RayHit rayCast(const QPointF& from, const QPointF& to) const;
 
 	QHash<QString, Body*> bodies_;
 	b2World *world_;

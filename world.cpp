@@ -55,8 +55,11 @@ void World::performSimulationStep(float32 timestep)
 	}
 }
 
-World::RayHit World::rayCast(const QPointF& from, const QPointF& to) const
+World::RayHit World::rayCast(const QLineF& ray) const
 {
+	const QPointF& from = ray.p1();
+	const QPointF& to = ray.p2();
+
 	class RayCastCallback : public b2RayCastCallback
 	{
 	public:

@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "world.h"
-#include "QVariant"
+#include <QVariantList>
 #include <QPointF>
 #include <QList>
 #include <QLineF>
@@ -15,16 +15,18 @@ public:
 	explicit Eye(World* world, qreal lengthOfSight, QObject *parent = 0);
 
 signals:
-	void hasSeen(QVariant output);
+	/* outputs a list of qreals */
+	void hasSeen(QVariantList output);
 
-public slots:
-	/* we need te position and orientation of the eye */
+protected slots:
+	/* we need the position and orientation of the eye */
 	void performSensing(QPointF position, qreal rotation);
 
 protected:
-	typedef QList<QLine> Rays;
+	void addRay(qreal length, qreal rotation);
 
-	Rays rays_;
+private:
+	QList<QLineF> rays_;
 	World* world_;
 	qreal lengthOfSight_;
 };
