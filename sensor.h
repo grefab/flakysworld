@@ -21,7 +21,7 @@ public:
 	QString id() const;
 
 	void setMapParentToWorld(QTransform mapParentToWorld);
-	QTransform mapToWorld() const;
+	const QTransform& mapToWorld() const;
 
 signals:
 	void positionChanged(QTransform mapToWorld);

@@ -18,14 +18,15 @@ Universe::Universe(QObject *parent) :
 
 void Universe::keyPressHandler(Qt::Key key)
 {
+	Q_UNUSED(key);
+
 	flaky_->accelerate(0.01, 0.01);
 }
 
 void Universe::keyReleaseHandler(Qt::Key key)
 {
-
+	Q_UNUSED(key);
 }
-
 
 void Universe::setup()
 {

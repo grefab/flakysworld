@@ -25,6 +25,7 @@ Body::Body(World* world, QPointF position, qreal rotation, Body::Type type, QObj
 	bodyDef.linearDamping = 0.2f;
 	bodyDef.angularDamping = 0.2f;
 
+	/* so we can be found e.g. by ray casts */
 	bodyDef.userData = this;
 
 	/* bring ourselves into the world */

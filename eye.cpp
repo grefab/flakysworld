@@ -22,8 +22,8 @@ void Eye::performSensing() const
 	QList<qreal> output;
 
 	foreach(QLineF ray, rays_) {
-//		QLineF transformedRay = mapToWorld().map(ray);
-//		World::RayHit hitpoint = world_.rayCast(transformedRay);
+		QLineF transformedRay = mapToWorld().map(ray);
+		World::RayHit hitpoint = world_.rayCast(transformedRay);
 
 //		output.append(hitpoint.fraction);
 	}

@@ -35,6 +35,8 @@ public:
 	void setId(QString newId);
 	QString id() const;
 
+	bool isAwake() const { return body_->IsAwake(); }
+
 	QTransform getWorldMap() const { return mapToWorld_; }
 
 signals:

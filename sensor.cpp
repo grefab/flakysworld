@@ -27,7 +27,7 @@ void Sensor::setMapParentToWorld(QTransform mapParentToWorld)
 	updateMapToWorld();
 }
 
-QTransform Sensor::mapToWorld() const
+const QTransform& Sensor::mapToWorld() const
 {
 	return mapToWorld_;
 }
