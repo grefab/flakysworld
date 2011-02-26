@@ -24,14 +24,17 @@ public:
 	qreal rotation() const { return rotation_; }
 
 	void setMapToWorld(QTransform mapToWorld) { mapToWorld_ = mapToWorld; }
+	QTransform mapToWorld() { return mapToWorld_; }
 
 public slots:
 	void setPosition(const QPointF &position) { position_ = position; }
 	void setRotation(qreal rotation) { rotation_ = rotation; }
 
+protected:
+	const World& world_;
+
 private:
 	QString id_;
-	const World& world_;
 
 	QPointF position_;
 	qreal rotation_;

@@ -6,6 +6,7 @@
 #include "bodycontroller.h"
 #include <QVariant>
 #include <QHash>
+#include <QList>
 #include "sensor.h"
 
 class World;
@@ -17,7 +18,8 @@ public:
 	explicit Flaky(World* world, QObject *parent = 0);
 	~Flaky();
 
-	PolygonBody* body();
+	PolygonBody* body() const;
+	QList<Sensor*> sensors() const;
 
 public slots:
 	void accelerate(qreal leftThruster, qreal rightThruster);

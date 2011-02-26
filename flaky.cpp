@@ -29,9 +29,14 @@ Flaky::~Flaky()
 	delete body_;
 }
 
-PolygonBody* Flaky::body()
+PolygonBody* Flaky::body() const
 {
 	return body_;
+}
+
+QList<Sensor*> Flaky::sensors() const
+{
+	return sensors_.values();
 }
 
 void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
@@ -45,6 +50,7 @@ void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
 
 void Flaky::bodyMoved(QTransform transformation)
 {
+	/* we need our sensors to know about their position in the world. */
 	foreach(Sensor* sensor, sensors_) {
 		sensor->setMapToWorld(transformation);
 	}
@@ -52,6 +58,7 @@ void Flaky::bodyMoved(QTransform transformation)
 
 void Flaky::worldChanged()
 {
+	/* something, not necessary ourselves, changed. update sensors! */
 	foreach(Sensor* sensor, sensors_) {
 		sensor->performSensing();
 	}
