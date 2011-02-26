@@ -51,6 +51,7 @@ void World::performSimulationStep(float32 timestep)
 		body->simulationStepHappened();
 	}
 
+	/* if any body is awake, something has changed. */
 	emit worldChanged();
 
 	if ( QThread::currentThread() != engine_ ) {
@@ -66,13 +67,15 @@ World::RayHit World::rayCast(const QLineF& ray) const
 	class RayCastCallback : public b2RayCastCallback
 	{
 	public:
-		RayCastCallback() : fixture_(NULL) {}
+		RayCastCallback() : fixture_(NULL), fraction_(1.1f /* bigger than 1 */)  {}
 
 		float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
-			fixture_ = fixture;
-			point_ = point;
-			normal_ = normal;
-			fraction_ = fraction;
+			if ( fraction < fraction_ ) {
+				fixture_ = fixture;
+				point_ = point;
+				normal_ = normal;
+				fraction_ = fraction;
+			}
 
 			/* using this we find the closest intersection point to our ray origin. */
 			return fraction;
@@ -82,16 +85,27 @@ World::RayHit World::rayCast(const QLineF& ray) const
 		b2Vec2 point_;
 		b2Vec2 normal_;
 		float32 fraction_;
+
 	} callback;
 
 	world_->RayCast(&callback, b2Vec2(from.x(), from.y()), b2Vec2(to.x(), to.y()));
 
-	return RayHit(
-			/* find body for fixture found */
-			bodies_.value( static_cast<Body*>(callback.fixture_->GetBody()->GetUserData())->id() ),
+	if ( callback.fraction_ > 0.001 && callback.fraction_ <= 1.0f ) {
+		/* we have hit something */
+		void* b2bodyUserData = callback.fixture_->GetBody()->GetUserData();
+		Body* hitBody = static_cast<Body*>(b2bodyUserData);
 
-			/* convert b2 parameters into our struct */
-			QPointF(callback.point_.x, callback.point_.y),
-			callback.fraction_
-			);
+		return RayHit(
+				/* find body for fixture found */
+				hitBody,
+
+				/* convert b2 parameters into our struct */
+				QPointF(callback.point_.x, callback.point_.y),
+				callback.fraction_
+				);
+
+	}
+
+	/* no hit */
+	return RayHit(NULL, QPointF(0, 0), 1.0f);
 }
