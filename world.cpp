@@ -22,9 +22,6 @@ Body* World::addBody(Body* body)
 	body->setParent(this);
 	bodies_.insert(body->id(), body);
 
-	/* update body if necessary */
-	connect(this, SIGNAL(simulationStepHappened()), body, SLOT(simulationStep()));
-
 	/* allows for chaining */
 	return body;
 }
@@ -48,11 +45,18 @@ void World::performSimulationStep(float32 timestep)
 	world_->Step(timestep, B2_VELOCITYITERATIONS, B2_POSITIONITERATIONS);
 	world_->ClearForces();
 
-	emit simulationStepHappened();
+	foreach( Body* body, bodies_ ) {
+		body->simulationStepHappened();
+	}
 
 	if ( QThread::currentThread() != engine_ ) {
 		qDebug() << "world not running in engine!";
 	}
+}
+
+void World::updateSensors()
+{
+
 }
 
 World::RayHit World::rayCast(const QLineF& ray) const

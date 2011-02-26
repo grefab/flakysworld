@@ -25,6 +25,9 @@ protected:
 	~Body();
 
 public:
+	/* tell us that a simulation step has happened and something may have changed. */
+	void simulationStepHappened() const;
+
 	QPointF position() const;
 	qreal rotation() const;
 
@@ -36,8 +39,6 @@ signals:
 	void changedPosition(QPointF position, qreal rotation) const;
 
 protected slots:
-	void simulationStep() const;
-
 	/* here comes the stuff a controller needs to manipulate a body */
 	void applyForce(const QPointF& force, const QPointF& localPoint);
 

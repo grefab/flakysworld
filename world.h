@@ -41,11 +41,9 @@ public:
 
 	RayHit rayCast(const QLineF& ray) const;
 
-signals:
-	void simulationStepHappened();
-
 protected:
 	void performSimulationStep(float32 timestep);
+	void updateSensors();
 
 	QHash<QString, Body*> bodies_;
 	b2World *world_;

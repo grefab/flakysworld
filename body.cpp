@@ -63,7 +63,7 @@ void Body::setId(QString newId)
 	id_ = newId;
 }
 
-void Body::simulationStep() const
+void Body::simulationStepHappened() const
 {
 	/* only update when we need */
 	if( body_->IsAwake() ) {
