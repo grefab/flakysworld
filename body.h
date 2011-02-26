@@ -22,6 +22,7 @@ public:
 
 protected:
 	explicit Body(World* world, QPointF position, qreal rotation, Type type = Dynamic, QObject *parent = 0);
+	~Body();
 
 public:
 	QPointF position() const;
