@@ -6,10 +6,13 @@ Eye::Eye(const World& world, const QPointF position, qreal rotation, qreal lengt
 	Sensor(world, position, rotation, parent),
 	lengthOfSight_(lengthOfSight)
 {
+	const qreal visionDegrees = 90;
+	const int rayCount = 32;
+
 
 	/* create 9 rays that form a 90° angle in total */
-	for( int i = 0; i < 9; ++i ) {
-		const qreal rotation = -45.0f + (i * 11.25f);
+	for( int i = 0; i < rayCount; ++i ) {
+		const qreal rotation = -visionDegrees / 2.0f + ((qreal)i * (visionDegrees / (qreal)(rayCount -1)));
 		addRay(lengthOfSight_, rotation);
 	}
 }
