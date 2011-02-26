@@ -13,13 +13,13 @@ class Eye : public QObject
 public:
 	explicit Eye(qreal lengthOfSight, QObject *parent = 0);
 
+	/* we need the position and orientation of the eye */
+	void performSensing(const World& world, QPointF position, qreal rotation) const;
+
 signals:
 	void hasSeen(QList<qreal> output) const;
 
 protected:
-	/* we need the position and orientation of the eye */
-	void performSensing(const World& world, QPointF position, qreal rotation) const;
-
 	void addRay(qreal length, qreal rotation);
 
 private:

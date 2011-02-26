@@ -53,6 +53,16 @@ b2Fixture* Body::addFixture(const b2FixtureDef& fixtureDef)
 	return body_->CreateFixture(&fixtureDef);
 }
 
+Sensor* Body::addSensor(Sensor* sensor)
+{
+	/* it's ours now! */
+	sensor->setParent(this);
+	sensors_.insert(sensor->id(), sensor);
+
+	/* allows for chaining */
+	return sensor;
+}
+
 QString Body::id() const
 {
 	return id_;
@@ -65,6 +75,11 @@ void Body::setId(QString newId)
 
 void Body::simulationStepHappened() const
 {
+	/* update the sensors */
+	foreach( Sensor* sensor, sensors_ ) {
+		sensor->performSensing();
+	}
+
 	/* only update when we need */
 	if( body_->IsAwake() ) {
 		emit changedPosition(position(), rotation());

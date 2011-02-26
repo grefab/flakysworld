@@ -42,9 +42,11 @@ void World::performSimulationStep(float32 timestep)
 	const int32 B2_POSITIONITERATIONS = 10;
 	//	const float32 B2_TIMESTEP = 1.0f / FPS;
 
+	/* move the world */
 	world_->Step(timestep, B2_VELOCITYITERATIONS, B2_POSITIONITERATIONS);
 	world_->ClearForces();
 
+	/* tell this the bodies */
 	foreach( Body* body, bodies_ ) {
 		body->simulationStepHappened();
 	}
@@ -52,11 +54,6 @@ void World::performSimulationStep(float32 timestep)
 	if ( QThread::currentThread() != engine_ ) {
 		qDebug() << "world not running in engine!";
 	}
-}
-
-void World::updateSensors()
-{
-
 }
 
 World::RayHit World::rayCast(const QLineF& ray) const
