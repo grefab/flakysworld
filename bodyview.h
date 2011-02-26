@@ -19,10 +19,6 @@ protected:
 private slots:
 	void bodyChanged(QPointF position, qreal rotation);
 
-private:
-	QPointF lastPosition_;
-	qreal lastRotation_;
-
 };
 
 #endif // BODYVIEW_H

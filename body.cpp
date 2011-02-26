@@ -70,6 +70,7 @@ void Body::setId(QString newId)
 
 void Body::simulationStep()
 {
+	/* only update when we need */
 	if( body_->IsAwake() ) {
 		emit changedPosition(position(), rotation());
 	}
