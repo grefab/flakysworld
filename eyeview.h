@@ -4,6 +4,7 @@
 #include <QGraphicsObject>
 #include "eye.h"
 #include <QList>
+#include <QLineF>
 
 class EyeView : public QGraphicsObject
 {
@@ -24,6 +25,8 @@ private slots:
 
 private:
 	QPolygonF polygon_;
+	QList<QLineF> rays_;
+	QList<qreal> output_;
 };
 
 #endif // EYEVIEW_H

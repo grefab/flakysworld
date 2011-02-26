@@ -25,7 +25,7 @@ void Eye::performSensing() const
 		QLineF transformedRay = mapToWorld().map(ray);
 		World::RayHit hitpoint = world_.rayCast(transformedRay);
 
-//		output.append(hitpoint.fraction);
+		output.append(hitpoint.fraction);
 	}
 
 	/* tell anybody who is interested what we have seen */
