@@ -19,17 +19,13 @@ void Eye::performSensing() const
 	/* the rays are sent from the origin (0,0) and have to be translated
 	 * and rotated to reflect the real world's position.
 	 */
-	QTransform trans;
-	trans.translate(position().x(), position().y());
-	trans.rotate(rotation());
-
 	QList<qreal> output;
 
 	foreach(QLineF ray, rays_) {
-		QLineF transformedRay = trans.map(ray);
-		World::RayHit hitpoint = world_.rayCast(transformedRay);
+//		QLineF transformedRay = mapToWorld().map(ray);
+//		World::RayHit hitpoint = world_.rayCast(transformedRay);
 
-		output.append(hitpoint.fraction);
+//		output.append(hitpoint.fraction);
 	}
 
 	/* tell anybody who is interested what we have seen */

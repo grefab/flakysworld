@@ -20,15 +20,11 @@ public:
 
 	QString id() const;
 
-	QPointF position() const { return position_; }
-	qreal rotation() const { return rotation_; }
+	void setMapParentToWorld(QTransform mapParentToWorld);
+	QTransform mapToWorld() const;
 
-	void setMapToWorld(QTransform mapToWorld) { mapToWorld_ = mapToWorld; }
-	QTransform mapToWorld() { return mapToWorld_; }
-
-public slots:
-	void setPosition(const QPointF &position) { position_ = position; }
-	void setRotation(qreal rotation) { rotation_ = rotation; }
+signals:
+	void positionChanged(QTransform mapToWorld);
 
 protected:
 	const World& world_;
@@ -39,6 +35,9 @@ private:
 	QPointF position_;
 	qreal rotation_;
 
+	QTransform mapToParent_;
+	QTransform mapParentToWorld_;
+	void updateMapToWorld();
 	QTransform mapToWorld_;
 };
 

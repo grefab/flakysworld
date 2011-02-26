@@ -4,7 +4,7 @@
 #include "universe.h"
 #include "circlebodyview.h"
 #include "polygonbodyview.h"
-
+#include "eyeview.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	QObject::connect(universe->engine(), SIGNAL(updatedFPS(int)), surface.fpsLabel(), SLOT(setNum(int)));
 
-	/* build a corresponding view for each body */
+	/* build a corresponding view for each body. */
 	foreach(Body* body, universe->world()->bodies()) {
 		CircleBody* circleBody = dynamic_cast<CircleBody*>(body);
 		if ( circleBody ) {
@@ -29,6 +29,14 @@ int main(int argc, char *argv[])
 		PolygonBody* polygonBody = dynamic_cast<PolygonBody*>(body);
 		if ( polygonBody ) {
 			surface.scene()->addItem( new PolygonBodyView(*polygonBody) );
+		}
+	}
+
+	/* build a corresponding view for flaky's sensors. */
+	foreach(Sensor* sensor, universe->flaky()->sensors()) {
+		Eye* eye = dynamic_cast<Eye*>(sensor);
+		if ( eye ) {
+			surface.scene()->addItem( new EyeView(*eye) );
 		}
 	}
 

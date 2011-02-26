@@ -31,6 +31,7 @@ protected:
 	QHash<QString, Sensor*> sensors_;
 
 private slots:
+	/* used internally to change sensors. */
 	void bodyMoved(QTransform transformation);
 	void worldChanged();
 
