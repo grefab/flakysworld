@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     graphicsview.cpp \
     universe.cpp \
     surface.cpp \
-    eye.cpp
+    eye.cpp \
+    eyeview.cpp
 INCLUDEPATH += /usr/local/include/Box2D
 LIBPATH += /usr/local/lib
 LIBS += -lBox2D
@@ -34,7 +35,8 @@ HEADERS += \
     graphicsview.h \
     universe.h \
     surface.h \
-    eye.h
+    eye.h \
+    eyeview.h
 
 FORMS += \
     surface.ui
