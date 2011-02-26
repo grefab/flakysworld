@@ -19,23 +19,21 @@ void Eye::performSensing() const
 	/* the rays are sent from the origin (0,0) and have to be translated
 	 * and rotated to reflect the real world's position.
 	 */
-//	QTransform trans;
-//	trans.translate(position.x(), position.y());
+	QTransform trans;
+	trans.translate(position().x(), position().y());
+	trans.rotate(rotation());
 
-//	QTransform rot;
-//	rot.rotate(rotation);
+	QList<qreal> output;
 
-//	QList<qreal> output;
+	foreach(QLineF ray, rays_) {
+		QLineF transformedRay = trans.map(ray);
+		World::RayHit hitpoint = world_.rayCast(transformedRay);
 
-//	foreach(QLineF ray, rays_) {
-//		QLineF transformedRay = trans.map(rot.map(ray));
-//		World::RayHit hitpoint = world.rayCast(transformedRay);
+		output.append(hitpoint.fraction);
+	}
 
-//		output.append(hitpoint.fraction);
-//	}
-
-//	/* tell anybody who is interested what we have seen */
-//	emit hasSeen(output);
+	/* tell anybody who is interested what we have seen */
+	emit hasSeen(output);
 }
 
 void Eye::addRay(qreal length, qreal rotation)
