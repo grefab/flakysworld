@@ -7,8 +7,6 @@ static const float PI = 3.14159265359;
 #include <QString>
 #include <Box2D.h>
 #include <QPointF>
-#include <QHash>
-#include "sensor.h"
 
 class World;
 
@@ -46,15 +44,11 @@ protected slots:
 
 protected:
 	b2Fixture* addFixture(const b2FixtureDef& fixtureDef);
-	Sensor* addSensor(Sensor* sensor);
 
 private:
 	QString id_;
 	b2World *world_;
 	b2Body *body_;
-
-	/* a list of sensors we need to update when a simulation step has happened. */
-	QHash<QString, Sensor*> sensors_;
 
 };
 
