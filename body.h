@@ -27,7 +27,7 @@ protected:
 
 public:
 	/* tell us that a simulation step has happened and something may have changed. */
-	void simulationStepHappened() const;
+	void simulationStepHappened();
 
 	QPointF position() const;
 	qreal rotation() const;
@@ -35,8 +35,7 @@ public:
 	void setId(QString newId);
 	QString id() const;
 
-	QPointF getWorldPoint(const QPointF& localPoint) const;
-	QTransform getWorldMap() const;
+	QTransform getWorldMap() const { return mapToWorld_; }
 
 signals:
 	/* a view can connect to this to take care for updates */
@@ -54,6 +53,8 @@ private:
 	b2World *world_;
 	b2Body *body_;
 
+	void updateMapToWorld();
+	QTransform mapToWorld_;
 };
 
 #endif // BODY_H

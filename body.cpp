@@ -63,29 +63,21 @@ void Body::setId(QString newId)
 	id_ = newId;
 }
 
-void Body::simulationStepHappened() const
+void Body::simulationStepHappened()
 {
 	/* only update when we need */
 	if( body_->IsAwake() ) {
-		emit changedPosition(getWorldMap());
+		updateMapToWorld();
+
+		emit changedPosition(mapToWorld_);
 	}
 }
 
-QPointF Body::getWorldPoint(const QPointF& localPoint) const
+void Body::updateMapToWorld()
 {
-	const b2Vec2 b2LocalPoint(localPoint.x(), localPoint.y());
-	const b2Vec2 b2WorldPoint = body_->GetWorldPoint(b2LocalPoint);
-
-	return QPointF(b2WorldPoint.x, b2WorldPoint.y);
-}
-
-QTransform Body::getWorldMap() const
-{
-	QTransform trans;
-	trans.translate(position().x(), position().y());
-	trans.rotateRadians(rotation());
-
-	return trans;
+	mapToWorld_.reset();
+	mapToWorld_.translate(position().x(), position().y());
+	mapToWorld_.rotateRadians(rotation());
 }
 
 
