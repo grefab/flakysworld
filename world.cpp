@@ -67,7 +67,7 @@ World::RayHit World::rayCast(const QLineF& ray) const
 	class RayCastCallback : public b2RayCastCallback
 	{
 	public:
-		RayCastCallback() : fixture_(NULL), fraction_(1.1f /* bigger than 1 */)  {}
+		RayCastCallback() : fixture_(NULL), fraction_(INT_MAX /* bigger than 1 */)  {}
 
 		float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
 			if ( fraction < fraction_ ) {
@@ -90,7 +90,7 @@ World::RayHit World::rayCast(const QLineF& ray) const
 
 	world_->RayCast(&callback, b2Vec2(from.x(), from.y()), b2Vec2(to.x(), to.y()));
 
-	if ( callback.fraction_ > 0.001 && callback.fraction_ <= 1.0f ) {
+	if ( callback.fraction_ < 1.0f ) {
 		/* we have hit something */
 		void* b2bodyUserData = callback.fixture_->GetBody()->GetUserData();
 		Body* hitBody = static_cast<Body*>(b2bodyUserData);

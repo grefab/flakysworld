@@ -28,6 +28,7 @@ protected:
 private:
 	QList<QLineF> rays_;
 	qreal lengthOfSight_;
+
 };
 
 #endif // EYE_H

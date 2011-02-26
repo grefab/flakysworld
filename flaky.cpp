@@ -21,7 +21,7 @@ Flaky::Flaky(World* world, QObject *parent) :
 	bodyController_ = new BodyController(body_);
 
 	/* create an eye */
-	Eye* eye = new Eye(*world, QPointF(0.06f, 0.0f), 0, 0.3f, this);
+	Eye* eye = new Eye(*world, QPointF(0.059f, 0.0f), 0, 0.3f, this);
 	sensors_.insert(eye->id(), eye);
 
 	/* we need to adjust our sensors when the body has moved. */
