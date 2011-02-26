@@ -28,19 +28,27 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	painter->drawPolygon(polygon_);
 
 	/* make the rays a bit transparent */
-	painter->setPen(QPen(QColor(0, 0, 0, 64)));
+	static const QColor color = QColor(0, 0, 0, 16);
+	painter->setPen(QPen(color));
+	painter->setBrush(QBrush(color));
 
 	/* draw the rays */
-	QVector<QLineF> drawLines = rays_.toVector();
+	QPolygonF poly;
+
+	poly << QPointF(0,0);
+
+	QList<QLineF> drawLines = rays_;
 	for( int i = 0; i < drawLines.size(); ++i) {
 		QLineF& line = drawLines[i];
 		qreal fraction = output_[i];
 
 		line.setLength(line.length() * fraction);
+
+		poly << line.p2();
 	}
 
-	painter->drawLines(drawLines);
-
+	painter->drawPolygon(poly);
+	painter->drawLines(drawLines.toVector());
 }
 
 QRectF EyeView::boundingRect() const
