@@ -17,7 +17,7 @@ protected:
 	const Body& body_;
 
 private slots:
-	void bodyChanged(QPointF position, qreal rotation);
+	void bodyChanged(QTransform transformation);
 
 };
 

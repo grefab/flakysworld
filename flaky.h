@@ -29,7 +29,7 @@ protected:
 	QHash<QString, Sensor*> sensors_;
 
 private slots:
-	void bodyMoved(QPointF position, qreal rotation);
+	void bodyMoved(QTransform transformation);
 	void worldChanged();
 
 };

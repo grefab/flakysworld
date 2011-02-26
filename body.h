@@ -40,7 +40,7 @@ public:
 
 signals:
 	/* a view can connect to this to take care for updates */
-	void changedPosition(QPointF position, qreal rotation) const;
+	void changedPosition(QTransform transformation) const;
 
 protected slots:
 	/* here comes the stuff a controller needs to manipulate a body */

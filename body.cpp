@@ -67,7 +67,7 @@ void Body::simulationStepHappened() const
 {
 	/* only update when we need */
 	if( body_->IsAwake() ) {
-		emit changedPosition(position(), rotation());
+		emit changedPosition(getWorldMap());
 	}
 }
 
@@ -83,7 +83,7 @@ QTransform Body::getWorldMap() const
 {
 	QTransform trans;
 	trans.translate(position().x(), position().y());
-	trans.rotate(rotation());
+	trans.rotateRadians(rotation());
 
 	return trans;
 }

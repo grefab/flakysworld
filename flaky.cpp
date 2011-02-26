@@ -17,7 +17,7 @@ Flaky::Flaky(World* world, QObject *parent) :
 	bodyController_ = new BodyController(body_);
 
 	/* we need to adjust our sensors when the body has moved. */
-	connect(body_, SIGNAL(changedPosition(QPointF,qreal)), this, SLOT(bodyMoved(QPointF,qreal)));
+	connect(body_, SIGNAL(changedPosition(QTransform)), this, SLOT(bodyMoved(QTransform)));
 
 	/* when the world has changed, we want new sensor input. */
 	connect(world, SIGNAL(worldChanged()), this, SLOT(worldChanged()));
@@ -43,10 +43,10 @@ void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
 	bodyController_->push(QPointF(rightThruster, 0), QPointF(-0.03, -0.03));
 }
 
-void Flaky::bodyMoved(QPointF position, qreal rotation)
+void Flaky::bodyMoved(QTransform transformation)
 {
 	foreach(Sensor* sensor, sensors_) {
-		sensor->setMapToWorld(body_->getWorldMap());
+		sensor->setMapToWorld(transformation);
 	}
 }
 

@@ -5,14 +5,16 @@ BodyView::BodyView(const Body& body, QGraphicsItem *parent) :
 		body_(body)
 {
 	/* we need the body only to connect to it. no reference is stored. */
-	connect(&body, SIGNAL(changedPosition(QPointF,qreal)), this, SLOT(bodyChanged(QPointF,qreal)));
+	connect(&body, SIGNAL(changedPosition(QTransform)), this, SLOT(bodyChanged(QTransform)));
 
 	/* initially set our location parameters */
-	bodyChanged(body.position(), body.rotation());
+	bodyChanged(body.getWorldMap());
 }
 
-void BodyView::bodyChanged(QPointF position, qreal rotation)
+void BodyView::bodyChanged(QTransform transformation)
 {
-	setPos(QPointF(position.x(), -position.y()));
-	setRotation(-rotation * 360.0 / (2 * PI));
+	setTransform(transformation);
+
+//	setPos(QPointF(position.x(), -position.y()));
+//	setRotation(-rotation * 360.0 / (2 * PI));
 }
