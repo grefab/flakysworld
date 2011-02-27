@@ -1,17 +1,18 @@
 h1. Flakysworld -- A Very Basic 2D World Simulator for AI Research
 
+
 h2. Introduction
 
-Flaky, the little triangle, lives in a 2D world. It has actuators (tiny little thrusters) and an sensor (an eye that casts rays into the world). The actuators take input and translate it into movement, whereas the sensors take input from the world around Flaky and translate it into output. In-/output is just a set of floating point values between 0 and 1.
+Flaky, the little triangle, lives in a 2D world. It has actuators (tiny little thrusters) and an sensor (an eye that casts rays into the world). The actuators take input and translate it into movement, whereas the sensors take input from the world around Flaky and translate it into output. In-/output is just a set of floating point values between 0 and 1. These could easily be interpreted as e.g. neuron potential.
 
-All elements in the world are subject to a physics simulation. Depending on what Flaky hits items may move, collide, bounce, etc. This is done continuously in the background, as long as there are items moving.
+All elements in the world are subject to a physics simulation. Depending on what Flaky hits on its way, items may move, collide, bounce, etc. This is done continuously in the background (as long as there are items moving).
 
 The purpose of this little simulation is to allow for an connection with some kind of artificial neuronal network, which takes the input and produces output. This way any action that is performed by flaky has a direct impact on sensor data, which in turn can be processed by the neural net.
 
 
 h2. News
 
-* 2011-02-27
+* *2011-02-27*
 Wrote this readme after code seems stable. Currently Flakysworld consists of the following basic object structure:
 ** Bodies that are subject to physical interactions
 ** Sensors that can cast rays into the world and receive the nearest hit body as well as the distance.
@@ -19,7 +20,7 @@ Wrote this readme after code seems stable. Currently Flakysworld consists of the
 ** A set of views for bodies/sensors resulting in QGraphicsItems that can be added to a scene/view in Qt.
 ** Basic GUI to see whats happening and perform rough control. Network communication layer is still missing, but soon to come.
 
-* Feb 2011
+* *Feb 2011*
 Started the project after realizing that playing with ANN requires a simulated world to produce feedback for actions.
 
 
@@ -29,10 +30,21 @@ The application uses Qt heavily for internal processing and depends on Box2D for
 
 The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ and a set of widgets and views, the _GUI_. Universe and GUI reside in a separate thread each. The network communication entity will be modeled as a separate thread as well.
 
+I've developed and tested everything using OSX 10.6, Qt 4.7 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
+
 
 h2. Current Status
 
-Actuators, sensors and physical world interaction are implemented. There is a simple view that shows what happens in Flaky's world. The network/JSON part is soon to come.
+Actuators, visual sensors and physical world interaction are implemented. There is a simple view that shows what happens in Flaky's world. The network/JSON part is soon to come.
+
+
+h2. Future plans
+
+* JSON data import and export: This will be here soon. Sensor data is sent over a socket connection as JSON, arriving JSON is processed into actuator actions.
+* Dual mode: Run with or without GUI.
+* Remote mode: Let universe and GUI run on different machines
+* Save/Load of the universe in a file or into a DB (CouchDB?)
+* Time flies mode: Do not keep in sync with real time, but run as fast as possible. May need sync signal for attached nets.
 
 
 h2. How To Install
@@ -41,22 +53,28 @@ h2. How To Install
 # Make sure you have Qt SDK installed. I use 4.7. This includes Qt Creator, which I use as IDE.
 # Make sure to have Box2D installed. On my machine it resides in /usr/local/include/Box2D and /usr/local/lib. This can be adjusted in the flakysworld.pro file to fit your needs.
 # Load the .pro file with Qt Creator.
-# Build an run.
+# Build and run.
 
 
 h2. FAQ
 
 * Q: I don't see anything!
-* A: The rendering is done using OpenGL per default. This is set up by ui->graphicsView->setViewport() in surface.cpp. Uncomment this line if you need to work without OpenGL and use software rendering instead.
+* A: The rendering is done using OpenGL per default. This is set up by ui->graphicsView->setViewport() in surface.cpp. Comment this line if you need to work without OpenGL and use software rendering instead.
 
 * Q: So how do I control Flaky?
 * A: By sending values for the thrusters, one for left and right. This applies a pulse to the corresponding thruster. Currently, this happens using keyboard commands or the UI.
 
-* Q: You call this "controls"? Are you serious?
-* A: Yes, they're more than ugly. Their purpose is just to test if interaction works basically. Go on and code a ANN that controls them in a sophisticated way!
+* Q: Where is the AI?
+* A: Nowhere here. The idea is to have a simulated world with an easy interface to connect any AI you like. To answer your question: That's your job!
+
+* Q: You call this "controls" in the GUI? Are you serious?
+* A: Yes, they're more than ugly. Their purpose is just to test if interaction works basically. Go on and code a ANN that controls them in a sophisticated way, this is why all this is here!
 
 * Q: Nah, I don't get this.
-* A: Dump all comments, questions and suggestion here: gre@g0r.de. I'm looking forward to it!
+* A: Dump all comments, questions and suggestion here: gre@g0r.de.
+
+* Q: I like it. How can I help?
+* A: Test, find bugs, improve performance, document, develop some stuff mentioned in the "Future Plans" section, do anything useful or nice you think may be fun!
 
 
 h2. Licenses
