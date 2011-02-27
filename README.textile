@@ -45,7 +45,7 @@ h2. Current Status
 Actuators, visual sensors and physical world interaction are implemented. There is a simple view that shows what happens in Flaky's world. The network/JSON part is soon to come.
 
 
-h2. Future plans
+h2. Future Plans
 
 * JSON data import and export: This will be here soon. Sensor data is sent over a socket connection as JSON, arriving JSON is processed into actuator actions.
 * Dual mode: Run with or without GUI.
@@ -87,11 +87,11 @@ h2. FAQ
 h2. Licenses
 
 All the code in *Flakysworld*, except its dependencies which have separate licenses (see below), is published under the MIT License. See
-http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you like with it.
+"here":http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you like with it.
 
-*Qt and its libraries* are licensed (as one possibility) under the LGPL. See http://qt.nokia.com/products/licensing/ for details.
+*Qt and its libraries* are licensed (as one possibility) under the LGPL. See "Nokias licesing page":http://qt.nokia.com/products/licensing/ for details.
 
-*Box2D* (http://www.box2d.org/) has its own license:
+"*Box2D*":http://www.box2d.org/ has its own license:
 
 Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
 
