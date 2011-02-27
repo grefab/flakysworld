@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	qsrand(time(0));
 
-	/* our engine! it takes care for the bodies we give to it. */
+	/* our universe. it manages world and engine that keeps world alive. */
 	Universe* universe = new Universe();
 
 	/* make everything visible */

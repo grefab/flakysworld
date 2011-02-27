@@ -17,7 +17,7 @@ Engine::Engine(World* world, QObject *parent) :
 
 Engine::~Engine()
 {
-	QThread::terminate();
+	quit();
 }
 
 void Engine::start()
