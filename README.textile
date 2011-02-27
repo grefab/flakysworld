@@ -10,6 +10,13 @@ All elements in the world are subject to a physics simulation. Depending on what
 The purpose of this little simulation is to allow for an connection with some kind of artificial neuronal network, which takes the input and produces output. This way any action that is performed by flaky has a direct impact on sensor data, which in turn can be processed by the neural net.
 
 
+h2. Screenshots
+
+Everyone likes screenshots! This is still in development and it really looks that way. Anyways, have a look:
+
+!https://github.com/grefab/flakysworld/raw/master/img/screenshot.png!
+
+
 h2. News
 
 * *2011-02-27*
