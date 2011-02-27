@@ -1,7 +1,6 @@
-=== Flakysworld -- A Very Basic 2D World Simulator for AI Research ===
+h1. Flakysworld -- A Very Basic 2D World Simulator for AI Research
 
-
-== Introduction ==
+h2. Introduction
 
 Flaky, the little triangle, lives in a 2D world. It has actuators (tiny little thrusters) and
 an sensor (an eye that casts rays into the world). The actuators take input and translate it
@@ -18,32 +17,26 @@ that is performed by flaky has a direct impact on sensor data, which in turn can
 by the neural net.
 
 
-== News ==
+h2. News
 
-= 2011-02-27 =
+* 2011-02-27
 Wrote this readme after code seems stable. Currently Flakysworld consists of the following basic object structure:
-
--- Bodies that are subject to physical interactions
-
--- Sensors that can cast rays into the world and receive the nearest hit body as well as the
+** Bodies that are subject to physical interactions
+** Sensors that can cast rays into the world and receive the nearest hit body as well as the
 distance.
-
--- A world that contains bodies and manages physics logic using Box2D. -- An engine that
+** A world that contains bodies and manages physics logic using Box2D. -- An engine that
 keeps the world in regular motion.
-
--- A set of views for bodies/sensors resulting in QGraphicsItems that can be added to a
+** A set of views for bodies/sensors resulting in QGraphicsItems that can be added to a
 scene/view in Qt.
-
--- Basic GUI to see whats happening and perform rough control.
-
+** Basic GUI to see whats happening and perform rough control.
 Network communication layer is still missing, but soon to come.
 
-= Feb 2011 =
+* Feb 2011
 Started the project after realizing that playing with ANN requires a simulated world to
 produce feedback for actions.
 
 
-== Technical Details ==
+h2. Technical Details
 
 The application uses Qt heavily for internal processing and depends on Box2D for physics
 simulation. In-/output is given via JSON-wrapped objects over a socket (will be soon), so the
@@ -52,61 +45,61 @@ by default.
 
 The entities in the system communicate via Qt signal/slots wherever possible to keep a) the
 code clean and b) to allow for multiple threads without the hassle of mutexes. This way the
-application is basically divided into a processing unit, the /universe/ and a set of widgets
-and views, the /GUI/. Universe and GUI reside in a separate thread each. The network
+application is basically divided into a processing unit, the _universe_ and a set of widgets
+and views, the _GUI_. Universe and GUI reside in a separate thread each. The network
 communication entity will be modeled as a separate thread as well.
 
 
-== Current Status ==
+h2. Current Status
 
 Actuators, sensors and physical world interaction are implemented. There is a simple view
 that shows what happens in Flaky's world. The network/JSON part is soon to come.
 
 
-== How To Install ==
+h2. How To Install
 
-1. Check out the code of Flakysworld.
-
-2. Make sure you have Qt SDK installed. I use 4.7. This includes Qt Creator, which I use as
+# Check out the code of Flakysworld.
+# Make sure you have Qt SDK installed. I use 4.7. This includes Qt Creator, which I use as
 IDE.
-
-3. Make sure to have Box2D installed. On my machine it resides in /usr/local/include/Box2D
+# Make sure to have Box2D installed. On my machine it resides in /usr/local/include/Box2D
 and /usr/local/lib. This can be adjusted in the flakysworld.pro file to fit your needs.
-
-4. Load the .pro file with Qt Creator.
-
-5. Build an run.
+# Load the .pro file with Qt Creator.
+# Build an run.
 
 
-== FAQ ==
+h2. FAQ
 
-Q: I don't see anything! A: The rendering is done using OpenGL per default. This is set up by
+* Q: I don't see anything!
+* A: The rendering is done using OpenGL per default. This is set up by
 ui->graphicsView->setViewport() in surface.cpp. Uncomment this line if you need to work
 without OpenGL and use software rendering instead.
 
-Q: So how do I control Flaky? A: By sending values for the thrusters, one for left and right.
+* Q: So how do I control Flaky?
+* A: By sending values for the thrusters, one for left and right.
 This applies a pulse to the corresponding thruster. Currently, this happens using keyboard
 commands or the UI.
 
-Q: You call this "controls"? Are you serious? A: Yes, they're more than ugly. Their purpose
+* Q: You call this "controls"? Are you serious?
+* A: Yes, they're more than ugly. Their purpose
 is just to test if interaction works basically. Go on and code a ANN that controls them in a
 sophisticated way!
 
-Q: Nah, I don't get this. A: Dump all comments, questions and suggestion here: gre@g0r.de .
+* Q: Nah, I don't get this.
+* A: Dump all comments, questions and suggestion here: gre@g0r.de .
 I'm looking forward to it!
 
 
-== Licenses ==
+h2. Licenses
 
-- All the code in Flakysworld, except its dependencies which have separate licenses (see
+All the code in *Flakysworld*, except its dependencies which have separate licenses (see
 below), is published under the MIT License. See
 http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you
 like with it.
 
-- Qt and its libraries are licensed (as one possibility) under the LGPL. See
+*Qt and its libraries* are licensed (as one possibility) under the LGPL. See
 http://qt.nokia.com/products/licensing/ for details.
 
-- Box2D (http://www.box2d.org/) has its own license:
+*Box2D* (http://www.box2d.org/) has its own license:
 
 Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
 
