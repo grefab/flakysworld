@@ -2,19 +2,11 @@ h1. Flakysworld -- A Very Basic 2D World Simulator for AI Research
 
 h2. Introduction
 
-Flaky, the little triangle, lives in a 2D world. It has actuators (tiny little thrusters) and
-an sensor (an eye that casts rays into the world). The actuators take input and translate it
-into movement, whereas the sensors take input from the world around Flaky and translate it
-into output. In-/output is just a set of floating point values between 0 and 1.
+Flaky, the little triangle, lives in a 2D world. It has actuators (tiny little thrusters) and an sensor (an eye that casts rays into the world). The actuators take input and translate it into movement, whereas the sensors take input from the world around Flaky and translate it into output. In-/output is just a set of floating point values between 0 and 1.
 
-All elements in the world are subject to a physics simulation. Depending on what Flaky hits
-items may move, collide, bounce, etc. This is done continuously in the background, as long as
-there are items moving.
+All elements in the world are subject to a physics simulation. Depending on what Flaky hits items may move, collide, bounce, etc. This is done continuously in the background, as long as there are items moving.
 
-The purpose of this little simulation is to allow for an connection with some kind of
-artificial neuronal network, which takes the input and produces output. This way any action
-that is performed by flaky has a direct impact on sensor data, which in turn can be processed
-by the neural net.
+The purpose of this little simulation is to allow for an connection with some kind of artificial neuronal network, which takes the input and produces output. This way any action that is performed by flaky has a direct impact on sensor data, which in turn can be processed by the neural net.
 
 
 h2. News
@@ -22,47 +14,32 @@ h2. News
 * 2011-02-27
 Wrote this readme after code seems stable. Currently Flakysworld consists of the following basic object structure:
 ** Bodies that are subject to physical interactions
-** Sensors that can cast rays into the world and receive the nearest hit body as well as the
-distance.
-** A world that contains bodies and manages physics logic using Box2D. -- An engine that
-keeps the world in regular motion.
-** A set of views for bodies/sensors resulting in QGraphicsItems that can be added to a
-scene/view in Qt.
-** Basic GUI to see whats happening and perform rough control.
-Network communication layer is still missing, but soon to come.
+** Sensors that can cast rays into the world and receive the nearest hit body as well as the distance.
+** A world that contains bodies and manages physics logic using Box2D. -- An engine that keeps the world in regular motion.
+** A set of views for bodies/sensors resulting in QGraphicsItems that can be added to a scene/view in Qt.
+** Basic GUI to see whats happening and perform rough control. Network communication layer is still missing, but soon to come.
 
 * Feb 2011
-Started the project after realizing that playing with ANN requires a simulated world to
-produce feedback for actions.
+Started the project after realizing that playing with ANN requires a simulated world to produce feedback for actions.
 
 
 h2. Technical Details
 
-The application uses Qt heavily for internal processing and depends on Box2D for physics
-simulation. In-/output is given via JSON-wrapped objects over a socket (will be soon), so the
-processing neuronal net does not have any technical dependencies. It even runs asynchronously
-by default.
+The application uses Qt heavily for internal processing and depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket (will be soon), so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
 
-The entities in the system communicate via Qt signal/slots wherever possible to keep a) the
-code clean and b) to allow for multiple threads without the hassle of mutexes. This way the
-application is basically divided into a processing unit, the _universe_ and a set of widgets
-and views, the _GUI_. Universe and GUI reside in a separate thread each. The network
-communication entity will be modeled as a separate thread as well.
+The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ and a set of widgets and views, the _GUI_. Universe and GUI reside in a separate thread each. The network communication entity will be modeled as a separate thread as well.
 
 
 h2. Current Status
 
-Actuators, sensors and physical world interaction are implemented. There is a simple view
-that shows what happens in Flaky's world. The network/JSON part is soon to come.
+Actuators, sensors and physical world interaction are implemented. There is a simple view that shows what happens in Flaky's world. The network/JSON part is soon to come.
 
 
 h2. How To Install
 
 # Check out the code of Flakysworld.
-# Make sure you have Qt SDK installed. I use 4.7. This includes Qt Creator, which I use as
-IDE.
-# Make sure to have Box2D installed. On my machine it resides in /usr/local/include/Box2D
-and /usr/local/lib. This can be adjusted in the flakysworld.pro file to fit your needs.
+# Make sure you have Qt SDK installed. I use 4.7. This includes Qt Creator, which I use as IDE.
+# Make sure to have Box2D installed. On my machine it resides in /usr/local/include/Box2D and /usr/local/lib. This can be adjusted in the flakysworld.pro file to fit your needs.
 # Load the .pro file with Qt Creator.
 # Build an run.
 
@@ -70,48 +47,34 @@ and /usr/local/lib. This can be adjusted in the flakysworld.pro file to fit your
 h2. FAQ
 
 * Q: I don't see anything!
-* A: The rendering is done using OpenGL per default. This is set up by
-ui->graphicsView->setViewport() in surface.cpp. Uncomment this line if you need to work
-without OpenGL and use software rendering instead.
+* A: The rendering is done using OpenGL per default. This is set up by ui->graphicsView->setViewport() in surface.cpp. Uncomment this line if you need to work without OpenGL and use software rendering instead.
 
 * Q: So how do I control Flaky?
-* A: By sending values for the thrusters, one for left and right.
-This applies a pulse to the corresponding thruster. Currently, this happens using keyboard
-commands or the UI.
+* A: By sending values for the thrusters, one for left and right. This applies a pulse to the corresponding thruster. Currently, this happens using keyboard commands or the UI.
 
 * Q: You call this "controls"? Are you serious?
-* A: Yes, they're more than ugly. Their purpose
-is just to test if interaction works basically. Go on and code a ANN that controls them in a
-sophisticated way!
+* A: Yes, they're more than ugly. Their purpose is just to test if interaction works basically. Go on and code a ANN that controls them in a sophisticated way!
 
 * Q: Nah, I don't get this.
-* A: Dump all comments, questions and suggestion here: gre@g0r.de .
-I'm looking forward to it!
+* A: Dump all comments, questions and suggestion here: gre@g0r.de. I'm looking forward to it!
 
 
 h2. Licenses
 
-All the code in *Flakysworld*, except its dependencies which have separate licenses (see
-below), is published under the MIT License. See
-http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you
-like with it.
+All the code in *Flakysworld*, except its dependencies which have separate licenses (see below), is published under the MIT License. See
+http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you like with it.
 
-*Qt and its libraries* are licensed (as one possibility) under the LGPL. See
-http://qt.nokia.com/products/licensing/ for details.
+*Qt and its libraries* are licensed (as one possibility) under the LGPL. See http://qt.nokia.com/products/licensing/ for details.
 
 *Box2D* (http://www.box2d.org/) has its own license:
 
 Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
 
-This software is provided 'as-is', without any express or implied warranty. In no event will
-the authors be held liable for any damages arising from the use of this software.
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
-Permission is granted to anyone to use this software for any purpose, including commercial
-applications, and to alter it and redistribute it freely, subject to the following
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following
 restrictions:
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote
-the original software. If you use this software in a product, an acknowledgment in the
-product documentation would be appreciated but is not required. 2. Altered source versions
-must be plainly marked as such, and must not be misrepresented as being the original
-software. 3. This notice may not be removed or altered from any source distribution.
+1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software. 
+3. This notice may not be removed or altered from any source distribution.
