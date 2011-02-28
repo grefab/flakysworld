@@ -8,8 +8,10 @@
 class NeuronSerializer : public QThread
 {
 	Q_OBJECT
+
 public:
 	explicit NeuronSerializer(QObject *parent = 0);
+	~NeuronSerializer();
 
 signals:
 	void sensorSerialized(QByteArray sensorSerialized);

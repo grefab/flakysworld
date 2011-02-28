@@ -17,7 +17,11 @@ Engine::Engine(World* world, QObject *parent) :
 
 Engine::~Engine()
 {
+	/* do not process further events. */
 	quit();
+
+	/* wait for our processing to be finished. */
+	wait();
 }
 
 void Engine::start()

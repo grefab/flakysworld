@@ -13,6 +13,12 @@ NeuronSerializer::NeuronSerializer(QObject *parent) :
 	start();
 }
 
+NeuronSerializer::~NeuronSerializer()
+{
+	quit();
+	wait();
+}
+
 void NeuronSerializer::serializeSensor(QString sensorId, QList<qreal> sensorNeurons)
 {
 	/* here we will store everything */
