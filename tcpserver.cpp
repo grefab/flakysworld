@@ -16,7 +16,7 @@ void TcpServer::socketConnected()
 	sockets_.insert(socket);
 
 	connect(socket, SIGNAL(readyRead()), this, SLOT(socketDataAvailable()));
-	connect(socket, SIGNAL(disconnected()), socket, SLOT(socketDisconnected()));
+	connect(socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
 }
 
 void TcpServer::socketDataAvailable()

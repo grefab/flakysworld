@@ -6,9 +6,13 @@
 #include "qjson/src/serializer.h"
 #include "qjson/src/parser.h"
 
+#include "sensor.h"
+
 NeuronSerializer::NeuronSerializer(QObject *parent) :
 	QThread(parent)
 {
+	qRegisterMetaType< QList<qreal> >("QList<qreal>");
+
 	moveToThread(this);
 	start();
 }
@@ -19,8 +23,10 @@ NeuronSerializer::~NeuronSerializer()
 	wait();
 }
 
-void NeuronSerializer::serializeSensor(QString sensorId, QList<qreal> sensorNeurons)
+void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 {
+	QString sensorId = static_cast<Sensor*>(sender())->id();
+
 	/* here we will store everything */
 	QVariantMap saveme;
 
