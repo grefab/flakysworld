@@ -22,7 +22,8 @@ SOURCES += main.cpp \
 	qjson/src/serializer.cpp \
 	qjson/src/parser.cpp \
 	qjson/src/json_scanner.cpp \
-	qjson/src/json_parser.cc
+	qjson/src/json_parser.cc \
+    tcpserver.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 LIBPATH += /usr/local/lib
@@ -49,7 +50,8 @@ HEADERS += \
 	qjson/src/json_scanner.h \
 	qjson/src/json_parser.hh \
 	qjson/src/serializer.h \
-	neuronserializer.h
+	neuronserializer.h \
+    tcpserver.h
 
 FORMS += \
 	surface.ui
