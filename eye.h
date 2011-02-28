@@ -19,9 +19,6 @@ public:
 
 	const QList<QLineF>& rays() const { return rays_; }
 
-signals:
-	void hasSeen(QList<qreal> output) const;
-
 protected:
 	void addRay(qreal length, qreal rotation);
 

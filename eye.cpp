@@ -32,7 +32,7 @@ void Eye::performSensing() const
 	}
 
 	/* tell anybody who is interested what we have seen */
-	emit hasSeen(output);
+	emit sensed(output);
 }
 
 void Eye::addRay(qreal length, qreal rotation)

@@ -24,6 +24,7 @@ public:
 	const QTransform& mapToWorld() const;
 
 signals:
+	void sensed(QList<qreal> output) const;
 	void positionChanged(QTransform mapToWorld);
 
 protected:

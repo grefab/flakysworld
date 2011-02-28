@@ -16,7 +16,7 @@ EyeView::EyeView(const Eye& eye, QGraphicsItem *parent) :
 	connect(&eye, SIGNAL(positionChanged(QTransform)), this, SLOT(eyePositionChanged(QTransform)));
 
 	/* get notified of sesor input changes */
-	connect(&eye, SIGNAL(hasSeen(QList<qreal>)), this, SLOT(retinaUpdated(QList<qreal>)));
+	connect(&eye, SIGNAL(sensed(QList<qreal>)), this, SLOT(retinaUpdated(QList<qreal>)));
 }
 
 void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
