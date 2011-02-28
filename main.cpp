@@ -1,10 +1,14 @@
 #include <QtGui>
 
-#include "surface.h"
 #include "universe.h"
+
+#include "surface.h"
 #include "circlebodyview.h"
 #include "polygonbodyview.h"
 #include "eyeview.h"
+
+#include "neuronserializer.h"
+#include "tcpserver.h"
 
 Surface* setupGUI(Universe* universe)
 {
@@ -48,6 +52,34 @@ Surface* setupGUI(Universe* universe)
 	return surface;
 }
 
+NeuronSerializer* setupNeuronIO(Universe* universe)
+{
+	/* the neuron serializer is a thread itself. */
+	NeuronSerializer* neuronSerializer = new NeuronSerializer();
+
+	/* this thread handles our network activity. */
+	QThread* networkThread = new QThread();
+	TcpServer* tcpServer = new TcpServer(2345);
+	tcpServer->moveToThread(networkThread);
+	networkThread->start();
+
+	/* allow for data exchange */
+	QObject::connect(tcpServer, SIGNAL(dataArrived(QByteArray)), neuronSerializer, SLOT(deserializeActuator(QByteArray)));
+	QObject::connect(neuronSerializer, SIGNAL(sensorSerialized(QByteArray)), tcpServer, SLOT(publish(QByteArray)));
+
+	/* we'd like to output all our sensors. */
+	foreach(Sensor* sensor, universe->flaky()->sensors()) {
+		QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), neuronSerializer, SLOT(serializeSensor(QList<qreal>)));
+	}
+
+	return neuronSerializer;
+
+	/* note that networkThread and tcpServer will never get deleted. this can be improved.
+	 * however, they will die at the end of the program and they are idle once neuronSerializer
+	 * is deleted. so there will be no problem here.
+	 */
+}
+
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
@@ -59,9 +91,13 @@ int main(int argc, char *argv[])
 	/* make everything visible */
 	Surface* surface = setupGUI(universe);
 
+	/* start neuron IO */
+	NeuronSerializer* neuronSerializer = setupNeuronIO(universe);
+
 	/* preparation is done. let if flow! */
 	return app.exec();
 
+	delete neuronSerializer;
 	delete surface;
 	delete universe;
 }
