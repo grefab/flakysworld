@@ -49,6 +49,11 @@ void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 
 void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
 {
+	/* perform some consistency checks first to ignore HTTP stuff. */
+	if ( !looksLikeJSON(actuatorSerialized) ) {
+		return;
+	}
+
 	/* convert JSON to something we can handle */
 	QJson::Parser parser;
 	bool ok;
@@ -75,4 +80,18 @@ void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
 		/* tell everyone who is interested */
 		emit actuatorDeserialized(actuator, result);
 	}
+}
+
+bool NeuronSerializer::looksLikeJSON(const QByteArray& data)
+{
+	if ( data.size() <= 0 ) {
+		return false;
+	}
+
+	if (data.at(0) != '{' || data.at(data.size()-1) != '}') {
+		return false;
+	}
+
+	/* if we reach this point, it seems we have a JSON object. */
+	return true;
 }

@@ -22,6 +22,8 @@ public slots:
 	void serializeSensor(QList<qreal> sensorNeurons);
 	void deserializeActuator(QByteArray actuatorSerialized);
 
+private:
+	bool looksLikeJSON(const QByteArray& data);
 };
 
 #endif // NEURONSERIALIZER_H
