@@ -13,10 +13,11 @@ class Sensor : public Organ
 public:
 	explicit Sensor(const World& world, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
-	virtual void performSensing() const =0;
-
 signals:
 	void sensed(QList<qreal> output) const;
+
+public slots:
+	virtual void performSensing() const =0;
 
 protected:
 	void updateIfNeeded(const QList<qreal>& newOutput) const;

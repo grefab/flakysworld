@@ -32,10 +32,7 @@ protected:
 
 	QHash<QString, Sensor*> sensors_;
 
-private slots:
-	/* used internally to change sensors. */
-	void worldChanged();
-
+	const World& world_;
 };
 
 #endif // FLAKY_H

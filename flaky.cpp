@@ -4,7 +4,8 @@
 #include "eye.h"
 
 Flaky::Flaky(World* world, QObject *parent) :
-		QObject(parent)
+		QObject(parent),
+		world_(*world)
 {
 	/* set up our shape */
 	QPolygonF flakyPoly;
@@ -23,9 +24,6 @@ Flaky::Flaky(World* world, QObject *parent) :
 	/* create an eye */
 	Eye* eye = new Eye(*world, QPointF(0.059f, 0.0f), 0, 0.6f, "eye", this);
 	addSensor(eye);
-
-	/* when the world has changed, we want new sensor input. */
-	connect(world, SIGNAL(worldChanged()), this, SLOT(worldChanged()));
 }
 
 Flaky::~Flaky()
@@ -60,12 +58,7 @@ void Flaky::addSensor(Sensor *sensor)
 
 	/* we need to adjust our sensors when the body has moved. */
 	connect(body_, SIGNAL(changedPosition(QTransform)), sensor, SLOT(setMapParentToWorld(QTransform)));
-}
 
-void Flaky::worldChanged()
-{
-	/* something, not necessary ourselves, changed. update sensors! */
-	foreach(Sensor* sensor, sensors_) {
-		sensor->performSensing();
-	}
+	/* when the world has changed, we want new sensor input. */
+	connect(&world_, SIGNAL(worldChanged()), sensor, SLOT(performSensing()));
 }

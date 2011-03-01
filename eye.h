@@ -14,10 +14,11 @@ class Eye : public Sensor
 public:
 	explicit Eye(const World& world, const QPointF position, qreal rotation, qreal lengthOfSight, QString id = "", QObject *parent = 0);
 
-	/* we need the position and orientation of the eye */
-	void performSensing() const;
-
 	const QList<QLineF>& rays() const { return rays_; }
+
+public slots:
+	/* query the world to get sensor data */
+	void performSensing() const;
 
 protected:
 	void addRay(qreal length, qreal rotation);
