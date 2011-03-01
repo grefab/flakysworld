@@ -29,6 +29,7 @@ signals:
 
 protected:
 	void updateIfNeeded(const QList<qreal>& newOutput) const;
+	bool isUpdateNeeded(const QList<qreal>& newOutput) const;
 
 	const World& world_;
 
