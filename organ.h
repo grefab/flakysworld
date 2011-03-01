@@ -15,11 +15,13 @@ public:
 
 	QString id() const;
 
-	void setMapParentToWorld(QTransform mapParentToWorld);
 	const QTransform& mapToWorld() const;
 
 signals:
 	void positionChanged(QTransform mapToWorld);
+
+public slots:
+	void setMapParentToWorld(QTransform mapParentToWorld);
 
 protected:
 	const World& world_;

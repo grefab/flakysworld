@@ -22,10 +22,7 @@ Flaky::Flaky(World* world, QObject *parent) :
 
 	/* create an eye */
 	Eye* eye = new Eye(*world, QPointF(0.059f, 0.0f), 0, 0.6f, "eye", this);
-	sensors_.insert(eye->id(), eye);
-
-	/* we need to adjust our sensors when the body has moved. */
-	connect(body_, SIGNAL(changedPosition(QTransform)), this, SLOT(bodyMoved(QTransform)));
+	addSensor(eye);
 
 	/* when the world has changed, we want new sensor input. */
 	connect(world, SIGNAL(worldChanged()), this, SLOT(worldChanged()));
@@ -56,12 +53,13 @@ void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
 	bodyController_->push(QPointF(rightThruster, 0), QPointF(-0.03, -0.03));
 }
 
-void Flaky::bodyMoved(QTransform transformation)
+void Flaky::addSensor(Sensor *sensor)
 {
-	/* we need our sensors to know about their position in the world. */
-	foreach(Sensor* sensor, sensors_) {
-		sensor->setMapParentToWorld(transformation);
-	}
+	/* store it for management */
+	sensors_.insert(sensor->id(), sensor);
+
+	/* we need to adjust our sensors when the body has moved. */
+	connect(body_, SIGNAL(changedPosition(QTransform)), sensor, SLOT(setMapParentToWorld(QTransform)));
 }
 
 void Flaky::worldChanged()

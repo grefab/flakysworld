@@ -25,6 +25,8 @@ public slots:
 	void accelerate(qreal leftThruster, qreal rightThruster);
 
 protected:
+	void addSensor(Sensor* sensor);
+
 	PolygonBody* body_;
 	BodyController* bodyController_;
 
@@ -32,7 +34,6 @@ protected:
 
 private slots:
 	/* used internally to change sensors. */
-	void bodyMoved(QTransform transformation);
 	void worldChanged();
 
 };

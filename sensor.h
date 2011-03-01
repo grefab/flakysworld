@@ -27,6 +27,7 @@ private:
 	 * we are const in updateIfNeeded().
 	 */
 	QList<qreal> lastOutput_;
+
 };
 
 #endif // SENSOR_H
