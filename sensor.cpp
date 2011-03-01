@@ -2,13 +2,13 @@
 #include "world.h"
 #include <QUuid>
 
-Sensor::Sensor(const World& world, const QPointF position, qreal rotation, QObject *parent) :
+Sensor::Sensor(const World& world, const QPointF position, qreal rotation, QString id, QObject *parent) :
 	QObject(parent),
 	world_(world),
 	position_(position),
 	rotation_(rotation)
 {
-	id_ = QUuid::createUuid().toString();
+	id_ = id == "" ? QUuid::createUuid().toString() : id;
 
 	mapToParent_.translate(position_.x(), position_.y());
 	mapToParent_.rotateRadians(rotation_);

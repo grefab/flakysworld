@@ -2,8 +2,8 @@
 #include <QTransform>
 
 
-Eye::Eye(const World& world, const QPointF position, qreal rotation, qreal lengthOfSight, QObject *parent) :
-	Sensor(world, position, rotation, parent),
+Eye::Eye(const World& world, const QPointF position, qreal rotation, qreal lengthOfSight, QString id, QObject *parent) :
+	Sensor(world, position, rotation, id, parent),
 	lengthOfSight_(lengthOfSight)
 {
 	const qreal visionDegrees = 90;

@@ -13,7 +13,7 @@ class Sensor : public QObject
 	Q_OBJECT
 
 public:
-	explicit Sensor(const World& world, const QPointF position, qreal rotation, QObject *parent = 0);
+	explicit Sensor(const World& world, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 	/* we need the position and orientation of the eye */
 	virtual void performSensing() const =0;
