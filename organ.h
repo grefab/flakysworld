@@ -21,7 +21,7 @@ signals:
 	void positionChanged(QTransform mapToWorld);
 
 public slots:
-	void setMapParentToWorld(QTransform mapParentToWorld);
+	void setMapParentToWorld(const QTransform& mapParentToWorld);
 
 protected:
 	const World& world_;

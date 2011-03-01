@@ -21,7 +21,7 @@ QString Organ::id() const
 	return id_;
 }
 
-void Organ::setMapParentToWorld(QTransform mapParentToWorld)
+void Organ::setMapParentToWorld(const QTransform& mapParentToWorld)
 {
 	/* we need to know how a point from our parent maps to world coordinates for
 	 * performing ray casts later on.
