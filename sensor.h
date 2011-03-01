@@ -28,6 +28,8 @@ signals:
 	void positionChanged(QTransform mapToWorld);
 
 protected:
+	void updateIfNeeded(const QList<qreal>& newOutput) const;
+
 	const World& world_;
 
 private:
@@ -40,6 +42,12 @@ private:
 	QTransform mapParentToWorld_;
 	void updateMapToWorld();
 	QTransform mapToWorld_;
+
+private:
+	/* really, really private, because we modify this but promise everyone
+	 * we are const in updateIfNeeded().
+	 */
+	QList<qreal> lastOutput_;
 };
 
 #endif // SENSOR_H

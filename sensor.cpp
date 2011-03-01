@@ -38,3 +38,15 @@ void Sensor::updateMapToWorld()
 
 	emit positionChanged(mapToWorld_);
 }
+
+void Sensor::updateIfNeeded(const QList<qreal>& newOutput) const
+{
+	/* only singal a change if there was actually one. */
+	if ( newOutput != lastOutput_ ) {
+		/* kinda dirty hack to modify our last output without admitting that we violate constness. */
+		QList<qreal>& nonconst_lastOutput = const_cast< QList<qreal>& >(lastOutput_);
+		nonconst_lastOutput = newOutput;
+
+		emit sensed(newOutput);
+	}
+}
