@@ -23,19 +23,29 @@ QString Sensor::id() const
 
 void Sensor::setMapParentToWorld(QTransform mapParentToWorld)
 {
+	/* we need to know how a point from our parent maps to world coordinates for
+	 * performing ray casts later on.
+	 */
 	mapParentToWorld_ = mapParentToWorld;
 	updateMapToWorld();
 }
 
 const QTransform& Sensor::mapToWorld() const
 {
+	/* tells how a local point maps to world coordinates. */
 	return mapToWorld_;
 }
 
 void Sensor::updateMapToWorld()
 {
+	/* when we map our local point to the parent coordinates and these again to the wolrd,
+	 * we achieve mapping local points to the world. woohoo!
+	 */
 	mapToWorld_ = mapToParent_ * mapParentToWorld_;
 
+	/* when we have to recalculate our mapping relative to the world it is plausible that
+	 * our world position has changed. tell everyone!
+	 */
 	emit positionChanged(mapToWorld_);
 }
 
