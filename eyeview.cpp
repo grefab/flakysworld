@@ -12,6 +12,11 @@ EyeView::EyeView(const Eye& eye, QGraphicsItem *parent) :
 	/* populate rays */
 	rays_ = eye_.rays();
 
+	/* initialize rays */
+	for(int i = 0; i < rays_.size(); ++i) {
+	    output_.append(0);
+	}
+
 	/* get notified of position changes */
 	connect(&eye, SIGNAL(positionChanged(QTransform)), this, SLOT(eyePositionChanged(QTransform)));
 
