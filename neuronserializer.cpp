@@ -94,10 +94,12 @@ void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
 
 bool NeuronSerializer::looksLikeJSON(const QByteArray& data)
 {
+	/* no data? no json. */
 	if ( data.size() <= 0 ) {
 		return false;
 	}
 
+	/* let's hope there's nothing except json that is included in curly brackets. */
 	if (data.at(0) != '{' || data.at(data.size()-1) != '}') {
 		return false;
 	}
