@@ -7,7 +7,7 @@ Flaky, the little triangle, lives in a 2D world. It has actuators (tiny little t
 
 All elements in the world are subject to a physics simulation. Depending on what Flaky hits on its way, items may move, collide, bounce, etc. This is done continuously in the background (as long as there are items moving).
 
-The purpose of this little simulation is to allow for an connection with some kind of artificial neuronal network, which takes the input and produces output. This way any action that is performed by flaky has a direct impact on sensor data, which in turn can be processed by the neural net.
+The purpose of this little simulation is to allow for a connection with some kind of artificial neuronal network, which takes the input and produces output. This way any action that is performed by flaky has a direct impact on sensor data, which in turn can be processed by the neural net.
 
 
 h2. Screenshots
@@ -18,6 +18,9 @@ Everyone likes screenshots! This is still in development and it really looks tha
 
 
 h2. News
+
+* *2011-03-12*
+Implemented network communication. See below for details.
 
 * *2011-02-27*
 Wrote this readme after code seems stable. Currently Flakysworld consists of the following basic object structure:
@@ -35,14 +38,16 @@ h2. Technical Details
 
 The application uses Qt heavily for internal processing and depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket (will be soon), so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
 
-The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ and a set of widgets and views, the _GUI_. Universe and GUI reside in a separate thread each. The network communication entity will be modeled as a separate thread as well.
+The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ and a set of widgets and views, the _GUI_. Universe and GUI reside in a separate thread each. The network communication entity is modeled as a simple socket connection that sends and receives JSON data. It ignores everything non-JSON (e.g. HTTP headers), so one can test output generation using a plain brwoser.
 
-I've developed and tested everything using OSX 10.6, Qt 4.7 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
+I've developed and tested everything using OSX 10.6, Ubuntu Linux 10.04, Qt 4.7 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
+
+See below for the JSON interface spec.
 
 
 h2. Current Status
 
-Actuators, visual sensors and physical world interaction are implemented. There is a simple view that shows what happens in Flaky's world. The network/JSON part is soon to come.
+Actuators, visual sensors and physical world interaction are implemented. There is a simple view that shows what happens in Flaky's world. Data from sensors/to actuators can be received/sent using plain JSON over a socket.
 
 
 h2. Future Plans
@@ -51,7 +56,12 @@ h2. Future Plans
 * Dual mode: Run with or without GUI.
 * Remote mode: Let universe and GUI run on different machines
 * Save/Load of the universe in a file or into a DB (CouchDB?)
-* Time flies mode: Do not keep in sync with real time, but run as fast as possible. May need sync signal for attached nets.
+* Time flies mode: Do not keep in sync with real time, but run as fast as possible. May need sync signal for clients attached via network.
+
+
+h2. Interface Specification
+
+
 
 
 h2. How To Install
@@ -86,8 +96,7 @@ h2. FAQ
 
 h2. Licenses
 
-All the code in *Flakysworld*, except its dependencies which have separate licenses (see below), is published under the MIT License. See
-"here":http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you like with it.
+All the code in *Flakysworld*, except its dependencies which have separate licenses (see below), is published under the MIT License. See "here":http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you like with it.
 
 *Qt and its libraries* are licensed (as one possibility) under the LGPL. See "Nokias licesing page":http://qt.nokia.com/products/licensing/ for details.
 
