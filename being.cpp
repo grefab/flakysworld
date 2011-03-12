@@ -1,6 +1,7 @@
 #include "being.h"
 #include "world.h"
 #include "sensor.h"
+#include "actuator.h"
 
 Being::Being(World* world, Body* body, QString id, QObject *parent) :
 	QObject(parent),
@@ -26,4 +27,10 @@ void Being::addSensor(Sensor *sensor)
 
 	/* when the world has changed, we want new sensor input. */
 	connect(world_, SIGNAL(worldChanged()), sensor, SLOT(performSensing()));
+}
+
+void Being::addActuator(Actuator *actuator)
+{
+	/* store it for management */
+	actuators_.insert(actuator->id(), actuator);
 }

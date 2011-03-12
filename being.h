@@ -8,6 +8,7 @@
 
 class World;
 class Sensor;
+class Actuator;
 
 class Being : public QObject
 {
@@ -34,6 +35,7 @@ private:
 	World* world_;
 	Body* body_;
 	QHash<QString, Sensor*> sensors_;
+	QHash<QString, Actuator*> actuators_;
 
 };
 
