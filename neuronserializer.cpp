@@ -8,6 +8,11 @@
 
 #include "sensor.h"
 
+/* string definitions needed later */
+static const QString KEY_SENDING_BEING = "being";
+static const QString KEY_BEINGS_SENSORS = "sensors";
+
+
 NeuronSerializer::NeuronSerializer(QObject *parent) :
 	QThread(parent)
 {
@@ -41,14 +46,14 @@ void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 	/* store sensor data */
 
 	/* tell who sent it */
-	saveme.insert("sender", beingId);
+	saveme.insert(KEY_SENDING_BEING, beingId);
 
 	/* we may have multiple sensors, so store the sensor in a map. */
 	QVariantMap v_sensors;
 	v_sensors.insert(sensorId, v_sensorNeurons);
 
 	/* finally insert the map */
-	saveme.insert("sensors", v_sensors);
+	saveme.insert(KEY_BEINGS_SENSORS, v_sensors);
 
 	/* perform serialization */
 	QJson::Serializer serializer;
