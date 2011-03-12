@@ -13,6 +13,7 @@ public:
 	explicit Organ(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 	QString id() const;
+	const Being& being() const { return being_; }
 
 	const QTransform& mapToWorld() const;
 
