@@ -25,7 +25,7 @@ protected:
 
 private:
 	/* really, really private, because we modify this but promise everyone
-	 * we are const in updateIfNeeded().
+	 * we are const in updateIfNeeded(). this serves for sending only different output.
 	 */
 	QList<qreal> lastOutput_;
 
