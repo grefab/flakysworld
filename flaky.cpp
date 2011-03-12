@@ -1,11 +1,10 @@
 #include "flaky.h"
-#include "world.h"
+#include "polygonbody.h"
 #include <QPolygonF>
 #include "eye.h"
 
 Flaky::Flaky(World* world, QObject *parent) :
-		QObject(parent),
-		world_(*world)
+		Being(world, parent)
 {
 	/* set up our shape */
 	QPolygonF flakyPoly;
@@ -29,17 +28,6 @@ Flaky::Flaky(World* world, QObject *parent) :
 Flaky::~Flaky()
 {
 	delete bodyController_;
-	delete body_;
-}
-
-PolygonBody* Flaky::body() const
-{
-	return body_;
-}
-
-QList<Sensor*> Flaky::sensors() const
-{
-	return sensors_.values();
 }
 
 void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
@@ -49,16 +37,4 @@ void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
 
 	/* right thruster */
 	bodyController_->push(QPointF(rightThruster, 0), QPointF(-0.03, -0.03));
-}
-
-void Flaky::addSensor(Sensor *sensor)
-{
-	/* store it for management */
-	sensors_.insert(sensor->id(), sensor);
-
-	/* we need to adjust our sensors when the body has moved. */
-	connect(body_, SIGNAL(changedPosition(QTransform)), sensor, SLOT(setMapParentToWorld(QTransform)));
-
-	/* when the world has changed, we want new sensor input. */
-	connect(&world_, SIGNAL(worldChanged()), sensor, SLOT(performSensing()));
 }

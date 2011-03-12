@@ -23,9 +23,10 @@ SOURCES += main.cpp \
 	qjson/src/parser.cpp \
 	qjson/src/json_scanner.cpp \
 	qjson/src/json_parser.cc \
-    tcpserver.cpp \
-    organ.cpp \
-    actuator.cpp
+	tcpserver.cpp \
+	organ.cpp \
+	actuator.cpp \
+	being.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 LIBPATH += /usr/local/lib
@@ -53,9 +54,10 @@ HEADERS += \
 	qjson/src/json_parser.hh \
 	qjson/src/serializer.h \
 	neuronserializer.h \
-    tcpserver.h \
-    organ.h \
-    actuator.h
+	tcpserver.h \
+	organ.h \
+	actuator.h \
+	being.h
 
 FORMS += \
 	surface.ui
