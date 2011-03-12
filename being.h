@@ -5,9 +5,9 @@
 #include "body.h"
 #include <QList>
 #include <QHash>
-#include "sensor.h"
 
 class World;
+class Sensor;
 
 class Being : public QObject
 {
@@ -20,7 +20,7 @@ protected:
 public:
 	~Being();
 
-	const World* world() const { return &world_; }
+	const World& world() const { return world_; }
 	Body* body() const { return body_; }
 	QList<Sensor*> sensors() const { return sensors_.values(); }
 

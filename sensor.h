@@ -11,7 +11,7 @@ class Sensor : public Organ
 	Q_OBJECT
 
 public:
-	explicit Sensor(const World& world, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
+	explicit Sensor(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 signals:
 	void sensed(QList<qreal> output) const;

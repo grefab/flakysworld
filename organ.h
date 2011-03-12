@@ -3,15 +3,14 @@
 
 #include <QObject>
 #include <QTransform>
-
-class World;
+#include "being.h"
 
 class Organ : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit Organ(const World& world, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
+	explicit Organ(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 	QString id() const;
 
@@ -24,7 +23,7 @@ public slots:
 	void setMapParentToWorld(const QTransform& mapParentToWorld);
 
 protected:
-	const World& world_;
+	const Being& being_;
 
 private:
 	QString id_;

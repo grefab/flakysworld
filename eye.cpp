@@ -2,8 +2,8 @@
 #include <QTransform>
 
 
-Eye::Eye(const World& world, const QPointF position, qreal rotation, qreal lengthOfSight, QString id, QObject *parent) :
-	Sensor(world, position, rotation, id, parent),
+Eye::Eye(const Being& being, const QPointF position, qreal rotation, qreal lengthOfSight, QString id, QObject *parent) :
+	Sensor(being, position, rotation, id, parent),
 	lengthOfSight_(lengthOfSight)
 {
 	const qreal visionDegrees = 90;
@@ -26,7 +26,7 @@ void Eye::performSensing() const
 
 	foreach(QLineF ray, rays_) {
 		QLineF transformedRay = mapToWorld().map(ray);
-		World::RayHit hitpoint = world_.rayCast(transformedRay);
+		World::RayHit hitpoint = being_.world().rayCast(transformedRay);
 
 		output.append(hitpoint.fraction);
 	}

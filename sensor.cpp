@@ -1,8 +1,8 @@
 #include "sensor.h"
 #include "world.h"
 
-Sensor::Sensor(const World& world, const QPointF position, qreal rotation, QString id, QObject *parent) :
-	Organ(world, position, rotation, id, parent)
+Sensor::Sensor(const Being& being, const QPointF position, qreal rotation, QString id, QObject *parent) :
+	Organ(being, position, rotation, id, parent)
 {
 }
 

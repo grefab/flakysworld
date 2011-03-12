@@ -1,5 +1,6 @@
 #include "being.h"
 #include "world.h"
+#include "sensor.h"
 
 Being::Being(World* world, Body* body, QObject *parent) :
 	QObject(parent),

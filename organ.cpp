@@ -1,9 +1,9 @@
 #include "organ.h"
 #include <QUuid>
 
-Organ::Organ(const World& world, const QPointF position, qreal rotation, QString id, QObject *parent) :
+Organ::Organ(const Being& being, const QPointF position, qreal rotation, QString id, QObject *parent) :
 	QObject(parent),
-	world_(world),
+	being_(being),
 	position_(position),
 	rotation_(rotation)
 

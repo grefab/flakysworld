@@ -10,7 +10,7 @@ Flaky::Flaky(World* world, QObject *parent) :
 	bodyController_ = new BodyController(body());
 
 	/* create an eye */
-	Eye* eye = new Eye(*world, QPointF(0.059f, 0.0f), 0, 0.6f, "eye", this);
+	Eye* eye = new Eye(*this, QPointF(0.059f, 0.0f), 0, 0.6f, "eye", this);
 	addSensor(eye);
 }
 
