@@ -26,6 +26,7 @@ private slots:
 private:
 	QPolygonF polygon_;
 	QList<QLineF> rays_;
+	QRectF boundingRect_;
 	QList<qreal> output_;
 };
 

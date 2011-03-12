@@ -25,7 +25,8 @@ NeuronSerializer::~NeuronSerializer()
 
 void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 {
-	QString sensorId = static_cast<Sensor*>(sender())->id();
+	const Sensor* sensor = static_cast<Sensor*>(sender());
+	const QString sensorId = sensor->id();
 
 	/* here we will store everything */
 	QVariantMap saveme;
@@ -37,7 +38,16 @@ void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 	}
 
 	/* store sensor data */
-	saveme.insert(sensorId, v_sensorNeurons);
+
+	/* tell who sent it */
+	saveme.insert("sender", "flaky");
+
+	/* we may have multiple sensors, so store the sensor in a map. */
+	QVariantMap v_sensors;
+	v_sensors.insert(sensorId, v_sensorNeurons);
+
+	/* finally insert the map */
+	saveme.insert("sensors", v_sensors);
 
 	/* perform serialization */
 	QJson::Serializer serializer;
@@ -84,10 +94,12 @@ void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
 
 bool NeuronSerializer::looksLikeJSON(const QByteArray& data)
 {
+	/* no data? no json. */
 	if ( data.size() <= 0 ) {
 		return false;
 	}
 
+	/* let's hope there's nothing except json that is included in curly brackets. */
 	if (data.at(0) != '{' || data.at(data.size()-1) != '}') {
 		return false;
 	}
