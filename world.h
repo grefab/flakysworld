@@ -22,7 +22,7 @@ public:
 	/* we take ownership of the body! */
 	Body* addBody(Body* body);
 
-	b2World* world();
+	b2World* world() const;
 	QList<Body*> bodies() const;
 
 	/* this contains the nearest hit from the ray cast origin. */

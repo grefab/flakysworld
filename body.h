@@ -25,7 +25,7 @@ protected:
 	/* protected constructor, so only inheriting classes can access it. this way
 	 * this class can not be instaciated directly.
 	 */
-	explicit Body(World* world, QPointF position, qreal rotation, Type type = Dynamic, QObject *parent = 0);
+	explicit Body(const World* world, QPointF position, qreal rotation, Type type = Dynamic, QObject *parent = 0);
 
 public:
 	~Body();

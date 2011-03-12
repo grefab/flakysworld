@@ -4,7 +4,17 @@
 #include "eye.h"
 
 Flaky::Flaky(World* world, QObject *parent) :
-		Being(world, parent)
+		Being(world, setupBody(world), parent)
+{
+	/* let us be able to control the body */
+	bodyController_ = new BodyController(body());
+
+	/* create an eye */
+	Eye* eye = new Eye(*world, QPointF(0.059f, 0.0f), 0, 0.6f, "eye", this);
+	addSensor(eye);
+}
+
+Body* Flaky::setupBody(World* world)
 {
 	/* set up our shape */
 	QPolygonF flakyPoly;
@@ -14,15 +24,10 @@ Flaky::Flaky(World* world, QObject *parent) :
 			QPointF(-0.03f, -0.03f);
 
 	/* make it a body */
-	body_ = new PolygonBody(world, QPointF(0, 0), 0.0f, flakyPoly, Body::Dynamic);
-	body_->setId("flaky");
+	Body* body = new PolygonBody(world, QPointF(0, 0), 0.0f, flakyPoly, Body::Dynamic);
+	body->setId("flaky");
 
-	/* let us be able to control the body */
-	bodyController_ = new BodyController(body_);
-
-	/* create an eye */
-	Eye* eye = new Eye(*world, QPointF(0.059f, 0.0f), 0, 0.6f, "eye", this);
-	addSensor(eye);
+	return body;
 }
 
 Flaky::~Flaky()

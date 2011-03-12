@@ -1,6 +1,6 @@
 #include "polygonbody.h"
 
-PolygonBody::PolygonBody(World* world, QPointF position, qreal rotation, QPolygonF polygon, Body::Type type, QObject *parent) :
+PolygonBody::PolygonBody(const World* world, QPointF position, qreal rotation, QPolygonF polygon, Body::Type type, QObject *parent) :
 		Body(world, position, rotation, type, parent),
 		polygon_(polygon)
 {

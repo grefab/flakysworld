@@ -12,16 +12,22 @@ class World;
 class Being : public QObject
 {
 	Q_OBJECT
+
+protected:
+	/* we do not allow plain beings, but just inherited ones. */
+	explicit Being(World* world, Body* body, QObject *parent = 0);
+
 public:
-	explicit Being(World* world, QObject *parent = 0);
 	~Being();
 
-	Body* body() const { return body_; };
-	QList<Sensor*> sensors() const { return sensors_.values(); };
+	const World* world() const { return &world_; }
+	Body* body() const { return body_; }
+	QList<Sensor*> sensors() const { return sensors_.values(); }
 
 protected:
 	void addSensor(Sensor* sensor);
 
+private:
 	const World& world_;
 	Body* body_;
 	QHash<QString, Sensor*> sensors_;

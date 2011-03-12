@@ -2,7 +2,7 @@
 #include <QUuid>
 #include "world.h"
 
-Body::Body(World* world, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
+Body::Body(const World* world, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
 		QObject(parent),
 		world_(world->world())
 {

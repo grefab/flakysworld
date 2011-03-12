@@ -1,9 +1,10 @@
 #include "being.h"
 #include "world.h"
 
-Being::Being(World* world, QObject *parent) :
+Being::Being(World* world, Body* body, QObject *parent) :
 	QObject(parent),
-	world_(*world)
+	world_(*world),
+	body_(body)
 {
 }
 

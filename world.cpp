@@ -26,7 +26,7 @@ Body* World::addBody(Body* body)
 	return body;
 }
 
-b2World* World::world()
+b2World* World::world() const
 {
 	return world_;
 }

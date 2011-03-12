@@ -20,6 +20,9 @@ public slots:
 
 protected:
 	BodyController* bodyController_;
+
+private:
+	Body* setupBody(World* world);
 };
 
 #endif // FLAKY_H
