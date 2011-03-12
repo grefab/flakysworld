@@ -30,8 +30,8 @@ Surface* setupGUI(Universe* universe)
 		}
 	}
 
-	/* build a corresponding view for flaky's sensors. */
-	foreach(Sensor* sensor, universe->flaky()->sensors()) {
+	/* build a corresponding view for flaky's eyes. */
+	foreach(Sensor* sensor, universe->being("flaky")->sensors()) {
 		Eye* eye = dynamic_cast<Eye*>(sensor);
 		if ( eye ) {
 			surface->scene()->addItem( new EyeView(*eye) );
@@ -47,7 +47,7 @@ Surface* setupGUI(Universe* universe)
 
 	/* and our engage button */
 	// TODO: Just provide motoric information and let flaky handle the consequences.
-	QObject::connect(surface, SIGNAL(engageTriggered(qreal,qreal)), universe->flaky(), SLOT(accelerate(qreal,qreal)));
+	QObject::connect(surface, SIGNAL(engageTriggered(qreal,qreal)), universe->being("flaky"), SLOT(accelerate(qreal,qreal)));
 
 	return surface;
 }
@@ -68,8 +68,10 @@ NeuronSerializer* setupNeuronIO(Universe* universe)
 	QObject::connect(neuronSerializer, SIGNAL(sensorSerialized(QByteArray)), tcpServer, SLOT(publish(QByteArray)));
 
 	/* we'd like to output all our sensors. */
-	foreach(Sensor* sensor, universe->flaky()->sensors()) {
-		QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), neuronSerializer, SLOT(serializeSensor(QList<qreal>)));
+	foreach(Being* being, universe->beings()) {
+		foreach(Sensor* sensor, being->sensors()) {
+			QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), neuronSerializer, SLOT(serializeSensor(QList<qreal>)));
+		}
 	}
 
 	return neuronSerializer;

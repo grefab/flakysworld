@@ -1,6 +1,7 @@
 #include "universe.h"
 #include "circlebody.h"
 #include "polygonbody.h"
+#include "flaky.h"
 
 Universe::Universe(QObject *parent) :
 		QObject(parent)
@@ -8,18 +9,24 @@ Universe::Universe(QObject *parent) :
 	world_ = new World();
 	engine_ = new Engine(world_);
 
-	flaky_ = new Flaky(world_);
-
 	/* set up the elements in the world */
 	setup();
 
+	/* put flaky into the world! */
+	addBeing(new Flaky(world_));
+
+	/* put everything in motion */
 	engine_->start();
 }
 
 Universe::~Universe()
 {
 	delete engine_;
-	delete flaky_;
+
+	foreach(Being* being, beings()) {
+		delete being;
+	}
+
 	delete world_;
 }
 
@@ -27,7 +34,7 @@ void Universe::keyPressHandler(Qt::Key key)
 {
 	Q_UNUSED(key);
 
-	flaky_->accelerate(0.01, 0.01);
+	static_cast<const Flaky*>(being("flaky"))->accelerate(0.01, 0.01);
 }
 
 void Universe::keyReleaseHandler(Qt::Key key)
@@ -53,9 +60,6 @@ void Universe::setup()
 	world_->addBody(bodyTop);
 	world_->addBody(bodyBottom);
 
-	/* our little being. jump into the world, flaky! */
-	world_->addBody(flaky_->body());
-
 	/* finally, build a set of other things. */
 	for (int i = 0; i < 100; ++i) {
 		CircleBody* circleBody = new CircleBody(
@@ -68,4 +72,9 @@ void Universe::setup()
 				Body::Dynamic);
 		world_->addBody(circleBody);
 	}
+}
+
+void Universe::addBeing(Being* being)
+{
+	beings_.insert(being->id(), being);
 }

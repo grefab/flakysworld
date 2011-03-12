@@ -5,7 +5,9 @@
 
 #include "world.h"
 #include "engine.h"
-#include "flaky.h"
+#include <QList>
+#include <QMap>
+#include "being.h"
 
 class Universe : public QObject
 {
@@ -14,7 +16,8 @@ public:
 	explicit Universe(QObject *parent = 0);
 	~Universe();
 
-	Flaky* flaky() { return flaky_; }
+	QList<Being*> beings() const { return beings_.values(); }
+	const Being* being(QString id) const { return beings_.value(id); }
 	World* world() { return world_; }
 	Engine* engine() { return engine_; }
 
@@ -24,8 +27,9 @@ public slots:
 
 protected:
 	void setup();
+	void addBeing(Being* being);
 
-	Flaky* flaky_;
+	QMap<QString, Being*> beings_;
 	World* world_;
 	Engine* engine_;
 };

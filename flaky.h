@@ -16,7 +16,7 @@ public:
 	~Flaky();
 
 public slots:
-	void accelerate(qreal leftThruster, qreal rightThruster);
+	void accelerate(qreal leftThruster, qreal rightThruster) const;
 
 protected:
 	BodyController* bodyController_;

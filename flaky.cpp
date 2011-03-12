@@ -4,7 +4,7 @@
 #include "eye.h"
 
 Flaky::Flaky(World* world, QObject *parent) :
-		Being(world, setupBody(world), parent)
+		Being(world, setupBody(world), "flaky", parent)
 {
 	/* let us be able to control the body */
 	bodyController_ = new BodyController(body());
@@ -35,7 +35,7 @@ Flaky::~Flaky()
 	delete bodyController_;
 }
 
-void Flaky::accelerate(qreal leftThruster, qreal rightThruster)
+void Flaky::accelerate(qreal leftThruster, qreal rightThruster) const
 {
 	/* left thruster */
 	bodyController_->push(QPointF(leftThruster, 0), QPointF(-0.03, 0.03));

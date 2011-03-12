@@ -2,11 +2,13 @@
 #include "world.h"
 #include "sensor.h"
 
-Being::Being(World* world, Body* body, QObject *parent) :
+Being::Being(World* world, Body* body, QString id, QObject *parent) :
 	QObject(parent),
-	world_(*world),
+	id_(id),
+	world_(world),
 	body_(body)
 {
+	world_->addBody(body_);
 }
 
 Being::~Being()
@@ -23,5 +25,5 @@ void Being::addSensor(Sensor *sensor)
 	connect(body_, SIGNAL(changedPosition(QTransform)), sensor, SLOT(setMapParentToWorld(QTransform)));
 
 	/* when the world has changed, we want new sensor input. */
-	connect(&world_, SIGNAL(worldChanged()), sensor, SLOT(performSensing()));
+	connect(world_, SIGNAL(worldChanged()), sensor, SLOT(performSensing()));
 }
