@@ -30,6 +30,7 @@ NeuronSerializer::~NeuronSerializer()
 
 void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 {
+	/* find IDs we need to work in our JSON response */
 	const Sensor* sensor = static_cast<Sensor*>(sender());
 	const QString sensorId = sensor->id();
 	const QString beingId = sensor->being().id();
