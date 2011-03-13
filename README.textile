@@ -57,7 +57,7 @@ h2. Future Plans
 * *Remote mode:* Let universe and GUI run on different machines
 * *Save/Load* of the universe in a file or into a DB (CouchDB?)
 * *Time flies mode:* Do not keep in sync with real time, but run as fast as possible. May need sync signal for clients attached via network.
-
+* *Optional compression:* JSON is quite verbose and therefore bandwidth consuming (nothing compared to SOAP, though). It would be nice to optionally compress traffic. The cost (CPU) and benefit (bandwidth savings) should be evaluated first.
 
 h2. Interface Specification
 
@@ -69,25 +69,36 @@ Here a more or less formal definition of a sensor output in form of a JSON objec
 
 used here mean the actual characters, whereas
 
+@()@
+
+group elements as entity.
+
 @+*@
 
 mean "one or more" and "zero or more" of the previously described entity. Multiple occurrences of an entity have to be comma separated.
 
 Sensor data is output according to the following scheme:
 
-@{ "being_id" : { "sensor_id" : [real*] }+ }@
+@{ "being" : "BEING_ID", "sensors" : { ( "SENSOR_ID" : [ REAL* ] )+ } }@
 
-This means: For exactly one being, which is denoted by its ID (@being_id@), there may be multiple sensors defined. Each sensor is described with its ID (@sensor_id@) as key and an array consisting of multiple @real@ values as sensor data. We define @real@ as a value in [0..1], which is a closed interval.
+This means: For exactly one being, which is denoted by its ID (@BEING_ID@), there may be multiple sensors defined. Each sensor is described with its ID (@SENSOR_ID@) as key and an array consisting of multiple @REAL@ values as sensor data. We define @REAL@ as a value in [0..1], which is a closed interval.
 
 The same holds for sending actuator data:
 
-@{ "being_id" : { "actuator_id" : [real*] }+ }@
+@{ "being" : "BEING_ID", "actuators" : { ( "ACTUATOR_ID" : [ REAL* ] )+ } }@
 
-For a being, denoted by @being_id@, multiple actuators can be described. Actuator data consists of key (@actuator_id@) and value, an array of real values in [0..1].
+For a being, denoted by @BEING_ID@, multiple actuators can be described. Actuator data consists of key (@ACTUATOR_ID@) and value, an array of real values in [0..1].
 
 Multiple data is, as usual in JSON, comma separated. A complete dataset, which has to be a JSON conform object, is finished by a newline. This holds for both directions. This means: Before a newline character, no JSON input is handled by flakysworld, and no complete output should be expected before a newline character.
 
 Non-existing beings or actuators are silently ignored. At the moment, there is only one being, called @flaky@ with only one sensor, called @eye@. Actuators will follow soon.
+
+
+h3. Example
+
+A possible return value for sensor data might look like this:
+
+@{ "being" : "flaky", "sensors" : { "eye" : [ 0.0298899, 0.032246, 0.0359727, 0.255273, 0.256103, 0.264073, 0.258331, 0.252873, 0.253623, 0.261305, 0.668216, 0.676755, 0.687302, 0.329974, 0.212865, 0.201672, 0.197739, 0.197683, 0.201475, 0.21226, 0.177706, 0.166087, 0.161403, 0.159795, 0.160635, 0.164229, 0.172641, 0.73212, 0.288457, 0.272602, 0.269097, 0.272273 ] } }@
 
 
 h2. How To Install
