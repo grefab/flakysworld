@@ -2,7 +2,7 @@
 #define POLYGONBODYVIEW_H
 
 #include "bodyview.h"
-#include "polygonbody.h"
+#include "bodies/polygonbody.h"
 
 class PolygonBodyView : public BodyView
 {

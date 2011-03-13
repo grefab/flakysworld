@@ -2,7 +2,7 @@
 #define EYEVIEW_H
 
 #include <QGraphicsObject>
-#include "eye.h"
+#include "flaky/eye.h"
 #include <QList>
 #include <QLineF>
 

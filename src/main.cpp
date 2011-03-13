@@ -1,14 +1,14 @@
 #include <QtGui>
 
-#include "universe.h"
+#include "infrastructure/universe.h"
 
-#include "surface.h"
-#include "circlebodyview.h"
-#include "polygonbodyview.h"
-#include "eyeview.h"
+#include "gui/surface.h"
+#include "gui/bodyviews/circlebodyview.h"
+#include "gui/bodyviews/polygonbodyview.h"
+#include "gui/flakyviews/eyeview.h"
 
-#include "neuronserializer.h"
-#include "tcpserver.h"
+#include "interface/neuronserializer.h"
+#include "interface/tcpserver.h"
 
 Surface* setupGUI(Universe* universe)
 {

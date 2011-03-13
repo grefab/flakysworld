@@ -130,7 +130,7 @@
   <customwidget>
    <class>GraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>graphicsview.h</header>
+   <header>gui/graphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

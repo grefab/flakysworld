@@ -1,6 +1,6 @@
 #include "body.h"
 #include <QUuid>
-#include "world.h"
+#include "infrastructure/world.h"
 
 Body::Body(const World* world, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
 		QObject(parent),

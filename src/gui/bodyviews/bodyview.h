@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QAbstractGraphicsShapeItem>
-#include "body.h"
+#include "bodies/body.h"
 #include <QPointF>
 
 class BodyView : public QObject, public QAbstractGraphicsShapeItem

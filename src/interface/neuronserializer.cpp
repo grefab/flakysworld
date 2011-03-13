@@ -3,10 +3,10 @@
 #include <QVariant>
 #include <QDebug>
 
-#include "qjson/src/serializer.h"
-#include "qjson/src/parser.h"
+#include "external/qjson/src/serializer.h"
+#include "external/qjson/src/parser.h"
 
-#include "sensor.h"
+#include "being/sensor.h"
 
 /* string definitions needed later */
 static const QString KEY_SENDING_BEING = "being";

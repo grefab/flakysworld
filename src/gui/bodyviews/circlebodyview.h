@@ -2,7 +2,7 @@
 #define CIRCLEBODYVIEW_H
 
 #include "bodyview.h"
-#include "circlebody.h"
+#include "bodies/circlebody.h"
 
 class CircleBodyView : public BodyView
 {
