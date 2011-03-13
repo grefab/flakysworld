@@ -1,63 +1,64 @@
 QT += opengl \
 	network
 
-SOURCES += main.cpp \
-	body.cpp \
-	engine.cpp \
-	circlebody.cpp \
-	bodyview.cpp \
-	circlebodyview.cpp \
-	polygonbody.cpp \
-	polygonbodyview.cpp \
-	bodycontroller.cpp \
-	flaky.cpp \
-	world.cpp \
-	graphicsview.cpp \
-	universe.cpp \
-	surface.cpp \
-	eye.cpp \
-	eyeview.cpp \
-	sensor.cpp \
-	neuronserializer.cpp \
-	qjson/src/serializer.cpp \
-	qjson/src/parser.cpp \
-	qjson/src/json_scanner.cpp \
-	qjson/src/json_parser.cc \
-	tcpserver.cpp \
-	organ.cpp \
-	actuator.cpp \
-	being.cpp
+SOURCES += src/main.cpp \
+	src/bodies/body.cpp \
+	src/infrastructure/engine.cpp \
+	src/bodies/circlebody.cpp \
+	src/gui/bodyviews/bodyview.cpp \
+	src/gui/bodyviews/circlebodyview.cpp \
+	src/bodies/polygonbody.cpp \
+	src/gui/bodyviews/polygonbodyview.cpp \
+	src/bodycontroller.cpp \
+	src/flaky/flaky.cpp \
+	src/infrastructure/world.cpp \
+	src/gui/graphicsview.cpp \
+	src/infrastructure/universe.cpp \
+	src/gui/surface.cpp \
+	src/flaky/eye.cpp \
+	src/gui/flakyviews/eyeview.cpp \
+	src/being/sensor.cpp \
+	src/interface/neuronserializer.cpp \
+	src/external/qjson/src/serializer.cpp \
+	src/external/qjson/src/parser.cpp \
+	src/external/qjson/src/json_scanner.cpp \
+	src/external/qjson/src/json_parser.cc \
+	src/interface/tcpserver.cpp \
+	src/being/organ.cpp \
+	src/being/actuator.cpp \
+	src/being/being.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
+INCLUDEPATH += src
 LIBPATH += /usr/local/lib
 LIBS += -lBox2D
 
 HEADERS += \
-	body.h \
-	engine.h \
-	circlebody.h \
-	bodyview.h \
-	circlebodyview.h \
-	polygonbody.h \
-	polygonbodyview.h \
-	bodycontroller.h \
-	flaky.h \
-	world.h \
-	graphicsview.h \
-	universe.h \
-	surface.h \
-	eye.h \
-	eyeview.h \
-	sensor.h \
-	qjson/src/parser.h \
-	qjson/src/json_scanner.h \
-	qjson/src/json_parser.hh \
-	qjson/src/serializer.h \
-	neuronserializer.h \
-	tcpserver.h \
-	organ.h \
-	actuator.h \
-	being.h
+	src/bodies/body.h \
+	src/infrastructure/engine.h \
+	src/bodies/circlebody.h \
+	src/gui/bodyviews/bodyview.h \
+	src/gui/bodyviews/circlebodyview.h \
+	src/bodies/polygonbody.h \
+	src/gui/bodyviews/polygonbodyview.h \
+	src/bodycontroller.h \
+	src/flaky/flaky.h \
+	src/infrastructure/world.h \
+	src/gui/graphicsview.h \
+	src/infrastructure/universe.h \
+	src/gui/surface.h \
+	src/flaky/eye.h \
+	src/gui/flakyviews/eyeview.h \
+	src/being/sensor.h \
+	src/external/qjson/src/parser.h \
+	src/external/qjson/src/json_scanner.h \
+	src/external/qjson/src/json_parser.hh \
+	src/external/qjson/src/serializer.h \
+	src/interface/neuronserializer.h \
+	src/interface/tcpserver.h \
+	src/being/organ.h \
+	src/being/actuator.h \
+	src/being/being.h
 
 FORMS += \
-	surface.ui
+	src/gui/surface.ui
