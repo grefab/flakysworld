@@ -19,8 +19,8 @@ Everyone likes screenshots! This is still in development and it really looks tha
 
 h2. News
 
-* *2011-03-12*
-Implemented network communication. See below for details.
+* *2011-03-13*
+Implemented network communication. Described it as interface specification. See below for details.
 
 * *2011-02-27*
 Wrote this readme after code seems stable. Currently Flakysworld consists of the following basic object structure:
@@ -36,9 +36,9 @@ Started the project after realizing that playing with ANN requires a simulated w
 
 h2. Technical Details
 
-The application uses Qt heavily for internal processing and depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket (will be soon), so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
+The application uses Qt heavily for internal processing and depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket, so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
 
-The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ and a set of widgets and views, the _GUI_. Universe and GUI reside in a separate thread each. The network communication entity is modeled as a simple socket connection that sends and receives JSON data. It ignores everything non-JSON (e.g. HTTP headers), so one can test output generation using a plain brwoser.
+The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ and a set of widgets and views, the _GUI_. Universe and GUI reside in a separate thread each. The network communication entity is modeled as a simple socket connection that sends and receives JSON data. It ignores everything non-JSON (e.g. HTTP headers), so one can test output generation using a plain browser.
 
 I've developed and tested everything using OSX 10.6, Ubuntu Linux 10.04, Qt 4.7 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
 
@@ -52,16 +52,42 @@ Actuators, visual sensors and physical world interaction are implemented. There 
 
 h2. Future Plans
 
-* JSON data import and export: This will be here soon. Sensor data is sent over a socket connection as JSON, arriving JSON is processed into actuator actions.
-* Dual mode: Run with or without GUI.
-* Remote mode: Let universe and GUI run on different machines
-* Save/Load of the universe in a file or into a DB (CouchDB?)
-* Time flies mode: Do not keep in sync with real time, but run as fast as possible. May need sync signal for clients attached via network.
+* *Configurability:* Port and interface should be configurable.
+* *Dual mode:* Run with or without GUI.
+* *Remote mode:* Let universe and GUI run on different machines
+* *Save/Load* of the universe in a file or into a DB (CouchDB?)
+* *Time flies mode:* Do not keep in sync with real time, but run as fast as possible. May need sync signal for clients attached via network.
 
 
 h2. Interface Specification
 
+Data is sent and received over the same socket connection. Flakysworld currently binds to port 2345 on any interface. Sensor updates are sent from flakysworld to all connected clients. Every client can send actuator data to falkysworld. All data is in the form of plain JSON objects.
 
+Here a more or less formal definition of a sensor output in form of a JSON object. Note that the characters
+
+@{}[]":@
+
+used here mean the actual characters, whereas
+
+@+*@
+
+mean "one or more" and "zero or more" of the previously described entity. Multiple occurrences of an entity have to be comma separated.
+
+Sensor data is output according to the following scheme:
+
+@{ "being_id" : { "sensor_id" : [real*] }+ }@
+
+This means: For exactly one being, which is denoted by its ID (@being_id@), there may be multiple sensors defined. Each sensor is described with its ID (@sensor_id@) as key and an array consisting of multiple @real@ values as sensor data. We define @real@ as a value in [0..1], which is a closed interval.
+
+The same holds for sending actuator data:
+
+@{ "being_id" : { "actuator_id" : [real*] }+ }@
+
+For a being, denoted by @being_id@, multiple actuators can be described. Actuator data consists of key (@actuator_id@) and value, an array of real values in [0..1].
+
+Multiple data is, as usual in JSON, comma separated. A complete dataset, which has to be a JSON conform object, is finished by a newline. This holds for both directions. This means: Before a newline character, no JSON input is handled by flakysworld, and no complete output should be expected before a newline character.
+
+Non-existing beings or actuators are silently ignored. At the moment, there is only one being, called @flaky@ with only one sensor, called @eye@. Actuators will follow soon.
 
 
 h2. How To Install
