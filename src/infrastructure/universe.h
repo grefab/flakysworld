@@ -7,7 +7,7 @@
 #include "engine.h"
 #include <QList>
 #include <QMap>
-#include "being.h"
+#include "being/being.h"
 
 class Universe : public QObject
 {

@@ -1,7 +1,7 @@
 #include "universe.h"
-#include "circlebody.h"
-#include "polygonbody.h"
-#include "flaky.h"
+#include "bodies/circlebody.h"
+#include "bodies/polygonbody.h"
+#include "flaky/flaky.h"
 
 Universe::Universe(QObject *parent) :
 		QObject(parent)

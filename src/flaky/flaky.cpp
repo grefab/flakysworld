@@ -1,5 +1,5 @@
 #include "flaky.h"
-#include "polygonbody.h"
+#include "bodies/polygonbody.h"
 #include <QPolygonF>
 #include "eye.h"
 

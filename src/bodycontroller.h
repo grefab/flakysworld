@@ -2,7 +2,7 @@
 #define BODYCONTROLLER_H
 
 #include <QObject>
-#include "body.h"
+#include "bodies/body.h"
 
 class BodyController : public QObject
 {

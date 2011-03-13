@@ -1,5 +1,5 @@
 #include "being.h"
-#include "world.h"
+#include "infrastructure/world.h"
 #include "sensor.h"
 #include "actuator.h"
 

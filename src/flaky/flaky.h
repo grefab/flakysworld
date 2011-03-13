@@ -2,7 +2,7 @@
 #define FLAKY_H
 
 #include <QObject>
-#include "being.h"
+#include "being/being.h"
 #include "bodycontroller.h"
 #include <QVariant>
 

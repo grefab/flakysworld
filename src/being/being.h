@@ -2,7 +2,7 @@
 #define BEING_H
 
 #include <QObject>
-#include "body.h"
+#include "bodies/body.h"
 #include <QList>
 #include <QHash>
 

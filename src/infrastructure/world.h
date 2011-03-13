@@ -5,7 +5,7 @@
 #include <Box2D.h>
 #include <QLineF>
 #include <QHash>
-#include "body.h"
+#include "bodies/body.h"
 
 class Engine;
 

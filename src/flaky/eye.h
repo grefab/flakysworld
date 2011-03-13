@@ -2,8 +2,8 @@
 #define EYE_H
 
 #include <QObject>
-#include "sensor.h"
-#include "world.h"
+#include "being/sensor.h"
+#include "infrastructure/world.h"
 #include <QList>
 #include <QLineF>
 
