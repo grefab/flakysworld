@@ -99,6 +99,7 @@ int main(int argc, char *argv[])
 	/* preparation is done. let if flow! */
 	return app.exec();
 
+	/* when we reach this, the program is finished. delete everything in reverse order. */
 	delete neuronSerializer;
 	delete surface;
 	delete universe;
