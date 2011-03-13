@@ -59,6 +59,7 @@ h2. Future Plans
 * *Time flies mode:* Do not keep in sync with real time, but run as fast as possible. May need sync signal for clients attached via network.
 * *Optional compression:* JSON is quite verbose and therefore bandwidth consuming (nothing compared to SOAP, though). It would be nice to optionally compress traffic. The cost (CPU) and benefit (bandwidth savings) should be evaluated first.
 
+
 h2. Interface Specification
 
 Data is sent and received over the same socket connection. Flakysworld currently binds to port 2345 on any interface. Sensor updates are sent from flakysworld to all connected clients. Every client can send actuator data to falkysworld. All data is in the form of plain JSON objects.
@@ -108,6 +109,19 @@ h2. How To Install
 # Make sure to have Box2D installed. On my machine it resides in /usr/local/include/Box2D and /usr/local/lib. This can be adjusted in the flakysworld.pro file to fit your needs.
 # Load the .pro file with Qt Creator.
 # Build and run.
+
+
+h2. Source Organization
+
+To allow for easy comprehension and modification of this project the source is organized thematically. This chapter provides an insight of the object structure as well. Everything is in the @src/@ directory, which has the following subdirectoies:
+
+* @being/@ Abstract being with its organs, i.e. sensors and actuators.
+* @bodies/@ Body, wich is an object in Box2D's physics world. Contains specialized bodies (ellipse, polygon) as well.
+* @external/@ External libraries/headers. Currently contains only Box2D.
+* @flaky/@ Flaky is a being with specialized sensor eye.
+* @gui/@ Qt's GUI stuff. Contains view classes for bodies and organs in further subdirectories.
+* @infrastructure/@ World (i.e. Box2D wrapper), engine (physics simulation thread) and universe (manages world and engine)
+* @interface/@ Serialization and TCP communication
 
 
 h2. FAQ
