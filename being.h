@@ -28,6 +28,7 @@ public:
 
 protected:
 	void addSensor(Sensor* sensor);
+	void addActuator(Actuator* actuator);
 
 private:
 	QString id_;
