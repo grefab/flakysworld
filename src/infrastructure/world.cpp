@@ -64,6 +64,26 @@ void World::performSimulationStep(float32 timestep)
 
 World::RayHit World::rayCast(const QLineF& ray) const
 {
+	QMutexLocker locker(const_cast<QMutex*>(&mutex_));
+
+	return internal_rayCast(ray);
+}
+
+QList<World::RayHit> World::rayCast(const QList<QLineF>& rays) const
+{
+	QMutexLocker locker(const_cast<QMutex*>(&mutex_));
+
+	QList<RayHit> results;
+
+	foreach(const QLineF& ray, rays) {
+		results.append(internal_rayCast(ray));
+	}
+
+	return results;
+}
+
+World::RayHit World::internal_rayCast(const QLineF& ray) const
+{
 	const QPointF& from = ray.p1();
 	const QPointF& to = ray.p2();
 
@@ -111,17 +131,4 @@ World::RayHit World::rayCast(const QLineF& ray) const
 
 	/* no hit */
 	return RayHit(NULL, QPointF(0, 0), 1.0f);
-}
-
-QList<World::RayHit> World::rayCast(const QList<QLineF>& rays) const
-{
-	QMutexLocker locker(const_cast<QMutex*>(&mutex_));
-
-	QList<RayHit> results;
-
-	foreach(const QLineF& ray, rays) {
-		results.append(rayCast(ray));
-	}
-
-	return results;
 }

@@ -41,6 +41,7 @@ public:
 		qreal fraction;
 	};
 
+	RayHit rayCast(const QLineF& ray) const;
 	QList<RayHit> rayCast(const QList<QLineF>& rays) const;
 
 signals:
@@ -54,7 +55,7 @@ protected:
 
 private:
 	/* private because this is not thread safe */
-	RayHit rayCast(const QLineF& ray) const;
+	RayHit internal_rayCast(const QLineF& ray) const;
 
 	/* so we know about our engine, just used for thread comparison. */
 	void setEngine(Engine* engine) { engine_ = engine; }
