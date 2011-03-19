@@ -2,6 +2,7 @@
 #include <QThread>
 #include "engine.h"
 
+#include <QMutexLocker>
 #include <QDebug>
 
 World::World(QObject *parent) :
@@ -38,6 +39,8 @@ QList<Body*> World::bodies() const
 
 void World::performSimulationStep(float32 timestep)
 {
+	QMutexLocker locker(const_cast<QMutex*>(&mutex_));
+
 	const int32 B2_VELOCITYITERATIONS = 10;
 	const int32 B2_POSITIONITERATIONS = 10;
 	//	const float32 B2_TIMESTEP = 1.0f / FPS;
@@ -108,4 +111,17 @@ World::RayHit World::rayCast(const QLineF& ray) const
 
 	/* no hit */
 	return RayHit(NULL, QPointF(0, 0), 1.0f);
+}
+
+QList<World::RayHit> World::rayCast(const QList<QLineF>& rays) const
+{
+	QMutexLocker locker(const_cast<QMutex*>(&mutex_));
+
+	QList<RayHit> results;
+
+	foreach(const QLineF& ray, rays) {
+		results.append(rayCast(ray));
+	}
+
+	return results;
 }

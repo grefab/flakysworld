@@ -5,6 +5,8 @@
 #include <Box2D.h>
 #include <QLineF>
 #include <QHash>
+#include <QList>
+#include <QMutex>
 #include "bodies/body.h"
 
 class Engine;
@@ -39,7 +41,7 @@ public:
 		qreal fraction;
 	};
 
-	RayHit rayCast(const QLineF& ray) const;
+	QList<RayHit> rayCast(const QList<QLineF>& rays) const;
 
 signals:
 	void worldChanged();
@@ -51,9 +53,14 @@ protected:
 	b2World *world_;
 
 private:
+	/* private because this is not thread safe */
+	RayHit rayCast(const QLineF& ray) const;
+
 	/* so we know about our engine, just used for thread comparison. */
 	void setEngine(Engine* engine) { engine_ = engine; }
 	Engine* engine_;
+
+	QMutex mutex_;
 };
 
 #endif // WORLD_H
