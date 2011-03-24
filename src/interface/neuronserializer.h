@@ -15,7 +15,7 @@ public:
 
 signals:
 	void sensorSerialized(QByteArray sensorSerialized);
-	void actuatorDeserialized(QString actuatorId, QList<qreal> actuatorNeurons);
+	void actuatorDeserialized(QString beingId, QString actuatorId, QList<qreal> actuatorNeurons);
 
 public slots:
 	void serializeSensor(QList<qreal> sensorNeurons);
