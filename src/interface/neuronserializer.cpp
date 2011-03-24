@@ -89,18 +89,18 @@ void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
 	const QVariantMap actuatorMap = parsedDataMap[KEY_BEINGS_ACTUATORS].toMap();
 
 	/* we interpret every item in that map as a sensor with an array as data. */
-	foreach(QString actuator, actuatorMap.keys()) {
+	foreach(QString actuatorId, actuatorMap.keys()) {
 		/* this is our data */
-		const QVariantList v_actuatorNeurons = actuatorMap[actuator].toList();
+		const QVariantList v_actuatorNeurons = actuatorMap[actuatorId].toList();
 
 		/* convert QVariantList to QList<qreal> */
-		QList<qreal> result;
+		QList<qreal> neuronValues;
 		foreach(QVariant v, v_actuatorNeurons) {
-			result.append(v.toReal());
+			neuronValues.append(v.toReal());
 		}
 
 		/* tell everyone who is interested */
-		emit actuatorDeserialized(beingId, actuator, result);
+		emit actuatorDeserialized(beingId, actuatorId, neuronValues);
 	}
 }
 
