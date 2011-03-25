@@ -1,11 +1,11 @@
 #ifndef NEURONSERIALIZER_H
 #define NEURONSERIALIZER_H
 
-#include <QThread>
+#include <QObject>
 #include <QList>
 #include <QVariant>
 
-class NeuronSerializer : public QThread
+class NeuronSerializer : public QObject
 {
 	Q_OBJECT
 

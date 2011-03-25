@@ -45,13 +45,17 @@ Surface* setupGUI(Universe* universe)
 
 NeuronSerializer* setupNeuronIO(Universe* universe)
 {
-	/* the neuron serializer is a thread itself. */
-	NeuronSerializer* neuronSerializer = new NeuronSerializer();
-
 	/* this thread handles our network activity. */
 	QThread* networkThread = new QThread();
+
+	/* these are our workers */
+	NeuronSerializer* neuronSerializer = new NeuronSerializer();
+	neuronSerializer->moveToThread(networkThread);
+
 	TcpServer* tcpServer = new TcpServer(2345);
 	tcpServer->moveToThread(networkThread);
+
+	/* start working! */
 	networkThread->start();
 
 	/* set up data exchange */

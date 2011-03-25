@@ -11,18 +11,13 @@ static const QString KEY_BEINGS_ACTUATORS = "actuators";
 
 
 NeuronSerializer::NeuronSerializer(QObject *parent) :
-	QThread(parent)
+	QObject(parent)
 {
 	qRegisterMetaType< QList<qreal> >("QList<qreal>");
-
-	moveToThread(this);
-	start();
 }
 
 NeuronSerializer::~NeuronSerializer()
 {
-	quit();
-	wait();
 }
 
 void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
