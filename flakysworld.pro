@@ -10,7 +10,7 @@ SOURCES += src/main.cpp \
 	src/infrastructure/universe.cpp \
 	src/gui/surface.cpp \
 	src/flaky/eye.cpp \
-	src/gui/flakyviews/eyeview.cpp \
+	src/gui/views/eyeview.cpp \
 	src/being/sensor.cpp \
 	src/interface/neuronserializer.cpp \
 	src/external/qjson/src/serializer.cpp \
@@ -23,7 +23,7 @@ SOURCES += src/main.cpp \
 	src/being/being.cpp \
 	src/flaky/thruster.cpp \
     src/bodies/thing.cpp \
-    src/gui/bodyviews/thingview.cpp
+    src/gui/views/thingview.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += src
@@ -39,7 +39,7 @@ HEADERS += \
 	src/infrastructure/universe.h \
 	src/gui/surface.h \
 	src/flaky/eye.h \
-	src/gui/flakyviews/eyeview.h \
+	src/gui/views/eyeview.h \
 	src/being/sensor.h \
 	src/external/qjson/src/parser.h \
 	src/external/qjson/src/json_scanner.h \
@@ -52,7 +52,7 @@ HEADERS += \
 	src/being/being.h \
 	src/flaky/thruster.h \
     src/bodies/thing.h \
-    src/gui/bodyviews/thingview.h
+    src/gui/views/thingview.h
 
 FORMS += \
 	src/gui/surface.ui

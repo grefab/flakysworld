@@ -3,8 +3,8 @@
 #include "infrastructure/universe.h"
 
 #include "gui/surface.h"
-#include "gui/bodyviews/thingview.h"
-#include "gui/flakyviews/eyeview.h"
+#include "gui/views/thingview.h"
+#include "gui/views/eyeview.h"
 
 #include "interface/neuronserializer.h"
 #include "interface/tcpserver.h"
