@@ -5,6 +5,12 @@ Body::Body(const World* world, QPolygonF shape, QPointF position, qreal rotation
 		Thing(shape, position, rotation, parent),
 		world_(world->world())
 {
+	setupB2Body(type);
+	setupB2Fixture();
+}
+
+void Body::setupB2Body(Body::Type type)
+{
 	/* b2Body is an abstract entity of an element in the physics world */
 	b2BodyDef bodyDef;
 
@@ -16,8 +22,8 @@ Body::Body(const World* world, QPolygonF shape, QPointF position, qreal rotation
 		bodyDef.type = b2_dynamicBody;
 	}
 
-	bodyDef.position.Set(position.x(), position.y()); // bring in sync with QGraphisObject rotation
-	bodyDef.angle = rotation; // bring in sync with QGraphisObject rotation
+	bodyDef.position.Set(position().x(), position().y()); // bring in sync with QGraphisObject rotation
+	bodyDef.angle = rotation(); // bring in sync with QGraphisObject rotation
 
 	bodyDef.linearDamping = 0.2f;
 	bodyDef.angularDamping = 0.2f;
@@ -27,16 +33,17 @@ Body::Body(const World* world, QPolygonF shape, QPointF position, qreal rotation
 
 	/* bring ourselves into the world */
 	body_ = world_->CreateBody(&bodyDef);
+}
 
-
-	/* take care for Box2D's fixture */
-	/* The shape of our body */
+void Body::setupB2Fixture()
+{
+	/* take care for Box2D's fixture, the shape of our body */
 	b2PolygonShape shapeDef;
 
-	int n = shape.size();
+	int n = shape().size();
 	b2Vec2 vertices[n];
 	for ( int i = 0; i < n; ++i ) {
-		const QPointF &p = shape.at(i);
+		const QPointF &p = shape().at(i);
 		vertices[i].Set(p.x(), p.y());
 	}
 	shapeDef.Set(vertices, n);

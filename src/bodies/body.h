@@ -43,6 +43,8 @@ private:
 	b2World *world_;
 	b2Body *body_;
 
+	void setupB2Body(Body::Type type);
+	void setupB2Fixture();
 };
 
 #endif // BODY_H
