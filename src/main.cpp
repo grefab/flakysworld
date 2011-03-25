@@ -47,7 +47,7 @@ Surface* setupGUI(Universe* universe)
 
 	/* and our engage button */
 	// TODO: Just provide motoric information and let flaky handle the consequences.
-	QObject::connect(surface, SIGNAL(engageTriggered(qreal,qreal)), universe->being("flaky"), SLOT(accelerate(qreal,qreal)));
+	QObject::connect(surface, SIGNAL(engageTriggered(qreal,qreal)), universe, SLOT(thurstersHandler(qreal,qreal)));
 
 	return surface;
 }

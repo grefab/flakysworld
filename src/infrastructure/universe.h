@@ -25,6 +25,8 @@ public slots:
 	void keyPressHandler(Qt::Key key);
 	void keyReleaseHandler(Qt::Key key);
 
+	void thurstersHandler(qreal leftThruster, qreal rightThruster);
+
 	void actuatorRefresh(QString beingId, QString actuatorId, QList<qreal> neuronValues);
 
 protected:

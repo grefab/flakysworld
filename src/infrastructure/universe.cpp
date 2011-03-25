@@ -36,12 +36,25 @@ void Universe::keyPressHandler(Qt::Key key)
 {
 	Q_UNUSED(key);
 
-//	static_cast<const Flaky*>(being("flaky"))->accelerate(0.01, 0.01);
+	thurstersHandler(0.05f, 0.05f);
 }
 
 void Universe::keyReleaseHandler(Qt::Key key)
 {
 	Q_UNUSED(key);
+}
+
+void Universe::thurstersHandler(qreal leftThruster, qreal rightThruster)
+{
+	/* prepare neuron data */
+	QList<qreal> leftNeuronValues;
+	leftNeuronValues.append(leftThruster);
+	QList<qreal> rightNeuronValues;
+	rightNeuronValues.append(rightThruster);
+
+	/* engage flaky's thursters */
+	actuatorRefresh("flaky", "thrl", leftNeuronValues);
+	actuatorRefresh("flaky", "thrr", rightNeuronValues);
 }
 
 void Universe::actuatorRefresh(QString beingId, QString actuatorId, QList<qreal> neuronValues)
