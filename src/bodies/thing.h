@@ -25,6 +25,10 @@ public:
 protected:
 	void update(QPointF position, qreal rotation);
 
+signals:
+	/* a view can connect to this to take care for updates */
+	void changedPosition(QTransform transformation) const;
+
 private:
 	QString id_;
 

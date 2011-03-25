@@ -16,6 +16,8 @@ void Thing::update(QPointF position, qreal rotation)
 	position_ = position;
 	rotation_ = rotation;
 	updateMapToWorld();
+
+	emit changedPosition(getWorldMap());
 }
 
 void Thing::updateMapToWorld()

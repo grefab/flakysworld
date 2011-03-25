@@ -3,7 +3,7 @@
 #include "infrastructure/universe.h"
 
 #include "gui/surface.h"
-#include "gui/bodyviews/bodyview.h"
+#include "gui/bodyviews/thingview.h"
 #include "gui/flakyviews/eyeview.h"
 
 #include "interface/neuronserializer.h"
@@ -18,7 +18,7 @@ Surface* setupGUI(Universe* universe)
 
 	/* build a corresponding view for each body. */
 	foreach(Body* body, universe->world()->bodies()) {
-		surface->scene()->addItem( new BodyView(*body) );
+		surface->scene()->addItem( new ThingView(*body) );
 	}
 
 	/* build a corresponding view for flaky's eyes. */

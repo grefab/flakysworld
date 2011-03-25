@@ -28,10 +28,6 @@ public:
 	/* pushes the body */
 	void applyForce(const QPointF& force, const QPointF& localPoint);
 
-signals:
-	/* a view can connect to this to take care for updates */
-	void changedPosition(QTransform transformation) const;
-
 protected:
 	b2Fixture* addFixture(const b2FixtureDef& fixtureDef);
 

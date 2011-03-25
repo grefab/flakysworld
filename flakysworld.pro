@@ -4,7 +4,6 @@ QT += opengl \
 SOURCES += src/main.cpp \
 	src/bodies/body.cpp \
 	src/infrastructure/engine.cpp \
-	src/gui/bodyviews/bodyview.cpp \
 	src/flaky/flaky.cpp \
 	src/infrastructure/world.cpp \
 	src/gui/graphicsview.cpp \
@@ -23,7 +22,8 @@ SOURCES += src/main.cpp \
 	src/being/actuator.cpp \
 	src/being/being.cpp \
 	src/flaky/thruster.cpp \
-    src/bodies/thing.cpp
+    src/bodies/thing.cpp \
+    src/gui/bodyviews/thingview.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += src
@@ -33,7 +33,6 @@ LIBS += -lBox2D
 HEADERS += \
 	src/bodies/body.h \
 	src/infrastructure/engine.h \
-	src/gui/bodyviews/bodyview.h \
 	src/flaky/flaky.h \
 	src/infrastructure/world.h \
 	src/gui/graphicsview.h \
@@ -52,7 +51,8 @@ HEADERS += \
 	src/being/actuator.h \
 	src/being/being.h \
 	src/flaky/thruster.h \
-    src/bodies/thing.h
+    src/bodies/thing.h \
+    src/gui/bodyviews/thingview.h
 
 FORMS += \
 	src/gui/surface.ui
