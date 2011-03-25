@@ -36,7 +36,7 @@ void Universe::keyPressHandler(Qt::Key key)
 {
 	Q_UNUSED(key);
 
-	static_cast<const Flaky*>(being("flaky"))->accelerate(0.01, 0.01);
+//	static_cast<const Flaky*>(being("flaky"))->accelerate(0.01, 0.01);
 }
 
 void Universe::keyReleaseHandler(Qt::Key key)

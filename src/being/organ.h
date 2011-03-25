@@ -25,12 +25,11 @@ public slots:
 
 protected:
 	const Being& being_;
+	QPointF position_;
+	qreal rotation_;
 
 private:
 	QString id_;
-
-	QPointF position_;
-	qreal rotation_;
 
 	QTransform mapToParent_;
 	QTransform mapParentToWorld_;

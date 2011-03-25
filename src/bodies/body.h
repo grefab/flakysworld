@@ -43,13 +43,12 @@ public:
 
 	QTransform getWorldMap() const { return mapToWorld_; }
 
+	/* pushes the body */
+	void applyForce(const QPointF& force, const QPointF& localPoint);
+
 signals:
 	/* a view can connect to this to take care for updates */
 	void changedPosition(QTransform transformation) const;
-
-protected slots:
-	/* here comes the stuff a controller needs to manipulate a body */
-	void applyForce(const QPointF& force, const QPointF& localPoint);
 
 protected:
 	b2Fixture* addFixture(const b2FixtureDef& fixtureDef);
