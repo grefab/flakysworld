@@ -5,8 +5,6 @@ SOURCES += src/main.cpp \
 	src/bodies/body.cpp \
 	src/infrastructure/engine.cpp \
 	src/gui/bodyviews/bodyview.cpp \
-	src/bodies/polygonbody.cpp \
-	src/gui/bodyviews/polygonbodyview.cpp \
 	src/flaky/flaky.cpp \
 	src/infrastructure/world.cpp \
 	src/gui/graphicsview.cpp \
@@ -36,8 +34,6 @@ HEADERS += \
 	src/bodies/body.h \
 	src/infrastructure/engine.h \
 	src/gui/bodyviews/bodyview.h \
-	src/bodies/polygonbody.h \
-	src/gui/bodyviews/polygonbodyview.h \
 	src/flaky/flaky.h \
 	src/infrastructure/world.h \
 	src/gui/graphicsview.h \

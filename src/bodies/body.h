@@ -19,13 +19,7 @@ public:
 		Dynamic
 	};
 
-protected:
-	/* protected constructor, so only inheriting classes can access it. this way
-	 * this class can not be instaciated directly.
-	 */
-	explicit Body(const World* world, QPointF position, qreal rotation, Type type = Dynamic, QObject *parent = 0);
-
-public:
+	explicit Body(const World* world, QPolygonF shape, QPointF position, qreal rotation, Type type = Dynamic, QObject *parent = 0);
 	~Body();
 
 	/* tell us that a simulation step has happened and something may have changed. */

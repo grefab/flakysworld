@@ -1,5 +1,5 @@
 #include "flaky.h"
-#include "bodies/polygonbody.h"
+#include "bodies/body.h"
 #include <QPolygonF>
 #include "eye.h"
 #include "thruster.h"
@@ -28,7 +28,7 @@ Body* Flaky::setupBody(World* world)
 			QPointF(-0.03f, -0.03f);
 
 	/* make it a body */
-	Body* body = new PolygonBody(world, QPointF(0, 0), 0.0f, flakyPoly, Body::Dynamic);
+	Body* body = new Body(world, flakyPoly, QPointF(0, 0), 0.0f, Body::Dynamic);
 	body->setId("flaky");
 
 	return body;

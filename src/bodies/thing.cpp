@@ -1,8 +1,9 @@
 #include "thing.h"
 #include <QUuid>
 
-Thing::Thing(QPointF position, qreal rotation, QObject *parent) :
+Thing::Thing(QPolygonF shape, QPointF position, qreal rotation, QObject *parent) :
 	QObject(parent),
+	shape_(shape),
 	position_(position),
 	rotation_(rotation)
 {

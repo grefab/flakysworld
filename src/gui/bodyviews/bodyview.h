@@ -2,11 +2,11 @@
 #define BODYVIEW_H
 
 #include <QObject>
-#include <QAbstractGraphicsShapeItem>
+#include <QGraphicsPolygonItem>
 #include "bodies/body.h"
 #include <QPointF>
 
-class BodyView : public QObject, public QAbstractGraphicsShapeItem
+class BodyView : public QObject, public QGraphicsPolygonItem
 {
 	Q_OBJECT
 

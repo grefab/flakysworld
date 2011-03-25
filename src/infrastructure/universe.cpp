@@ -1,5 +1,5 @@
 #include "universe.h"
-#include "bodies/polygonbody.h"
+#include "bodies/body.h"
 #include "flaky/flaky.h"
 
 #include <QDebug>
@@ -83,10 +83,10 @@ void Universe::setup()
 			QPointF(0.0f, 0.5f) <<
 			QPointF(0.0f, -0.5f);
 
-	PolygonBody* bodyLeft = new PolygonBody(world_, QPointF(-0.5f, 0.0f), 0, edgePoly, Body::Static);
-	PolygonBody* bodyRight = new PolygonBody(world_, QPointF(0.5f, 0.0f), 0, edgePoly, Body::Static);
-	PolygonBody* bodyTop = new PolygonBody(world_, QPointF(0.0f, 0.5f), PI / 2.0f, edgePoly, Body::Static);
-	PolygonBody* bodyBottom = new PolygonBody(world_, QPointF(0.0f, -0.5f), PI / 2.0f, edgePoly, Body::Static);
+	Body* bodyLeft = new Body(world_, edgePoly, QPointF(-0.5f, 0.0f), 0, Body::Static);
+	Body* bodyRight = new Body(world_, edgePoly, QPointF(0.5f, 0.0f), 0, Body::Static);
+	Body* bodyTop = new Body(world_, edgePoly, QPointF(0.0f, 0.5f), PI / 2.0f, Body::Static);
+	Body* bodyBottom = new Body(world_, edgePoly, QPointF(0.0f, -0.5f), PI / 2.0f, Body::Static);
 
 	world_->addBody(bodyLeft);
 	world_->addBody(bodyRight);
@@ -111,14 +111,14 @@ void Universe::setup()
 
 	/* distribute a lot of them everywhere */
 	for (int i = 0; i < 100; ++i) {
-		PolygonBody* body = new PolygonBody(
+		Body* body = new Body(
 				world_,
+				regularPoly,
 				QPointF(
 						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
 						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f
 						),
 				0,
-				regularPoly,
 				Body::Dynamic);
 		world_->addBody(body);
 	}

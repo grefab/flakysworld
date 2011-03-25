@@ -1,14 +1,21 @@
 #include "bodyview.h"
+#include <QBrush>
 
 BodyView::BodyView(const Body& body, QGraphicsItem *parent) :
-		QAbstractGraphicsShapeItem(parent),
+		QGraphicsPolygonItem(parent),
 		body_(body)
 {
+	/* colorize! */
+	setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
+
 	/* we need the body only to connect to it. no reference is stored. */
 	connect(&body, SIGNAL(changedPosition(QTransform)), this, SLOT(bodyChanged(QTransform)));
 
 	/* initially set our location parameters */
 	bodyChanged(body.getWorldMap());
+
+	/* adept our model's shape */
+	setPolygon(body.shape());
 }
 
 void BodyView::bodyChanged(QTransform transformation)

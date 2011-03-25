@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QPointF>
+#include <QPolygonF>
 #include <QTransform>
 
 class Thing : public QObject
@@ -10,11 +11,12 @@ class Thing : public QObject
 	Q_OBJECT
 
 public:
-	explicit Thing(QPointF position, qreal rotation, QObject *parent = 0);
+	explicit Thing(QPolygonF shape, QPointF position, qreal rotation, QObject *parent = 0);
 
 	void setId(QString newId) { id_ = newId; };
 	const QString& id() const { return id_; };
 
+	const QPolygonF& shape() const { return shape_; };
 	const QPointF& position() const { return position_; };
 	const qreal& rotation() const { return rotation_; };
 
@@ -26,6 +28,7 @@ protected:
 private:
 	QString id_;
 
+	QPolygonF shape_;
 	QPointF position_;
 	qreal rotation_;
 

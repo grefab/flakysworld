@@ -1,8 +1,8 @@
 #include "body.h"
 #include "infrastructure/world.h"
 
-Body::Body(const World* world, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
-		Thing(position, rotation, parent),
+Body::Body(const World* world, QPolygonF shape, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
+		Thing(shape, position, rotation, parent),
 		world_(world->world())
 {
 	/* b2Body is an abstract entity of an element in the physics world */
@@ -27,6 +27,28 @@ Body::Body(const World* world, QPointF position, qreal rotation, Body::Type type
 
 	/* bring ourselves into the world */
 	body_ = world_->CreateBody(&bodyDef);
+
+
+	/* take care for Box2D's fixture */
+	/* The shape of our body */
+	b2PolygonShape shapeDef;
+
+	int n = shape.size();
+	b2Vec2 vertices[n];
+	for ( int i = 0; i < n; ++i ) {
+		const QPointF &p = shape.at(i);
+		vertices[i].Set(p.x(), p.y());
+	}
+	shapeDef.Set(vertices, n);
+
+	/* Fixture is the physical representation of a shape */
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shapeDef;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.5f;
+	fixtureDef.restitution = 0.2f;
+
+	addFixture(fixtureDef);
 }
 
 Body::~Body()

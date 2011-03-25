@@ -3,7 +3,7 @@
 #include "infrastructure/universe.h"
 
 #include "gui/surface.h"
-#include "gui/bodyviews/polygonbodyview.h"
+#include "gui/bodyviews/bodyview.h"
 #include "gui/flakyviews/eyeview.h"
 
 #include "interface/neuronserializer.h"
@@ -18,10 +18,7 @@ Surface* setupGUI(Universe* universe)
 
 	/* build a corresponding view for each body. */
 	foreach(Body* body, universe->world()->bodies()) {
-		PolygonBody* polygonBody = dynamic_cast<PolygonBody*>(body);
-		if ( polygonBody ) {
-			surface->scene()->addItem( new PolygonBodyView(*polygonBody) );
-		}
+		surface->scene()->addItem( new BodyView(*body) );
 	}
 
 	/* build a corresponding view for flaky's eyes. */
