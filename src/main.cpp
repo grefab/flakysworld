@@ -43,7 +43,7 @@ Surface* setupGUI(Universe* universe)
 	return surface;
 }
 
-NeuronSerializer* setupNeuronIO(Universe* universe)
+QThread* setupNeuronIO(Universe* universe)
 {
 	/* this thread handles our network activity. */
 	QThread* networkThread = new QThread();
@@ -75,7 +75,7 @@ NeuronSerializer* setupNeuronIO(Universe* universe)
 		}
 	}
 
-	return neuronSerializer;
+	return networkThread;
 
 	/* note that networkThread and tcpServer will never get deleted. this can be improved.
 	 * however, they will die at the end of the program and they are idle once neuronSerializer
@@ -102,13 +102,15 @@ int main(int argc, char *argv[])
 	if ( useGui ) surface = setupGUI(universe);
 
 	/* start neuron IO */
-	NeuronSerializer* neuronSerializer = setupNeuronIO(universe);
+	QThread* networkThread = setupNeuronIO(universe);
 
 	/* preparation is done. let if flow! */
 	return app->exec();
 
 	/* when we reach this, the program is finished. delete everything in reverse order. */
-	delete neuronSerializer;
+	networkThread->quit();
+	networkThread->wait();
+	delete networkThread;
 	delete surface;
 	delete universe;
 	delete app;
