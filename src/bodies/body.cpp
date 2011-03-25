@@ -1,13 +1,10 @@
 #include "body.h"
-#include <QUuid>
 #include "infrastructure/world.h"
 
 Body::Body(const World* world, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
-		QObject(parent),
+		Thing(position, rotation, parent),
 		world_(world->world())
 {
-	id_ = QUuid::createUuid().toString();
-
 	/* b2Body is an abstract entity of an element in the physics world */
 	b2BodyDef bodyDef;
 
@@ -37,14 +34,14 @@ Body::~Body()
 	world_->DestroyBody(body_);
 }
 
-QPointF Body::position() const
+QPointF Body::getPosition() const
 {
 	const b2Vec2& position = body_->GetPosition();
 
 	return QPointF(position.x, position.y);
 }
 
-qreal Body::rotation() const
+qreal Body::getRotation() const
 {
 	return body_->GetAngle();
 }
@@ -54,33 +51,15 @@ b2Fixture* Body::addFixture(const b2FixtureDef& fixtureDef)
 	return body_->CreateFixture(&fixtureDef);
 }
 
-QString Body::id() const
-{
-	return id_;
-}
-
-void Body::setId(QString newId)
-{
-	id_ = newId;
-}
-
 void Body::simulationStepHappened()
 {
 	/* only update when we need */
 	if( body_->IsAwake() ) {
-		updateMapToWorld();
+		update(getPosition(), getRotation());
 
-		emit changedPosition(mapToWorld_);
+		emit changedPosition(getWorldMap());
 	}
 }
-
-void Body::updateMapToWorld()
-{
-	mapToWorld_.reset();
-	mapToWorld_.translate(position().x(), position().y());
-	mapToWorld_.rotateRadians(rotation());
-}
-
 
 void Body::applyForce(const QPointF& force, const QPointF& localPoint)
 {

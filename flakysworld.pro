@@ -26,7 +26,8 @@ SOURCES += src/main.cpp \
 	src/being/organ.cpp \
 	src/being/actuator.cpp \
 	src/being/being.cpp \
-	src/flaky/thruster.cpp
+	src/flaky/thruster.cpp \
+    src/bodies/thing.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += src
@@ -58,7 +59,8 @@ HEADERS += \
 	src/being/organ.h \
 	src/being/actuator.h \
 	src/being/being.h \
-	src/flaky/thruster.h
+	src/flaky/thruster.h \
+    src/bodies/thing.h
 
 FORMS += \
 	src/gui/surface.ui

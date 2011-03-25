@@ -3,15 +3,13 @@
 
 static const float PI = 3.14159265359;
 
-#include <QObject>
-#include <QString>
 #include <Box2D.h>
-#include <QPointF>
-#include <QTransform>
+#include "thing.h"
+
 
 class World;
 
-class Body : public QObject
+class Body : public Thing
 {
 	Q_OBJECT
 
@@ -33,16 +31,6 @@ public:
 	/* tell us that a simulation step has happened and something may have changed. */
 	void simulationStepHappened();
 
-	QPointF position() const;
-	qreal rotation() const;
-
-	void setId(QString newId);
-	QString id() const;
-
-	bool isAwake() const { return body_->IsAwake(); }
-
-	QTransform getWorldMap() const { return mapToWorld_; }
-
 	/* pushes the body */
 	void applyForce(const QPointF& force, const QPointF& localPoint);
 
@@ -54,12 +42,13 @@ protected:
 	b2Fixture* addFixture(const b2FixtureDef& fixtureDef);
 
 private:
-	QString id_;
+	bool isAwake() const { return body_->IsAwake(); }
+	QPointF getPosition() const;
+	qreal getRotation() const;
+
 	b2World *world_;
 	b2Body *body_;
 
-	void updateMapToWorld();
-	QTransform mapToWorld_;
 };
 
 #endif // BODY_H
