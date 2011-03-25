@@ -28,8 +28,7 @@ Body* Flaky::setupBody(World* world)
 			QPointF(-0.03f, -0.03f);
 
 	/* make it a body */
-	Body* body = new Body(world, flakyPoly, QPointF(0, 0), 0.0f, Body::Dynamic);
-	body->setId("flaky");
+	Body* body = new Body(world, flakyPoly, QPointF(0, 0), 0.0f, Body::Dynamic, "flaky");
 
 	return body;
 }

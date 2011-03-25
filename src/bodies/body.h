@@ -19,7 +19,7 @@ public:
 		Dynamic
 	};
 
-	explicit Body(const World* world, QPolygonF shape, QPointF position, qreal rotation, Type type = Dynamic, QObject *parent = 0);
+	explicit Body(const World* world, QPolygonF shape, QPointF position, qreal rotation, Type type = Dynamic, QString id = "", QObject *parent = 0);
 	~Body();
 
 	/* tell us that a simulation step has happened and something may have changed. */

@@ -11,9 +11,8 @@ class Thing : public QObject
 	Q_OBJECT
 
 public:
-	explicit Thing(QPolygonF shape, QPointF position, qreal rotation, QObject *parent = 0);
+	explicit Thing(QPolygonF shape, QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
-	void setId(QString newId) { id_ = newId; };
 	const QString& id() const { return id_; };
 
 	const QPolygonF& shape() const { return shape_; };

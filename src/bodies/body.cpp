@@ -1,8 +1,8 @@
 #include "body.h"
 #include "infrastructure/world.h"
 
-Body::Body(const World* world, QPolygonF shape, QPointF position, qreal rotation, Body::Type type, QObject *parent) :
-		Thing(shape, position, rotation, parent),
+Body::Body(const World* world, QPolygonF shape, QPointF position, qreal rotation, Body::Type type, QString id, QObject *parent) :
+		Thing(shape, position, rotation, id, parent),
 		world_(world->world())
 {
 	setupB2Body(type);
