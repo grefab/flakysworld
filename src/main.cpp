@@ -85,23 +85,31 @@ NeuronSerializer* setupNeuronIO(Universe* universe)
 
 int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
-	qsrand(time(0));
+	const bool useGui = true;
+
+	QCoreApplication* app;
+	if ( useGui ) {
+		app = new QApplication(argc, argv);
+	} else {
+		app = new QCoreApplication(argc, argv);
+	}
 
 	/* our universe. it manages world and engine that keeps world alive. */
 	Universe* universe = new Universe();
 
 	/* make everything visible */
-	Surface* surface = setupGUI(universe);
+	Surface* surface = 0;
+	if ( useGui ) surface = setupGUI(universe);
 
 	/* start neuron IO */
 	NeuronSerializer* neuronSerializer = setupNeuronIO(universe);
 
 	/* preparation is done. let if flow! */
-	return app.exec();
+	return app->exec();
 
 	/* when we reach this, the program is finished. delete everything in reverse order. */
 	delete neuronSerializer;
 	delete surface;
 	delete universe;
+	delete app;
 }
