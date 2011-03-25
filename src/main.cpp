@@ -54,15 +54,20 @@ NeuronSerializer* setupNeuronIO(Universe* universe)
 	tcpServer->moveToThread(networkThread);
 	networkThread->start();
 
-	/* allow for data exchange */
-	QObject::connect(tcpServer, SIGNAL(dataArrived(QByteArray)), neuronSerializer, SLOT(deserializeActuator(QByteArray)));
-	QObject::connect(neuronSerializer, SIGNAL(sensorSerialized(QByteArray)), tcpServer, SLOT(publish(QByteArray)));
-	QObject::connect(neuronSerializer, SIGNAL(actuatorDeserialized(QString,QString,QList<qreal>)), universe, SLOT(actuatorRefresh(QString,QString,QList<qreal>)));
+	/* set up data exchange */
+	{
+		/* forward incoming data to deserialization */
+		QObject::connect(tcpServer, SIGNAL(dataArrived(QVariant)), neuronSerializer, SLOT(deserializeActuator(QVariant)));
+		/* publish serialized sensors */
+		QObject::connect(neuronSerializer, SIGNAL(sensorSerialized(QVariant)), tcpServer, SLOT(publish(QVariant)));
+		/* handle incoming actuator data */
+		QObject::connect(neuronSerializer, SIGNAL(actuatorDeserialized(QString,QString,QList<qreal>)), universe, SLOT(actuatorRefresh(QString,QString,QList<qreal>)));
 
-	/* we'd like to output all our sensors. */
-	foreach(Being* being, universe->beings()) {
-		foreach(Sensor* sensor, being->sensors()) {
-			QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), neuronSerializer, SLOT(serializeSensor(QList<qreal>)));
+		/* we'd like to output all our sensors. */
+		foreach(Being* being, universe->beings()) {
+			foreach(Sensor* sensor, being->sensors()) {
+				QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), neuronSerializer, SLOT(serializeSensor(QList<qreal>)));
+			}
 		}
 	}
 

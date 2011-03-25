@@ -3,7 +3,7 @@
 
 #include <QThread>
 #include <QList>
-#include <QByteArray>
+#include <QVariant>
 
 class NeuronSerializer : public QThread
 {
@@ -14,15 +14,13 @@ public:
 	~NeuronSerializer();
 
 signals:
-	void sensorSerialized(QByteArray sensorSerialized);
+	void sensorSerialized(QVariant sensorSerialized);
 	void actuatorDeserialized(QString beingId, QString actuatorId, QList<qreal> actuatorNeurons);
 
 public slots:
 	void serializeSensor(QList<qreal> sensorNeurons);
-	void deserializeActuator(QByteArray actuatorSerialized);
+	void deserializeActuator(QVariant actuatorSerialized);
 
-private:
-	bool looksLikeJSON(const QByteArray& data);
 };
 
 #endif // NEURONSERIALIZER_H

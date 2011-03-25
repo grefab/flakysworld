@@ -1,10 +1,6 @@
 #include "neuronserializer.h"
 
-#include <QVariant>
 #include <QDebug>
-
-#include "external/qjson/src/serializer.h"
-#include "external/qjson/src/parser.h"
 
 #include "being/sensor.h"
 
@@ -54,34 +50,15 @@ void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 	QVariantMap v_sensors;
 	v_sensors.insert(sensorId, v_sensorNeurons);
 
-	/* finally insert the map */
+	/* finally insert sensor into the map */
 	saveme.insert(KEY_BEINGS_SENSORS, v_sensors);
 
-	/* perform serialization */
-	QJson::Serializer serializer;
-	QByteArray result = serializer.serialize(saveme);
-
 	/* tell everyone who is interested */
-	emit sensorSerialized(result);
+	emit sensorSerialized(saveme);
 }
 
-void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
+void NeuronSerializer::deserializeActuator(QVariant parsedData)
 {
-	/* perform some consistency checks first to ignore HTTP stuff. */
-	if ( !looksLikeJSON(actuatorSerialized) ) {
-		return;
-	}
-
-	/* convert JSON to something we can handle */
-	QJson::Parser parser;
-	bool ok;
-	QVariant parsedData = parser.parse(actuatorSerialized, &ok);
-
-	if ( !ok ) {
-		/* we have a problem. */
-		qDebug() << "Error parsing raw data. Assumed JSON.";
-		return;
-	}
 	QVariantMap parsedDataMap = parsedData.toMap();
 
 	/* find which being is concerned */
@@ -102,20 +79,4 @@ void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
 		/* tell everyone who is interested */
 		emit actuatorDeserialized(beingId, actuatorId, neuronValues);
 	}
-}
-
-bool NeuronSerializer::looksLikeJSON(const QByteArray& data)
-{
-	/* no data? no json. */
-	if ( data.size() <= 0 ) {
-		return false;
-	}
-
-	/* let's hope there's nothing except json that is included in curly brackets. */
-	if (data.at(0) != '{' || data.at(data.size()-1) != '}') {
-		return false;
-	}
-
-	/* if we reach this point, it seems we have a JSON object. */
-	return true;
 }
