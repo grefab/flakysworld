@@ -3,7 +3,6 @@
 #include "infrastructure/universe.h"
 
 #include "gui/surface.h"
-#include "gui/bodyviews/circlebodyview.h"
 #include "gui/bodyviews/polygonbodyview.h"
 #include "gui/flakyviews/eyeview.h"
 
@@ -19,11 +18,6 @@ Surface* setupGUI(Universe* universe)
 
 	/* build a corresponding view for each body. */
 	foreach(Body* body, universe->world()->bodies()) {
-		CircleBody* circleBody = dynamic_cast<CircleBody*>(body);
-		if ( circleBody ) {
-			surface->scene()->addItem( new CircleBodyView(*circleBody) );
-		}
-
 		PolygonBody* polygonBody = dynamic_cast<PolygonBody*>(body);
 		if ( polygonBody ) {
 			surface->scene()->addItem( new PolygonBodyView(*polygonBody) );

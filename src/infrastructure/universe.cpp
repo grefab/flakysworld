@@ -1,5 +1,4 @@
 #include "universe.h"
-#include "bodies/circlebody.h"
 #include "bodies/polygonbody.h"
 #include "flaky/flaky.h"
 
@@ -95,16 +94,33 @@ void Universe::setup()
 	world_->addBody(bodyBottom);
 
 	/* finally, build a set of other things. */
+	QPolygonF regularPoly;
+
+	/* construct regular polygons */
+	{
+		const int edges = 6;
+		const qreal radius = 0.03;
+
+		QTransform rotationMap;
+		QPointF edge(0, radius);
+		for ( int i = 0; i < edges; ++i ) {
+			regularPoly << rotationMap.map(edge);
+			rotationMap.rotate( (qreal)360 / (qreal)edges );
+		}
+	}
+
+	/* distribute a lot of them everywhere */
 	for (int i = 0; i < 100; ++i) {
-		CircleBody* circleBody = new CircleBody(
+		PolygonBody* body = new PolygonBody(
 				world_,
 				QPointF(
 						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
 						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f
 						),
-				0.02f,
+				0,
+				regularPoly,
 				Body::Dynamic);
-		world_->addBody(circleBody);
+		world_->addBody(body);
 	}
 }
 
