@@ -84,8 +84,15 @@ void Body::updateMapToWorld()
 
 void Body::applyForce(const QPointF& force, const QPointF& localPoint)
 {
-	b2Vec2 b2Force(force.x(), force.y());
+	/* calculate directed force */
+	QTransform transformation;
+	transformation.rotateRadians(rotation());
+	QPointF directedForce = transformation.map(force);
+
+	/* convert to b2Vec2 */
+	b2Vec2 b2Force(directedForce.x(), directedForce.y());
 	b2Vec2 b2LocalPoint(localPoint.x(), localPoint.y());
 
+	/* finally apply */
 	body_->ApplyForce(b2Force, body_->GetWorldPoint(b2LocalPoint));
 }

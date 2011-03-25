@@ -24,11 +24,15 @@ public:
 	QString id() const { return id_; }
 	const World& world() const { return *world_; }
 	Body* body() const { return body_; }
-	QList<Sensor*> sensors() const { return sensors_.values(); }
+	const QHash<QString, Sensor*>& sensors() const { return sensors_; }
+	const QHash<QString, Actuator*> &actuators() const { return actuators_; }
 
 protected:
 	void addSensor(Sensor* sensor);
 	void addActuator(Actuator* actuator);
+
+protected slots:
+	void actuatorRefresh(QString actuatorId, QList<qreal> neuronValues);
 
 private:
 	QString id_;

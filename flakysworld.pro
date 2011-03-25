@@ -9,7 +9,6 @@ SOURCES += src/main.cpp \
 	src/gui/bodyviews/circlebodyview.cpp \
 	src/bodies/polygonbody.cpp \
 	src/gui/bodyviews/polygonbodyview.cpp \
-	src/bodycontroller.cpp \
 	src/flaky/flaky.cpp \
 	src/infrastructure/world.cpp \
 	src/gui/graphicsview.cpp \
@@ -26,7 +25,8 @@ SOURCES += src/main.cpp \
 	src/interface/tcpserver.cpp \
 	src/being/organ.cpp \
 	src/being/actuator.cpp \
-	src/being/being.cpp
+	src/being/being.cpp \
+	src/flaky/thruster.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += src
@@ -41,7 +41,6 @@ HEADERS += \
 	src/gui/bodyviews/circlebodyview.h \
 	src/bodies/polygonbody.h \
 	src/gui/bodyviews/polygonbodyview.h \
-	src/bodycontroller.h \
 	src/flaky/flaky.h \
 	src/infrastructure/world.h \
 	src/gui/graphicsview.h \
@@ -58,7 +57,8 @@ HEADERS += \
 	src/interface/tcpserver.h \
 	src/being/organ.h \
 	src/being/actuator.h \
-	src/being/being.h
+	src/being/being.h \
+	src/flaky/thruster.h
 
 FORMS += \
 	src/gui/surface.ui

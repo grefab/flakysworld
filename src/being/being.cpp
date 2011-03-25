@@ -3,6 +3,8 @@
 #include "sensor.h"
 #include "actuator.h"
 
+#include <QDebug>
+
 Being::Being(World* world, Body* body, QString id, QObject *parent) :
 	QObject(parent),
 	id_(id),
@@ -33,4 +35,22 @@ void Being::addActuator(Actuator *actuator)
 {
 	/* store it for management */
 	actuators_.insert(actuator->id(), actuator);
+}
+
+void Being::actuatorRefresh(QString actuatorId, QList<qreal> neuronValues)
+{
+	Actuator* actuator = actuators_.value(actuatorId);
+
+	if ( !actuator ) {
+		qDebug() << "actuator" << actuatorId << "not found in being" << id();
+		return;
+	}
+
+	/* call the actuator update asynchronously */
+	QMetaObject::invokeMethod(
+				actuator,
+				"receiveInput",
+				Qt::QueuedConnection,
+				Q_ARG(QList<qreal>, neuronValues)
+				);
 }

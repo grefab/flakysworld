@@ -25,6 +25,8 @@ public slots:
 	void keyPressHandler(Qt::Key key);
 	void keyReleaseHandler(Qt::Key key);
 
+	void actuatorRefresh(QString beingId, QString actuatorId, QList<qreal> neuronValues);
+
 protected:
 	void setup();
 	void addBeing(Being* being);

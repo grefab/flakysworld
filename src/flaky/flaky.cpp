@@ -2,16 +2,20 @@
 #include "bodies/polygonbody.h"
 #include <QPolygonF>
 #include "eye.h"
+#include "thruster.h"
 
 Flaky::Flaky(World* world, QObject *parent) :
 		Being(world, setupBody(world), "flaky", parent)
 {
-	/* let us be able to control the body */
-	bodyController_ = new BodyController(body());
-
 	/* create an eye */
 	Eye* eye = new Eye(*this, QPointF(0.03f, 0.0f), 0, 0.6f, "eye", this);
 	addSensor(eye);
+
+	/* create our thrusters */
+	Thruster* thrl = new Thruster(*this, QPointF(-0.03f, 0.03f), 0, "thrl", this);
+	Thruster* thrr = new Thruster(*this, QPointF(-0.03f, -0.03f), 0, "thrr", this);
+	addActuator(thrl);
+	addActuator(thrr);
 }
 
 Body* Flaky::setupBody(World* world)
@@ -32,14 +36,4 @@ Body* Flaky::setupBody(World* world)
 
 Flaky::~Flaky()
 {
-	delete bodyController_;
-}
-
-void Flaky::accelerate(qreal leftThruster, qreal rightThruster) const
-{
-	/* left thruster */
-	bodyController_->push(QPointF(leftThruster, 0), QPointF(-0.03, 0.03));
-
-	/* right thruster */
-	bodyController_->push(QPointF(rightThruster, 0), QPointF(-0.03, -0.03));
 }

@@ -25,7 +25,7 @@ void TcpServer::socketDataAvailable()
 
 	/* if we have a complete line, pass it on! */
 	while ( socket->canReadLine() ) {
-		QByteArray line = socket->readLine();
+		QByteArray line = socket->readLine().trimmed();
 
 		emit dataArrived(line);
 	}

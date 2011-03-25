@@ -9,8 +9,9 @@
 #include "being/sensor.h"
 
 /* string definitions needed later */
-static const QString KEY_SENDING_BEING = "being";
+static const QString KEY_BEING = "being";
 static const QString KEY_BEINGS_SENSORS = "sensors";
+static const QString KEY_BEINGS_ACTUATORS = "actuators";
 
 
 NeuronSerializer::NeuronSerializer(QObject *parent) :
@@ -47,7 +48,7 @@ void NeuronSerializer::serializeSensor(QList<qreal> sensorNeurons)
 	/* store sensor data */
 
 	/* tell who sent it */
-	saveme.insert(KEY_SENDING_BEING, beingId);
+	saveme.insert(KEY_BEING, beingId);
 
 	/* we may have multiple sensors, so store the sensor in a map. */
 	QVariantMap v_sensors;
@@ -83,19 +84,23 @@ void NeuronSerializer::deserializeActuator(QByteArray actuatorSerialized)
 	}
 	QVariantMap parsedDataMap = parsedData.toMap();
 
+	/* find which being is concerned */
+	const QString beingId = parsedDataMap[KEY_BEING].toString();
+	const QVariantMap actuatorMap = parsedDataMap[KEY_BEINGS_ACTUATORS].toMap();
+
 	/* we interpret every item in that map as a sensor with an array as data. */
-	foreach(QString actuator, parsedDataMap.keys()) {
+	foreach(QString actuatorId, actuatorMap.keys()) {
 		/* this is our data */
-		const QVariantList v_actuatorNeurons = parsedDataMap[actuator].toList();
+		const QVariantList v_actuatorNeurons = actuatorMap[actuatorId].toList();
 
 		/* convert QVariantList to QList<qreal> */
-		QList<qreal> result;
+		QList<qreal> neuronValues;
 		foreach(QVariant v, v_actuatorNeurons) {
-			result.append(v.toReal());
+			neuronValues.append(v.toReal());
 		}
 
 		/* tell everyone who is interested */
-		emit actuatorDeserialized(actuator, result);
+		emit actuatorDeserialized(beingId, actuatorId, neuronValues);
 	}
 }
 

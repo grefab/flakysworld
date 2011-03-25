@@ -3,6 +3,8 @@
 #include "bodies/polygonbody.h"
 #include "flaky/flaky.h"
 
+#include <QDebug>
+
 Universe::Universe(QObject *parent) :
 		QObject(parent)
 {
@@ -34,12 +36,31 @@ void Universe::keyPressHandler(Qt::Key key)
 {
 	Q_UNUSED(key);
 
-	static_cast<const Flaky*>(being("flaky"))->accelerate(0.01, 0.01);
+//	static_cast<const Flaky*>(being("flaky"))->accelerate(0.01, 0.01);
 }
 
 void Universe::keyReleaseHandler(Qt::Key key)
 {
 	Q_UNUSED(key);
+}
+
+void Universe::actuatorRefresh(QString beingId, QString actuatorId, QList<qreal> neuronValues)
+{
+	Being* being = beings_.value(beingId);
+
+	if ( !being ) {
+		qDebug() << "being" << beingId << "not found.";
+		return;
+	}
+
+	/* call the actuator update asynchronously */
+	QMetaObject::invokeMethod(
+				being,
+				"actuatorRefresh",
+				Qt::QueuedConnection,
+				Q_ARG(QString, actuatorId),
+				Q_ARG(QList<qreal>, neuronValues)
+				);
 }
 
 void Universe::setup()
