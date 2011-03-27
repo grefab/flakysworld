@@ -25,6 +25,7 @@ public:
 
 	/* serializer */
 	QVariantMap getSerialized();
+	void fromVariant(QVariantMap serialized);
 
 protected:
 	void update(QPointF position, qreal rotation);

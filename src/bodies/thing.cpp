@@ -33,15 +33,28 @@ void Thing::updateMapToWorld()
 	mapToWorld_.rotateRadians(rotation());
 }
 
+const QString KEY_THING_ID = "id";
+const QString KEY_THING_SHAPE = "shape";
+const QString KEY_THING_POSITION = "position";
+const QString KEY_THING_ROTATION = "rotation";
+
 QVariantMap Thing::getSerialized()
 {
 	/* we need to serailize everything, i.e. id, shape, position and rotation. */
 	QVariantMap resultMap;
 
-	resultMap.insert("id", id_);
-	resultMap.insert("shape", qpolygonf2qvariant(shape_));
-	resultMap.insert("position", qpointf2qvariant(position_));
-	resultMap.insert("rotation", rotation_);
+	resultMap.insert(KEY_THING_ID, id_);
+	resultMap.insert(KEY_THING_SHAPE, qpolygonf2qvariant(shape_));
+	resultMap.insert(KEY_THING_POSITION, qpointf2qvariant(position_));
+	resultMap.insert(KEY_THING_ROTATION, rotation_);
 
 	return resultMap;
+}
+
+void Thing::fromVariant(QVariantMap serialized)
+{
+	QString id = serialized[KEY_THING_ID].toString();
+	QPolygonF shape = qvariant2qpolygonf(serialized[KEY_THING_SHAPE]);
+	QPointF position = qvariant2qpointf(serialized[KEY_THING_POSITION]);
+	qreal rotation = serialized[KEY_THING_ROTATION].toReal();
 }
