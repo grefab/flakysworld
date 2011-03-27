@@ -5,6 +5,7 @@
 #include <QPointF>
 #include <QPolygonF>
 #include <QTransform>
+#include <QVariant>
 
 class Thing : public QObject
 {
@@ -13,6 +14,7 @@ class Thing : public QObject
 public:
 	explicit Thing(QPolygonF shape, QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
+	/* getter */
 	const QString& id() const { return id_; };
 
 	const QPolygonF& shape() const { return shape_; };
@@ -20,6 +22,9 @@ public:
 	const qreal& rotation() const { return rotation_; };
 
 	const QTransform& getWorldMap() const { return mapToWorld_; }
+
+	/* serializer */
+	QVariantMap getSerialized();
 
 protected:
 	void update(QPointF position, qreal rotation);

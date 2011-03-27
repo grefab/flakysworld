@@ -23,7 +23,8 @@ SOURCES += src/main.cpp \
 	src/being/being.cpp \
 	src/flaky/thruster.cpp \
     src/bodies/thing.cpp \
-    src/gui/views/thingview.cpp
+    src/gui/views/thingview.cpp \
+    src/interface/persistence.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += src
@@ -52,7 +53,8 @@ HEADERS += \
 	src/being/being.h \
 	src/flaky/thruster.h \
     src/bodies/thing.h \
-    src/gui/views/thingview.h
+    src/gui/views/thingview.h \
+    src/interface/persistence.h
 
 FORMS += \
 	src/gui/surface.ui
