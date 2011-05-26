@@ -15,11 +15,11 @@ public:
 	explicit Thing(QPolygonF shape, QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 	/* getter */
-	const QString& id() const { return id_; };
+	const QString& id() const { return id_; }
 
-	const QPolygonF& shape() const { return shape_; };
-	const QPointF& position() const { return position_; };
-	const qreal& rotation() const { return rotation_; };
+	const QPolygonF& shape() const { return shape_; }
+	const QPointF& position() const { return position_; }
+	const qreal& rotation() const { return rotation_; }
 
 	const QTransform& getWorldMap() const { return mapToWorld_; }
 

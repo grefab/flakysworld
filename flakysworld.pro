@@ -22,13 +22,13 @@ SOURCES += src/main.cpp \
 	src/being/actuator.cpp \
 	src/being/being.cpp \
 	src/flaky/thruster.cpp \
-    src/bodies/thing.cpp \
-    src/gui/views/thingview.cpp \
-    src/interface/persistence.cpp
+	src/bodies/thing.cpp \
+	src/gui/views/thingview.cpp \
+	src/interface/persistence.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += src
-LIBPATH += /usr/local/lib
+QMAKE_LIBDIR += /usr/local/lib
 LIBS += -lBox2D
 
 HEADERS += \
@@ -52,9 +52,9 @@ HEADERS += \
 	src/being/actuator.h \
 	src/being/being.h \
 	src/flaky/thruster.h \
-    src/bodies/thing.h \
-    src/gui/views/thingview.h \
-    src/interface/persistence.h
+	src/bodies/thing.h \
+	src/gui/views/thingview.h \
+	src/interface/persistence.h
 
 FORMS += \
 	src/gui/surface.ui
