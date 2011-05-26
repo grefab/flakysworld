@@ -76,11 +76,6 @@ QThread* setupNeuronIO(Universe* universe)
 	}
 
 	return networkThread;
-
-	/* note that networkThread and tcpServer will never get deleted. this can be improved.
-	 * however, they will die at the end of the program and they are idle once neuronSerializer
-	 * is deleted. so there will be no problem here.
-	 */
 }
 
 int main(int argc, char *argv[])
