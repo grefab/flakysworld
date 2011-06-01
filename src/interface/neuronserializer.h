@@ -13,13 +13,9 @@ public:
 	explicit NeuronSerializer(QObject *parent = 0);
 	~NeuronSerializer();
 
-signals:
-	void sensorSerialized(QVariant sensorSerialized);
-	void actuatorDeserialized(QString beingId, QString actuatorId, QList<qreal> actuatorNeurons);
-
 public slots:
-	void serializeSensor(QList<qreal> sensorNeurons);
-	void deserializeActuator(QVariant actuatorSerialized);
+	QVariant serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons);
+	void deserializeActuator(const QVariant& actuatorSerialized, QString* actuatorBeingId, QString* actuatorId, QList<qreal>* actuatorNeurons);
 
 };
 

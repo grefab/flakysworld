@@ -16,6 +16,8 @@ void TcpServer::socketConnected()
 
 	connect(socket, SIGNAL(readyRead()), this, SLOT(socketDataAvailable()));
 	connect(socket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()));
+
+	emit newConnection(socket);
 }
 
 void TcpServer::socketDataAvailable()
@@ -41,7 +43,7 @@ void TcpServer::socketDataAvailable()
 			return;
 		}
 
-		emit dataArrived(parsedData);
+		emit dataArrived(socket, parsedData);
 	}
 }
 
@@ -51,20 +53,20 @@ void TcpServer::socketDisconnected()
 	QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
 	sockets_.remove(socket);
 	socket->deleteLater();
+
+	emit disconnected(socket);
 }
 
-void TcpServer::publish(QVariant data)
+void TcpServer::publish(QVariant data, QTcpSocket* socket)
 {
 	/* perform serialization */
 	QByteArray binaryData = serializer_.serialize(data);
 
-	/* tell everyone! */
-	foreach(QTcpSocket* socket, sockets_) {
-		socket->write(binaryData);
+	/* tell socket! */
+	socket->write(binaryData);
 
-		/* newline tells that data is finished. */
-		socket->write("\n");
-	}
+	/* newline tells that data is finished. */
+	socket->write("\n");
 }
 
 bool TcpServer::looksLikeJSON(const QByteArray& data)

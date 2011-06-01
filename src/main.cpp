@@ -6,8 +6,7 @@
 #include "gui/views/thingview.h"
 #include "gui/views/eyeview.h"
 
-#include "interface/neuronserializer.h"
-#include "interface/tcpserver.h"
+#include "interface/connectionmanager.h"
 
 Surface* setupGUI(Universe* universe)
 {
@@ -43,39 +42,11 @@ Surface* setupGUI(Universe* universe)
 	return surface;
 }
 
-QThread* setupNeuronIO(Universe* universe)
+ConnectionManager* setupIO(Universe* universe)
 {
-	/* this thread handles our network activity. */
-	QThread* networkThread = new QThread();
+	ConnectionManager* connectionManager = new ConnectionManager(universe);
 
-	/* these are our workers */
-	NeuronSerializer* neuronSerializer = new NeuronSerializer();
-	neuronSerializer->moveToThread(networkThread);
-
-	TcpServer* tcpServer = new TcpServer(2345);
-	tcpServer->moveToThread(networkThread);
-
-	/* start working! */
-	networkThread->start();
-
-	/* set up data exchange */
-	{
-		/* forward incoming data to deserialization */
-		QObject::connect(tcpServer, SIGNAL(dataArrived(QVariant)), neuronSerializer, SLOT(deserializeActuator(QVariant)));
-		/* publish serialized sensors */
-		QObject::connect(neuronSerializer, SIGNAL(sensorSerialized(QVariant)), tcpServer, SLOT(publish(QVariant)));
-		/* handle incoming actuator data */
-		QObject::connect(neuronSerializer, SIGNAL(actuatorDeserialized(QString,QString,QList<qreal>)), universe, SLOT(actuatorRefresh(QString,QString,QList<qreal>)));
-
-		/* we'd like to output all our sensors. */
-		foreach(Being* being, universe->beings()) {
-			foreach(Sensor* sensor, being->sensors()) {
-				QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), neuronSerializer, SLOT(serializeSensor(QList<qreal>)));
-			}
-		}
-	}
-
-	return networkThread;
+	return connectionManager;
 }
 
 int main(int argc, char *argv[])
@@ -97,15 +68,13 @@ int main(int argc, char *argv[])
 	if ( useGui ) surface = setupGUI(universe);
 
 	/* start neuron IO */
-	QThread* networkThread = setupNeuronIO(universe);
+	ConnectionManager* connectionManager = setupIO(universe);
 
 	/* preparation is done. let if flow! */
 	return app->exec();
 
 	/* when we reach this, the program is finished. delete everything in reverse order. */
-	networkThread->quit();
-	networkThread->wait();
-	delete networkThread;
+	delete connectionManager;
 	delete surface;
 	delete universe;
 	delete app;

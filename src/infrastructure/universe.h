@@ -21,6 +21,9 @@ public:
 	World* world() { return world_; }
 	Engine* engine() { return engine_; }
 
+signals:
+	void sensorDataAvaliable(QString beingId, QString sensorId, QList<qreal> sensorNeurons);
+
 public slots:
 	void keyPressHandler(Qt::Key key);
 	void keyReleaseHandler(Qt::Key key);
@@ -28,6 +31,9 @@ public slots:
 	void thurstersHandler(qreal leftThruster, qreal rightThruster);
 
 	void actuatorRefresh(QString beingId, QString actuatorId, QList<qreal> neuronValues);
+
+protected slots:
+	void sensorSensed(QList<qreal> sensorNeurons);
 
 protected:
 	void setup();

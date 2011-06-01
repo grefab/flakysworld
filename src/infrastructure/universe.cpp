@@ -1,6 +1,7 @@
 #include "universe.h"
 #include "bodies/body.h"
 #include "flaky/flaky.h"
+#include "being/sensor.h"
 
 #include <QDebug>
 
@@ -75,6 +76,15 @@ void Universe::actuatorRefresh(QString beingId, QString actuatorId, QList<qreal>
 				);
 }
 
+void Universe::sensorSensed(QList<qreal> sensorNeurons)
+{
+	const Sensor* sensor = static_cast<Sensor*>(sender());
+	const QString sensorId = sensor->id();
+	const QString beingId = sensor->being().id();
+
+	emit sensorDataAvaliable(beingId, sensorId, sensorNeurons);
+}
+
 void Universe::setup()
 {
 	/* build a cage */
@@ -127,4 +137,9 @@ void Universe::setup()
 void Universe::addBeing(Being* being)
 {
 	beings_.insert(being->id(), being);
+
+	foreach(Sensor* sensor, being->sensors()) {
+		QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), this, SLOT(sensorSensed(QList<qreal>)));
+	}
+
 }
