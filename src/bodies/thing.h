@@ -25,7 +25,7 @@ public:
 
 	/* serializer */
 	QVariantMap getSerialized(bool onlyUpdate = false);
-	void fromVariant(QVariantMap serialized);
+	void fromVariant(QVariant serialized);
 
 protected:
 	void setPosRot(const QPointF& position, qreal rotation);
@@ -45,7 +45,6 @@ private:
 	qreal rotation_;
 
 	void update();
-
 	void updateMapToWorld();
 	QTransform mapToWorld_;
 

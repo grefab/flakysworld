@@ -71,13 +71,15 @@ QVariantMap Thing::getSerialized(bool onlyUpdate)
 	return resultMap;
 }
 
-void Thing::fromVariant(QVariantMap serialized)
+void Thing::fromVariant(QVariant serialized)
 {
-	QString id = serialized[KEY_THING_ID].toString();
-	QPolygonF shape = qvariant2qpolygonf(serialized[KEY_THING_SHAPE]);
-	QPointF position = qvariant2qpointf(serialized[KEY_THING_POSITION]);
+	QVariantMap serializedMap = serialized.toMap();
+
+	QString id = serializedMap[KEY_THING_ID].toString();
+	QPolygonF shape = qvariant2qpolygonf(serializedMap[KEY_THING_SHAPE]);
+	QPointF position = qvariant2qpointf(serializedMap[KEY_THING_POSITION]);
 	bool rotationFound;
-	qreal rotation = serialized[KEY_THING_ROTATION].toReal(&rotationFound);
+	qreal rotation = serializedMap[KEY_THING_ROTATION].toReal(&rotationFound);
 
 	if(id != "") {
 		id_ = id;
