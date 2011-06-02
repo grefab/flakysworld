@@ -14,32 +14,34 @@ Thing::Thing(QPolygonF shape, QPointF position, qreal rotation, QString id, QObj
 		id_ = QUuid::createUuid().toString();
 	}
 
-	updateMapToWorld();
+	update();
 }
 
 void Thing::setPosRot(const QPointF& position, qreal rotation)
 {
 	position_ = position;
 	rotation_ = rotation;
-	updateMapToWorld();
-
-	emit changedPosition(getWorldMap());
+	update();
 }
 
 void Thing::setPosition(const QPointF& position)
 {
 	position_ = position;
-	updateMapToWorld();
-
-	emit changedPosition(getWorldMap());
+	update();
 }
 
 void Thing::setRotation(qreal rotation)
 {
 	rotation_ = rotation;
+	update();
+}
+
+void Thing::update()
+{
 	updateMapToWorld();
 
 	emit changedPosition(getWorldMap());
+	emit changedPosition(position_, rotation_);
 }
 
 void Thing::updateMapToWorld()
@@ -54,13 +56,15 @@ const QString KEY_THING_SHAPE = "shape";
 const QString KEY_THING_POSITION = "position";
 const QString KEY_THING_ROTATION = "rotation";
 
-QVariantMap Thing::getSerialized()
+QVariantMap Thing::getSerialized(bool onlyUpdate)
 {
 	/* we need to serailize everything, i.e. id, shape, position and rotation. */
 	QVariantMap resultMap;
 
 	resultMap.insert(KEY_THING_ID, id_);
-	resultMap.insert(KEY_THING_SHAPE, qpolygonf2qvariant(shape_));
+	if(!onlyUpdate) {
+		resultMap.insert(KEY_THING_SHAPE, qpolygonf2qvariant(shape_));
+	}
 	resultMap.insert(KEY_THING_POSITION, qpointf2qvariant(position_));
 	resultMap.insert(KEY_THING_ROTATION, rotation_);
 
