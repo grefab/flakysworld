@@ -89,7 +89,7 @@ void ConnectionManager::run()
 void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons)
 {
 	/* get a variant to be sent */
-	QVariantMap sendMe = neuronSerializer_.serializeSensor(beingId, sensorId, sensorNeurons);
+	QVariantMap sendMe = entitySerializer_.serializeSensor(beingId, sensorId, sensorNeurons);
 
 	/* define type */
 	sendMe.insert(KEY_TYPE, TYPE_SENSOROUTPUT);
@@ -128,7 +128,7 @@ void ConnectionManager::dataArrived(QTcpSocket* socket, QVariantMap data)
 		QString beingId;
 		QString actuatorId;
 		QList<qreal> actuatorNeurons;
-		neuronSerializer_.deserializeActuator(data, &beingId, &actuatorId, &actuatorNeurons);
+		entitySerializer_.deserializeActuator(data, &beingId, &actuatorId, &actuatorNeurons);
 
 		/* tell universe */
 		emit actuatorUpdate(beingId, actuatorId, actuatorNeurons);

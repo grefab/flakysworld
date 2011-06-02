@@ -1,4 +1,4 @@
-#include "neuronserializer.h"
+#include "entityserializer.h"
 
 #include <QDebug>
 
@@ -10,17 +10,17 @@ static const QString KEY_BEINGS_SENSORS = "sensors";
 static const QString KEY_BEINGS_ACTUATORS = "actuators";
 
 
-NeuronSerializer::NeuronSerializer(QObject *parent) :
+EntitySerializer::EntitySerializer(QObject *parent) :
 	QObject(parent)
 {
 	qRegisterMetaType< QList<qreal> >("QList<qreal>");
 }
 
-NeuronSerializer::~NeuronSerializer()
+EntitySerializer::~EntitySerializer()
 {
 }
 
-QVariantMap NeuronSerializer::serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons)
+QVariantMap EntitySerializer::serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons)
 {
 	/* here we will store everything */
 	QVariantMap saveme;
@@ -47,7 +47,7 @@ QVariantMap NeuronSerializer::serializeSensor(QString beingId, QString sensorId,
 	return saveme;
 }
 
-void NeuronSerializer::deserializeActuator(const QVariant& actuatorSerialized, QString* actuatorBeingId, QString* actuatorId, QList<qreal>* actuatorNeurons)
+void EntitySerializer::deserializeActuator(const QVariant& actuatorSerialized, QString* actuatorBeingId, QString* actuatorId, QList<qreal>* actuatorNeurons)
 {
 	QVariantMap parsedDataMap = actuatorSerialized.toMap();
 

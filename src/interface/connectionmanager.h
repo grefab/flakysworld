@@ -7,7 +7,7 @@
 #include <QSet>
 #include "infrastructure/universe.h"
 #include "tcpserver.h"
-#include "neuronserializer.h"
+#include "entityserializer.h"
 
 
 class ConnectionManager : public QThread
@@ -36,7 +36,7 @@ private:
 	Universe* universe_;
 	TcpServer* tcpServer_;
 
-	NeuronSerializer neuronSerializer_;
+	EntitySerializer entitySerializer_;
 
 	QSet<QTcpSocket*> neuronReceivers_;
 	QSet<QTcpSocket*> worldReceivers_;
