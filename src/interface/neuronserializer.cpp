@@ -20,7 +20,7 @@ NeuronSerializer::~NeuronSerializer()
 {
 }
 
-QVariant NeuronSerializer::serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons)
+QVariantMap NeuronSerializer::serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons)
 {
 	/* here we will store everything */
 	QVariantMap saveme;

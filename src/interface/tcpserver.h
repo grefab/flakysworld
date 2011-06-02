@@ -16,12 +16,12 @@ public:
 	explicit TcpServer(quint16 port, QObject *parent = 0);
 
 signals:
-	void dataArrived(QTcpSocket* socket, QVariant data);
+	void dataArrived(QTcpSocket* socket, QVariantMap data);
 	void newConnection(QTcpSocket* socket);
 	void disconnected(QTcpSocket* socket);
 
 public slots:
-	void publish(QVariant data, QTcpSocket* socket);
+	void publish(QVariantMap data, QTcpSocket* socket);
 
 protected slots:
 	void socketConnected();

@@ -43,7 +43,7 @@ void TcpServer::socketDataAvailable()
 			return;
 		}
 
-		emit dataArrived(socket, parsedData);
+		emit dataArrived(socket, parsedData.toMap());
 	}
 }
 
@@ -57,7 +57,7 @@ void TcpServer::socketDisconnected()
 	emit disconnected(socket);
 }
 
-void TcpServer::publish(QVariant data, QTcpSocket* socket)
+void TcpServer::publish(QVariantMap data, QTcpSocket* socket)
 {
 	/* perform serialization */
 	QByteArray binaryData = serializer_.serialize(data);

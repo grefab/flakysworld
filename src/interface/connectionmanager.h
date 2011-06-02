@@ -27,7 +27,7 @@ protected slots:
 	/* this is for connecting to tcp server */
 	void newConnection(QTcpSocket* socket);
 	void disconnected(QTcpSocket* socket);
-	void dataArrived(QTcpSocket* socket, QVariant data);
+	void dataArrived(QTcpSocket* socket, QVariantMap data);
 
 protected:
 	void run();
@@ -39,6 +39,7 @@ private:
 	NeuronSerializer neuronSerializer_;
 
 	QSet<QTcpSocket*> neuronReceivers_;
+	QSet<QTcpSocket*> worldReceivers_;
 };
 
 #endif // CONNECTIONMANAGER_H

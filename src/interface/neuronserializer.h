@@ -14,7 +14,7 @@ public:
 	~NeuronSerializer();
 
 public slots:
-	QVariant serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons);
+	QVariantMap serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons);
 	void deserializeActuator(const QVariant& actuatorSerialized, QString* actuatorBeingId, QString* actuatorId, QList<qreal>* actuatorNeurons);
 
 };

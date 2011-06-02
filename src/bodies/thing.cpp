@@ -33,7 +33,7 @@ void Thing::updateMapToWorld()
 	mapToWorld_.rotateRadians(rotation());
 }
 
-const QString KEY_THING_ID = "id";
+const QString KEY_THING_ID = "thing";
 const QString KEY_THING_SHAPE = "shape";
 const QString KEY_THING_POSITION = "position";
 const QString KEY_THING_ROTATION = "rotation";
