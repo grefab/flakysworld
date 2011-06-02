@@ -12,7 +12,6 @@ SOURCES += src/main.cpp \
 	src/flaky/eye.cpp \
 	src/gui/views/eyeview.cpp \
 	src/being/sensor.cpp \
-	src/interface/neuronserializer.cpp \
 	src/external/qjson/src/serializer.cpp \
 	src/external/qjson/src/parser.cpp \
 	src/external/qjson/src/json_scanner.cpp \
@@ -25,7 +24,8 @@ SOURCES += src/main.cpp \
 	src/bodies/thing.cpp \
 	src/gui/views/thingview.cpp \
 	src/interface/persistence.cpp \
-    src/interface/connectionmanager.cpp
+    src/interface/connectionmanager.cpp \
+    src/interface/entityserializer.cpp
 
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += src
@@ -47,7 +47,6 @@ HEADERS += \
 	src/external/qjson/src/json_scanner.h \
 	src/external/qjson/src/json_parser.hh \
 	src/external/qjson/src/serializer.h \
-	src/interface/neuronserializer.h \
 	src/interface/tcpserver.h \
 	src/being/organ.h \
 	src/being/actuator.h \
@@ -56,7 +55,8 @@ HEADERS += \
 	src/bodies/thing.h \
 	src/gui/views/thingview.h \
 	src/interface/persistence.h \
-    src/interface/connectionmanager.h
+    src/interface/connectionmanager.h \
+    src/interface/entityserializer.h
 
 FORMS += \
 	src/gui/surface.ui
