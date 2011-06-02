@@ -102,7 +102,7 @@ void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qr
 
 void ConnectionManager::newConnection(QTcpSocket* socket)
 {
-	neuronReceivers_.insert(socket);
+	Q_UNUSED(socket)
 }
 
 void ConnectionManager::disconnected(QTcpSocket* socket)
