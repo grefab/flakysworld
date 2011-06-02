@@ -14,6 +14,10 @@ QPointF qvariant2qpointf(const QVariant& var)
 {
 	QVariantMap map = var.toMap();
 
+	if(!map.contains("x") || !map.contains("y")) {
+		return QPointF();
+	}
+
 	QPointF point = QPointF(map["x"].toFloat(), map["y"].toFloat());
 
 	return point;
@@ -32,6 +36,10 @@ QVariantMap qrectf2qvariant(const QRectF& rect)
 QRectF qvariant2qrectf(const QVariant& var)
 {
 	QVariantMap map = var.toMap();
+
+	if(!map.contains("topleft") || !map.contains("bottomright")) {
+		return QRectF();
+	}
 
 	QRectF rect = QRectF(
 			qvariant2qpointf(map["topleft"].toMap()),
@@ -55,6 +63,10 @@ QVariantList qpolygonf2qvariant(const QPolygonF& polygon)
 QPolygonF qvariant2qpolygonf(const QVariant& var)
 {
 	QVariantList list = var.toList();
+
+	if(list.isEmpty()) {
+		return QPolygonF();
+	}
 
 	QPolygonF poly;
 
