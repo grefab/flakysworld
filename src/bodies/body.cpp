@@ -84,7 +84,7 @@ void Body::simulationStepHappened()
 {
 	/* only update when we need */
 	if( body_->IsAwake() ) {
-		update(getPosition(), getRotation());
+		setPosRot(getPosition(), getRotation());
 	}
 }
 

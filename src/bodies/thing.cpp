@@ -17,9 +17,25 @@ Thing::Thing(QPolygonF shape, QPointF position, qreal rotation, QString id, QObj
 	updateMapToWorld();
 }
 
-void Thing::update(QPointF position, qreal rotation)
+void Thing::setPosRot(const QPointF& position, qreal rotation)
 {
 	position_ = position;
+	rotation_ = rotation;
+	updateMapToWorld();
+
+	emit changedPosition(getWorldMap());
+}
+
+void Thing::setPosition(const QPointF& position)
+{
+	position_ = position;
+	updateMapToWorld();
+
+	emit changedPosition(getWorldMap());
+}
+
+void Thing::setRotation(qreal rotation)
+{
 	rotation_ = rotation;
 	updateMapToWorld();
 
@@ -56,5 +72,27 @@ void Thing::fromVariant(QVariantMap serialized)
 	QString id = serialized[KEY_THING_ID].toString();
 	QPolygonF shape = qvariant2qpolygonf(serialized[KEY_THING_SHAPE]);
 	QPointF position = qvariant2qpointf(serialized[KEY_THING_POSITION]);
-	qreal rotation = serialized[KEY_THING_ROTATION].toReal();
+	bool rotationFound;
+	qreal rotation = serialized[KEY_THING_ROTATION].toReal(&rotationFound);
+
+	if(id != "") {
+		id_ = id;
+	}
+
+	if(!shape.isEmpty()) {
+		shape_ = shape;
+	}
+
+	if(position != QPOINTF_INVALID && rotationFound) {
+		setPosRot(position, rotation);
+	} else {
+		if(position != QPOINTF_INVALID) {
+			setPosition(position);
+		}
+
+		if(rotationFound) {
+			setRotation(rotation);
+		}
+	}
+
 }

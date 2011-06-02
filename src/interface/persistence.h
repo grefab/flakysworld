@@ -6,6 +6,9 @@
 #include <QPointF>
 #include <QRectF>
 #include <QPolygonF>
+#include <limits>
+
+#define QPOINTF_INVALID QPointF(LONG_MIN, LONG_MIN)
 
 QVariantMap qpointf2qvariant(const QPointF& point);
 QPointF qvariant2qpointf(const QVariant& var);

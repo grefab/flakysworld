@@ -15,7 +15,7 @@ QPointF qvariant2qpointf(const QVariant& var)
 	QVariantMap map = var.toMap();
 
 	if(!map.contains("x") || !map.contains("y")) {
-		return QPointF();
+		return QPOINTF_INVALID;
 	}
 
 	QPointF point = QPointF(map["x"].toFloat(), map["y"].toFloat());

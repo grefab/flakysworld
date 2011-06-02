@@ -28,7 +28,9 @@ public:
 	void fromVariant(QVariantMap serialized);
 
 protected:
-	void update(QPointF position, qreal rotation);
+	void setPosRot(const QPointF& position, qreal rotation);
+	void setPosition(const QPointF& position);
+	void setRotation(qreal rotation);
 
 signals:
 	/* a view can connect to this to take care for updates */
