@@ -28,20 +28,7 @@ void TcpServer::socketDataAvailable()
 	while ( socket->canReadLine() ) {
 		QByteArray line = socket->readLine().trimmed();
 
-		/* perform some consistency checks first to ignore HTTP stuff. */
-		if ( !looksLikeJSON(line) ) {
-			continue;
-		}
-
-		/* convert JSON to something we can handle */
-		bool ok;
-		QVariant parsedData = parser_.parse(line, &ok);
-
-		if ( !ok ) {
-			/* we have a problem. */
-			qDebug() << "Error parsing raw data. Assumed JSON.";
-			return;
-		}
+		QVariant parsedData = variantBinaryConverter_.toVariant(line);
 
 		emit dataArrived(socket, parsedData.toMap());
 	}
@@ -60,27 +47,11 @@ void TcpServer::socketDisconnected()
 void TcpServer::publish(QVariantMap data, QTcpSocket* socket)
 {
 	/* perform serialization */
-	QByteArray binaryData = serializer_.serialize(data);
+	QByteArray binaryData = variantBinaryConverter_.toByteArray(data);
 
 	/* tell socket! */
 	socket->write(binaryData);
 
 	/* newline tells that data is finished. */
 	socket->write("\n");
-}
-
-bool TcpServer::looksLikeJSON(const QByteArray& data)
-{
-	/* no data? no json. */
-	if ( data.size() <= 0 ) {
-		return false;
-	}
-
-	/* let's hope there's nothing except json that is included in curly brackets. */
-	if (data.at(0) != '{' || data.at(data.size()-1) != '}') {
-		return false;
-	}
-
-	/* if we reach this point, it seems we have a JSON object. */
-	return true;
 }

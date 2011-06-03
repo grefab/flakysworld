@@ -26,7 +26,8 @@ HEADERS += \
     being/sensor.h \
     being/organ.h \
     being/being.h \
-    being/actuator.h
+    being/actuator.h \
+    ../common/interface/variantbinaryconverter.h
 
 SOURCES += \
 	main.cpp \
@@ -49,4 +50,5 @@ SOURCES += \
     being/sensor.cpp \
     being/organ.cpp \
     being/being.cpp \
-    being/actuator.cpp
+    being/actuator.cpp \
+    ../common/interface/variantbinaryconverter.cpp

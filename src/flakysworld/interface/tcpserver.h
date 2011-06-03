@@ -5,8 +5,7 @@
 #include <QTcpSocket>
 #include <QSet>
 #include <QVariant>
-#include "external/qjson/src/serializer.h"
-#include "external/qjson/src/parser.h"
+#include "interface/variantbinaryconverter.h"
 
 class TcpServer : public QTcpServer
 {
@@ -30,11 +29,9 @@ protected slots:
 
 protected:
 	QSet<QTcpSocket*> sockets_;
-	QJson::Serializer serializer_;
-	QJson::Parser parser_;
 
 private:
-	bool looksLikeJSON(const QByteArray& data);
+	VariantBinaryConverter variantBinaryConverter_;
 
 };
 
