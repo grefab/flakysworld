@@ -14,15 +14,15 @@ EyeView::EyeView(const Eye& eye, QGraphicsItem *parent) :
 
 	/* initialize rays and bounding rect */
 	for(int i = 0; i < rays_.size(); ++i) {
-	    output_.append(0);
-	    boundingRect_ = boundingRect_.united(QRectF(rays_[i].p1(), rays_[i].p2()));
+		output_.append(0);
+		boundingRect_ = boundingRect_.united(QRectF(rays_[i].p1(), rays_[i].p2()));
 	}
 
 	/* get notified of position changes */
 	connect(&eye, SIGNAL(positionChanged(QTransform)), this, SLOT(eyePositionChanged(QTransform)));
 
 	/* get notified of sesor input changes */
-	connect(&eye, SIGNAL(sensed(QList<qreal>)), this, SLOT(retinaUpdated(QList<qreal>)));
+	connect(&eye, SIGNAL(updated(QList<qreal>)), this, SLOT(retinaUpdated(QList<qreal>)));
 }
 
 void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

@@ -10,7 +10,7 @@ void Sensor::updateIfNeeded(const QList<qreal>& newOutput) const
 {
 	/* only singal a change if there was actually one. */
 	if ( isUpdateNeeded(newOutput) ) {
-		emit sensed(newOutput);
+		emit updated(newOutput);
 	}
 }
 

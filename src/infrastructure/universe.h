@@ -23,6 +23,7 @@ public:
 
 signals:
 	void sensorDataAvaliable(QString beingId, QString sensorId, QList<qreal> sensorNeurons);
+	void tingUpdateAvaliable(QString thingId, QPointF position, qreal rotation);
 
 public slots:
 	void keyPressHandler(Qt::Key key);

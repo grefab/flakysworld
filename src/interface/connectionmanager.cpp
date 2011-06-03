@@ -80,8 +80,9 @@ void ConnectionManager::run()
 	/* notify universe if we have new actuator data */
 	connect(this, SIGNAL(actuatorUpdate(QString,QString,QList<qreal>)), universe_, SLOT(actuatorRefresh(QString,QString,QList<qreal>)));
 
-	/* get notified by universe if sensor data updates */
+	/* get notified by universe if sensor or thing updates */
 	connect(universe_, SIGNAL(sensorDataAvaliable(QString,QString,QList<qreal>)), this, SLOT(sensorUpdate(QString,QString,QList<qreal>)));
+	connect(universe_->world(), SIGNAL(thingUpdate(QString,QPointF,qreal)), this, SLOT(thingUpdate(QString,QPointF,qreal)));
 
 	QThread::run();
 }
@@ -98,6 +99,11 @@ void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qr
 	foreach(QTcpSocket* socket, neuronReceivers_) {
 		tcpServer_->publish(sendMe, socket);
 	}
+}
+
+void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rotation)
+{
+
 }
 
 void ConnectionManager::newConnection(QTcpSocket* socket)

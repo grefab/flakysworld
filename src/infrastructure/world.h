@@ -46,6 +46,10 @@ public:
 
 signals:
 	void worldChanged();
+	void thingUpdate(QString thingId, QPointF position, qreal rotation);
+
+protected slots:
+	void thingUpdated(QPointF position, qreal rotation);
 
 protected:
 	void performSimulationStep(float32 timestep);

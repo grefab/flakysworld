@@ -35,7 +35,7 @@ protected:
 signals:
 	/* a view can connect to this to take care for updates */
 	void changedPosition(QTransform transformation) const;
-	void changedPosition(QPointF position, qreal rotation) const;
+	void updated(QPointF position, qreal rotation) const;
 
 private:
 	QString id_;

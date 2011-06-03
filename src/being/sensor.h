@@ -14,7 +14,7 @@ public:
 	explicit Sensor(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 signals:
-	void sensed(QList<qreal> output) const;
+	void updated(QList<qreal> output) const;
 
 public slots:
 	virtual void performSensing() const =0;

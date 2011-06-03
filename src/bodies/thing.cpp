@@ -41,7 +41,7 @@ void Thing::update()
 	updateMapToWorld();
 
 	emit changedPosition(getWorldMap());
-	emit changedPosition(position_, rotation_);
+	emit updated(position_, rotation_);
 }
 
 void Thing::updateMapToWorld()

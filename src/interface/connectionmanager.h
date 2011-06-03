@@ -23,6 +23,7 @@ signals:
 protected slots:
 	/* this is to get notified by the outside world */
 	void sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons);
+	void thingUpdate(QString thingId, QPointF position, qreal rotation);
 
 	/* this is for connecting to tcp server */
 	void newConnection(QTcpSocket* socket);

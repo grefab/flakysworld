@@ -139,7 +139,7 @@ void Universe::addBeing(Being* being)
 	beings_.insert(being->id(), being);
 
 	foreach(Sensor* sensor, being->sensors()) {
-		QObject::connect(sensor, SIGNAL(sensed(QList<qreal>)), this, SLOT(sensorSensed(QList<qreal>)));
+		QObject::connect(sensor, SIGNAL(updated(QList<qreal>)), this, SLOT(sensorSensed(QList<qreal>)));
 	}
 
 }

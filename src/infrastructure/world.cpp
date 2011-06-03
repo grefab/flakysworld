@@ -23,8 +23,18 @@ Body* World::addBody(Body* body)
 	body->setParent(this);
 	bodies_.insert(body->id(), body);
 
+	/* we want to be notified if a thing moved */
+	connect(body, SIGNAL(updated(QPointF,qreal)), this, SLOT(thingUpdated(QPointF,qreal)));
+
 	/* allows for chaining */
 	return body;
+}
+
+void World::thingUpdated(QPointF position, qreal rotation)
+{
+	QString thingId = static_cast<Thing*>(sender())->id();
+
+	emit thingUpdate(thingId, position, rotation);
 }
 
 b2World* World::world() const
