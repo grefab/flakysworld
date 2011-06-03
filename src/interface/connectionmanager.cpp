@@ -89,6 +89,9 @@ void ConnectionManager::run()
 
 void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons)
 {
+	if ( neuronReceivers_.empty() )
+		return;
+
 	/* get a variant to be sent */
 	QVariantMap sendMe = entitySerializer_.serializeSensor(beingId, sensorId, sensorNeurons);
 
@@ -103,6 +106,9 @@ void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qr
 
 void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rotation)
 {
+	if ( worldReceivers_.empty() )
+		return;
+
 	/* get a variant to be sent */
 	QVariantMap sendMe = entitySerializer_.serializeThing(thingId, QPolygonF(), position, rotation);
 
