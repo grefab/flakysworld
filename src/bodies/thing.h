@@ -23,10 +23,6 @@ public:
 
 	const QTransform& getWorldMap() const { return mapToWorld_; }
 
-	/* serializer */
-	QVariantMap getSerialized(bool onlyUpdate = false);
-	void fromVariant(QVariant serialized);
-
 protected:
 	void setPosRot(const QPointF& position, qreal rotation);
 	void setPosition(const QPointF& position);

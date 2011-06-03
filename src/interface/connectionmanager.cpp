@@ -103,7 +103,16 @@ void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qr
 
 void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rotation)
 {
+	/* get a variant to be sent */
+	QVariantMap sendMe = entitySerializer_.serializeThing(thingId, QPolygonF(), position, rotation);
 
+	/* define type */
+	sendMe.insert(KEY_TYPE, TYPE_THING);
+
+	/* tell all interested sockets about our updated thing */
+	foreach(QTcpSocket* socket, worldReceivers_) {
+		tcpServer_->publish(sendMe, socket);
+	}
 }
 
 void ConnectionManager::newConnection(QTcpSocket* socket)

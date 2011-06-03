@@ -2,12 +2,18 @@
 
 #include <QDebug>
 
+#include "persistence.h"
 #include "being/sensor.h"
 
 /* string definitions needed later */
 static const QString KEY_BEING = "being";
 static const QString KEY_BEINGS_SENSORS = "sensors";
 static const QString KEY_BEINGS_ACTUATORS = "actuators";
+
+const QString KEY_THING_ID = "thing";
+const QString KEY_THING_SHAPE = "shape";
+const QString KEY_THING_POSITION = "position";
+const QString KEY_THING_ROTATION = "rotation";
 
 
 EntitySerializer::EntitySerializer(QObject *parent) :
@@ -71,4 +77,35 @@ void EntitySerializer::deserializeActuator(const QVariant& actuatorSerialized, Q
 		*actuatorId = id;
 		*actuatorNeurons = neuronValues;
 	}
+}
+
+QVariantMap EntitySerializer::serializeThing(QString thingId, const QPolygonF& shape, const QPointF& position, qreal rotation)
+{
+	/* we need to serailize everything, i.e. id, shape, position and rotation. */
+	QVariantMap resultMap;
+
+	resultMap.insert(KEY_THING_ID, thingId);
+	if(!shape.isEmpty()) {
+		resultMap.insert(KEY_THING_SHAPE, qpolygonf2qvariant(shape));
+	}
+	resultMap.insert(KEY_THING_POSITION, qpointf2qvariant(position));
+	resultMap.insert(KEY_THING_ROTATION, rotation);
+
+	return resultMap;
+}
+
+void EntitySerializer::deserializeThing(const QVariant& thingSerialized, QString* thingId, QPolygonF* thingShape, QPointF* thingPosition, qreal* thingRotation)
+{
+	QVariantMap serializedMap = thingSerialized.toMap();
+
+	QString id = serializedMap[KEY_THING_ID].toString();
+	QPolygonF shape = qvariant2qpolygonf(serializedMap[KEY_THING_SHAPE]);
+	QPointF position = qvariant2qpointf(serializedMap[KEY_THING_POSITION]);
+	bool rotationFound;
+	qreal rotation = serializedMap[KEY_THING_ROTATION].toReal(&rotationFound);
+
+	*thingId = id;
+	*thingShape = shape;
+	*thingPosition = position;
+	*thingRotation = rotationFound ? rotation : QREAL_INVALID;
 }
