@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QGraphicsPolygonItem>
-#include "bodies/body.h"
+#include "thing/thing.h"
 #include <QPointF>
 
 class ThingView : public QObject, public QGraphicsPolygonItem

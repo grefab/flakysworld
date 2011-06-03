@@ -4,7 +4,7 @@
 static const float PI = 3.14159265359;
 
 #include <Box2D.h>
-#include "thing.h"
+#include "thing/thing.h"
 
 
 class World;

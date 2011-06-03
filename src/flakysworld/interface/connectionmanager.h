@@ -6,8 +6,8 @@
 #include <QVariant>
 #include <QSet>
 #include "infrastructure/universe.h"
-#include "tcpserver.h"
-#include "entityserializer.h"
+#include "interface/tcpserver.h"
+#include "interface/entityserializer.h"
 
 
 class ConnectionManager : public QThread

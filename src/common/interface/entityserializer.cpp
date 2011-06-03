@@ -3,7 +3,6 @@
 #include <QDebug>
 
 #include "persistence.h"
-#include "being/sensor.h"
 
 /* string definitions needed later */
 static const QString KEY_BEING = "being";
