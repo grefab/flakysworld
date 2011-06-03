@@ -15,8 +15,8 @@ HEADERS += \
 	flaky/flaky.h \
 	flaky/eye.h \
 	bodies/body.h \
+	interface/tcpserver.h \
 	../common/thing/thing.h \
-	../common/interface/tcpserver.h \
 	../common/interface/persistence.h \
 	../common/interface/entityserializer.h \
     ../common/external/qjson/src/serializer.h \
@@ -38,8 +38,8 @@ SOURCES += \
 	flaky/flaky.cpp \
 	flaky/eye.cpp \
 	bodies/body.cpp \
+	interface/tcpserver.cpp \
 	../common/thing/thing.cpp \
-	../common/interface/tcpserver.cpp \
 	../common/interface/persistence.cpp \
 	../common/interface/entityserializer.cpp \
     ../common/external/qjson/src/serializer.cpp \
