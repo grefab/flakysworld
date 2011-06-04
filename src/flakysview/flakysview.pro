@@ -15,7 +15,9 @@ HEADERS += \
 	../common/external/qjson/src/json_scanner.h \
 	../common/external/qjson/src/json_parser.hh \
     interface/tcpclient.h \
-    ../common/interface/variantbinaryconverter.h
+    ../common/interface/variantbinaryconverter.h \
+    infrastructure/world.h \
+    ../common/constants.h
 
 SOURCES += \
 	main.cpp \
@@ -30,7 +32,8 @@ SOURCES += \
 	../common/external/qjson/src/json_scanner.cpp \
 	../common/external/qjson/src/json_parser.cc \
     interface/tcpclient.cpp \
-    ../common/interface/variantbinaryconverter.cpp
+    ../common/interface/variantbinaryconverter.cpp \
+    infrastructure/world.cpp
 
 FORMS += \
 	gui/surface.ui
