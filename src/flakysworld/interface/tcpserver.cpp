@@ -44,7 +44,7 @@ void TcpServer::socketDisconnected()
 	emit disconnected(socket);
 }
 
-void TcpServer::publish(QVariantMap data, QTcpSocket* socket)
+void TcpServer::publish(QVariant data, QTcpSocket* socket)
 {
 	/* perform serialization */
 	QByteArray binaryData = variantBinaryConverter_.toByteArray(data);
