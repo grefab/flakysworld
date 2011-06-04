@@ -20,7 +20,7 @@ signals:
 	void disconnected(QTcpSocket* socket);
 
 public slots:
-	void publish(QVariant data, QTcpSocket* socket);
+	void send(QVariant data, QTcpSocket* socket);
 
 protected slots:
 	void socketConnected();

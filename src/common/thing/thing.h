@@ -12,14 +12,29 @@ class Thing : public QObject
 	Q_OBJECT
 
 public:
+	struct Model
+	{
+	public:
+		explicit Model(QPolygonF shape, QPointF position, qreal rotation, QString id = "");
+
+		QString id_;
+
+		QPolygonF shape_;
+		QPointF position_;
+		qreal rotation_;
+	};
+
+
 	explicit Thing(QPolygonF shape, QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 	/* getter */
-	const QString& id() const { return id_; }
+	const QString& id() const { return model_.id_; }
 
-	const QPolygonF& shape() const { return shape_; }
-	const QPointF& position() const { return position_; }
-	const qreal& rotation() const { return rotation_; }
+	const QPolygonF& shape() const { return model_.shape_; }
+	const QPointF& position() const { return model_.position_; }
+	const qreal& rotation() const { return model_.rotation_; }
+
+	const Model& getModel() const { return model_; }
 
 	const QTransform& getWorldMap() const { return mapToWorld_; }
 
@@ -34,11 +49,7 @@ signals:
 	void updated(QPointF position, qreal rotation) const;
 
 private:
-	QString id_;
-
-	QPolygonF shape_;
-	QPointF position_;
-	qreal rotation_;
+	Model model_;
 
 	void update();
 	void updateMapToWorld();

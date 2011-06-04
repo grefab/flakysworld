@@ -87,6 +87,22 @@ void ConnectionManager::run()
 	QThread::run();
 }
 
+void ConnectionManager::sendCompleteWorld(QTcpSocket* socket)
+{
+	QList<Thing::Model> things = universe_->world()->getThingModels();
+
+	foreach(const Thing::Model& thing, things) {
+		/* get a variant to be sent */
+		QVariantMap sendMe = entitySerializer_.serializeThing(thing.id_, thing.shape_, thing.position_, thing.rotation_);
+
+		/* define type */
+		sendMe.insert(KEY_TYPE, TYPE_THING);
+
+		/* send the data to socket */
+		tcpServer_->send(sendMe, socket);
+	}
+}
+
 void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons)
 {
 	if ( neuronReceivers_.empty() )
@@ -100,7 +116,7 @@ void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qr
 
 	/* tell all interested sockets about our sensor */
 	foreach(QTcpSocket* socket, neuronReceivers_) {
-		tcpServer_->publish(sendMe, socket);
+		tcpServer_->send(sendMe, socket);
 	}
 }
 
@@ -117,7 +133,7 @@ void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rot
 
 	/* tell all interested sockets about our updated thing */
 	foreach(QTcpSocket* socket, worldReceivers_) {
-		tcpServer_->publish(sendMe, socket);
+		tcpServer_->send(sendMe, socket);
 	}
 }
 
@@ -166,6 +182,8 @@ void ConnectionManager::dataArrived(QTcpSocket* socket, QVariantMap data)
 			return;
 		}
 		if(concerns == CONCERNS_WORLD) {
+			/* send complete world initally as "keyframe" */
+			sendCompleteWorld(socket);
 			worldReceivers_.insert(socket);
 			return;
 		}

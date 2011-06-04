@@ -8,7 +8,7 @@
 #include "infrastructure/universe.h"
 #include "interface/tcpserver.h"
 #include "interface/entityserializer.h"
-
+#include "thing/thing.h"
 
 class ConnectionManager : public QThread
 {
@@ -32,6 +32,8 @@ protected slots:
 
 protected:
 	void run();
+
+	void sendCompleteWorld(QTcpSocket* socket);
 
 private:
 	Universe* universe_;

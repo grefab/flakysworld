@@ -30,6 +30,19 @@ Body* World::addBody(Body* body)
 	return body;
 }
 
+QList<Thing::Model> World::getThingModels() const
+{
+	QMutexLocker locker(const_cast<QMutex*>(&mutex_));
+
+	/* create copies of all thing models to return them. this is for thread safety. */
+	QList<Thing::Model> things;
+	foreach(Body* body, bodies_.values()) {
+		things.append(body->getModel());
+	}
+
+	return things;
+}
+
 void World::thingUpdated(QPointF position, qreal rotation)
 {
 	QString thingId = static_cast<Thing*>(sender())->id();

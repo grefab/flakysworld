@@ -44,6 +44,8 @@ public:
 	RayHit rayCast(const QLineF& ray) const;
 	QList<RayHit> rayCast(const QList<QLineF>& rays) const;
 
+	QList<Thing::Model> getThingModels() const;
+
 signals:
 	void worldChanged();
 	void thingUpdate(QString thingId, QPointF position, qreal rotation);
