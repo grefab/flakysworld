@@ -7,7 +7,7 @@ VariantBinaryConverter::VariantBinaryConverter(QObject *parent) :
 {
 }
 
-QVariant VariantBinaryConverter::toVariant(const QByteArray binaryData)
+QVariant VariantBinaryConverter::toVariant(const QByteArray& binaryData)
 {
 	/* perform some consistency checks first to ignore HTTP stuff. */
 	if ( !looksLikeJSON(binaryData) ) {

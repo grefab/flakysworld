@@ -14,7 +14,7 @@ class VariantBinaryConverter : public QObject
 public:
 	explicit VariantBinaryConverter(QObject *parent = 0);
 
-	QVariant toVariant(const QByteArray binaryData);
+	QVariant toVariant(const QByteArray& binaryData);
 	QByteArray toByteArray(const QVariant& variantData);
 
 private:
