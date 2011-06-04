@@ -6,11 +6,7 @@
 #include <QPointF>
 #include <QRectF>
 #include <QPolygonF>
-#include <limits>
-
-/* needed to check if serialization worked */
-#define QPOINTF_INVALID QPointF(LONG_MIN, LONG_MIN)
-#define QREAL_INVALID LONG_MIN
+#include "constants.h"
 
 QVariantMap qpointf2qvariant(const QPointF& point);
 QPointF qvariant2qpointf(const QVariant& var);

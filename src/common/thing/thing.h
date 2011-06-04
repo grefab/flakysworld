@@ -26,6 +26,7 @@ public:
 
 
 	explicit Thing(QPolygonF shape, QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
+	explicit Thing(const Model model, QObject *parent = 0);
 
 	/* getter */
 	const QString& id() const { return model_.id_; }
@@ -38,7 +39,7 @@ public:
 
 	const QTransform& getWorldMap() const { return mapToWorld_; }
 
-protected:
+	/* setter */
 	void setPosRot(const QPointF& position, qreal rotation);
 	void setPosition(const QPointF& position);
 	void setRotation(qreal rotation);

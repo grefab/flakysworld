@@ -20,6 +20,13 @@ Thing::Thing(QPolygonF shape, QPointF position, qreal rotation, QString id, QObj
 	update();
 }
 
+Thing::Thing(const Model model, QObject *parent) :
+	QObject(parent),
+	model_(model)
+{
+	update();
+}
+
 void Thing::setPosRot(const QPointF& position, qreal rotation)
 {
 	model_.position_ = position;

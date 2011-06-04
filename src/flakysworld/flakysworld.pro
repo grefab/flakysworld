@@ -27,7 +27,8 @@ HEADERS += \
     being/organ.h \
     being/being.h \
     being/actuator.h \
-    ../common/interface/variantbinaryconverter.h
+    ../common/interface/variantbinaryconverter.h \
+    ../common/constants.h
 
 SOURCES += \
 	main.cpp \
