@@ -4,19 +4,18 @@
 #include "gui/views/thingview.h"
 //#include "gui/views/eyeview.h"
 
-//#include "interface/connectionmanager.h"
+#include "infrastructure/world.h"
+#include "interface/connectionmanager.h"
+#include "infrastructure/viewmanager.h"
 
-Surface* setupGUI()
+Surface* setupGUI(World* world)
 {
 	Surface* surface = new Surface();
-	surface->show();
 
-//	QObject::connect(universe->engine(), SIGNAL(updatedFPS(int)), surface->fpsLabel(), SLOT(setNum(int)));
+	/* viewmanager handles updates of things */
+	ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
 
-	/* build a corresponding view for each body. */
-//	foreach(Body* body, universe->world()->bodies()) {
-//		surface->scene()->addItem( new ThingView(*body) );
-//	}
+	QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
 
 	/* build a corresponding view for flaky's eyes. */
 //	foreach(Sensor* sensor, universe->being("flaky")->sensors()) {
@@ -37,31 +36,40 @@ Surface* setupGUI()
 	// TODO: Just provide motoric information and let flaky handle the consequences.
 //	QObject::connect(surface, SIGNAL(engageTriggered(qreal,qreal)), universe, SLOT(thurstersHandler(qreal,qreal)));
 
+	/* show everything */
+	surface->show();
+
 	return surface;
 }
 
-//ConnectionManager* setupIO(Universe* universe)
-//{
-//	ConnectionManager* connectionManager = new ConnectionManager(universe);
-//
-//	return connectionManager;
-//}
+ConnectionManager* setupIO(World* world)
+{
+	ConnectionManager* connectionManager = new ConnectionManager();
+
+	QObject::connect(connectionManager, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
+
+	return connectionManager;
+}
 
 int main(int argc, char *argv[])
 {
 	QApplication* app = new QApplication(argc, argv);
 
+	/* world contains a collection of things */
+	World* world = new World();
+
 	/* make everything visible */
-	Surface* surface = setupGUI();
+	Surface* surface = setupGUI(world);
 
 	/* start neuron IO */
-//	ConnectionManager* connectionManager = setupIO(universe);
+	ConnectionManager* connectionManager = setupIO(world);
 
 	/* preparation is done. let if flow! */
 	return app->exec();
 
 	/* when we reach this, the program is finished. delete everything in reverse order. */
-//	delete connectionManager;
+	delete connectionManager;
+	delete world;
 	delete surface;
 	delete app;
 }

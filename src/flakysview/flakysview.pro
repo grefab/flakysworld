@@ -17,7 +17,9 @@ HEADERS += \
     interface/tcpclient.h \
     ../common/interface/variantbinaryconverter.h \
     infrastructure/world.h \
-    ../common/constants.h
+    ../common/constants.h \
+    interface/connectionmanager.h \
+    infrastructure/viewmanager.h
 
 SOURCES += \
 	main.cpp \
@@ -33,7 +35,9 @@ SOURCES += \
 	../common/external/qjson/src/json_parser.cc \
     interface/tcpclient.cpp \
     ../common/interface/variantbinaryconverter.cpp \
-    infrastructure/world.cpp
+    infrastructure/world.cpp \
+    interface/connectionmanager.cpp \
+    infrastructure/viewmanager.cpp
 
 FORMS += \
 	gui/surface.ui

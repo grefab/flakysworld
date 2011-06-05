@@ -6,6 +6,16 @@ World::World(QObject *parent) :
 {
 }
 
+void World::thingUpdated(Thing::Model thingModel)
+{
+	Thing* newThing = updateThing(thingModel);
+
+	if( newThing ) {
+		/* this thing is new, needs to be connected to a view. let somebodfy else care for that. */
+		emit newThingArrived(newThing);
+	}
+}
+
 Thing* World::updateThing(const Thing::Model& thingModel)
 {
 	if( things_.contains(thingModel.id_) )	{

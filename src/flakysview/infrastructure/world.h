@@ -11,10 +11,16 @@ class World : public QObject
 public:
 	explicit World(QObject *parent = 0);
 
+signals:
+	void newThingArrived(const Thing* thing);
+
+protected slots:
+	void thingUpdated(Thing::Model thingModel);
+
+private:
 	/* if a new thing has been added, this thing is returned. otherwise, NULL is returned. */
 	Thing* updateThing(const Thing::Model& thingModel);
 
-private:
 	QMap<QString, Thing*> things_;
 };
 
