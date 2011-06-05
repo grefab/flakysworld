@@ -6,8 +6,10 @@
 TcpClient::TcpClient(QObject* parent) :
 	QObject(parent)
 {
-	connect(&socket_, SIGNAL(connected()), this, SLOT(connected()));
-	connect(&socket_, SIGNAL(disconnected()), this, SLOT(disconnected()));
+	connect(&socket_, SIGNAL(connected()), this, SIGNAL(connected()));
+	connect(&socket_, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
+	connect(&socket_, SIGNAL(connected()), this, SLOT(onConnect()));
+	connect(&socket_, SIGNAL(disconnected()), this, SLOT(onDisconnect()));
 	connect(&socket_, SIGNAL(readyRead()), this, SLOT(dataAvailable()));
 
 	qDebug() << "created";
@@ -18,19 +20,18 @@ TcpClient::~TcpClient()
 	socket_.close();
 }
 
-void TcpClient::start(QHostAddress address, quint16 port)
+void TcpClient::start(QString host, quint16 port)
 {
 	qDebug() << "connecting...";
-	socket_.connectToHost(address, port);
+	socket_.connectToHost(host, port);
 }
 
-
-void TcpClient::connected()
+void TcpClient::onConnect()
 {
 	qDebug() << "connected.";
 }
 
-void TcpClient::disconnected()
+void TcpClient::onDisconnect()
 {
 	qDebug() << "disconnected.";
 }

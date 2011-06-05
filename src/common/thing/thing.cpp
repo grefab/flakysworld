@@ -1,4 +1,5 @@
 #include "thing.h"
+#include "constants.h"
 #include <QUuid>
 
 Thing::Model::Model(QPolygonF shape, QPointF position, qreal rotation, QString id) :
@@ -11,6 +12,14 @@ Thing::Model::Model(QPolygonF shape, QPointF position, qreal rotation, QString i
 	if ( id_ == "" ) {
 		id_ = QUuid::createUuid().toString();
 	}
+}
+
+Thing::Model::Model() :
+	id_(""),
+	shape_(QPolygonF()),
+	position_(QPOINTF_INVALID),
+	rotation_(QREAL_INVALID)
+{
 }
 
 Thing::Thing(QPolygonF shape, QPointF position, qreal rotation, QString id, QObject *parent) :

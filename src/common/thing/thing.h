@@ -15,6 +15,7 @@ public:
 	struct Model
 	{
 	public:
+		explicit Model();
 		explicit Model(QPolygonF shape, QPointF position, qreal rotation, QString id = "");
 
 		QString id_;

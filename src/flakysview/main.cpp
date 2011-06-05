@@ -64,6 +64,8 @@ int main(int argc, char *argv[])
 	/* start neuron IO */
 	ConnectionManager* connectionManager = setupIO(world);
 
+	connectionManager->initiateConnection();
+
 	/* preparation is done. let if flow! */
 	return app->exec();
 
