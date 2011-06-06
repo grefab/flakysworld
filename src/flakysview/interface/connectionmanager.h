@@ -30,6 +30,7 @@ private:
 	TcpClient* tcpClient_;
 	EntitySerializer entitySerializer_;
 
+	QMutex locker_;
 };
 
 #endif // CONNECTIONMANAGER_H

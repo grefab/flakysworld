@@ -4,6 +4,9 @@
 ConnectionManager::ConnectionManager(QObject* parent) :
 	QThread(parent)
 {
+	/* make sure initateConnection cannot be called yet */
+	locker_.lock();
+
 	qRegisterMetaType< Thing::Model >("Thing::Model");
 
 	moveToThread(this);
@@ -30,13 +33,18 @@ void ConnectionManager::run()
 	connect(tcpClient_, SIGNAL(connected()), this, SLOT(connected()));
 	connect(tcpClient_, SIGNAL(disconnected()), this, SLOT(disconnected()));
 
+	/* now it's safe to call initiateConnection. */
+	locker_.unlock();
+
 	QThread::run();
 }
 
 
 void ConnectionManager::initiateConnection()
 {
-	QThread::sleep(1);
+	/* to avoid race condition in the construction phase. */
+	locker_.lock();
+	locker_.unlock();
 
 	/* call tcpclient asynchronously to ensure thread safety */
 	QMetaObject::invokeMethod(
