@@ -56,5 +56,13 @@ const QString TYPE_ACTUATORINPUT = "actuatorinput";
 const QString CONCERNS_SENSORS = "sensors";
 const QString CONCERNS_WORLD = "world";
 
+const QString KEY_BEING = "being";
+const QString KEY_BEINGS_SENSORS = "sensors";
+const QString KEY_BEINGS_ACTUATORS = "actuators";
+
+const QString KEY_THING_ID = "thing";
+const QString KEY_THING_SHAPE = "shape";
+const QString KEY_THING_POSITION = "position";
+const QString KEY_THING_ROTATION = "rotation";
 
 #endif // CONSTANTS_H

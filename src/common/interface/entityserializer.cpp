@@ -1,19 +1,8 @@
 #include "entityserializer.h"
-
-#include <QDebug>
-
+#include "constants.h"
 #include "persistence.h"
 
-/* string definitions needed later */
-static const QString KEY_BEING = "being";
-static const QString KEY_BEINGS_SENSORS = "sensors";
-static const QString KEY_BEINGS_ACTUATORS = "actuators";
-
-const QString KEY_THING_ID = "thing";
-const QString KEY_THING_SHAPE = "shape";
-const QString KEY_THING_POSITION = "position";
-const QString KEY_THING_ROTATION = "rotation";
-
+#include <QDebug>
 
 EntitySerializer::EntitySerializer(QObject *parent) :
 	QObject(parent)
