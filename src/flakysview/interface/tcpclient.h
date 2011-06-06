@@ -13,14 +13,13 @@ public:
 	explicit TcpClient(QObject *parent = 0);
 	~TcpClient();
 
-	void start(QString host, quint16 port);
-
 signals:
 	void connected();
 	void disconnected();
 	void dataArrived(QVariantMap data);
 
 public slots:
+	void start(QString host, int port);
 	void sendLine(const QVariant& data);
 	void dataAvailable();
 

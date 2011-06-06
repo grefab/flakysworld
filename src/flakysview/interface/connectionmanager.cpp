@@ -2,16 +2,50 @@
 #include "constants.h"
 
 ConnectionManager::ConnectionManager(QObject* parent) :
-	QObject(parent)
+	QThread(parent)
 {
-	connect(&tcpClient_, SIGNAL(dataArrived(QVariantMap)), this, SLOT(dataArrived(QVariantMap)));
-	connect(&tcpClient_, SIGNAL(connected()), this, SLOT(connected()));
-	connect(&tcpClient_, SIGNAL(disconnected()), this, SLOT(disconnected()));
+	qRegisterMetaType< Thing::Model >("Thing::Model");
+
+	moveToThread(this);
+
+	start();
 }
+
+ConnectionManager::~ConnectionManager()
+{
+	/* do not process further events. */
+	quit();
+
+	/* wait for our processing to be finished. */
+	wait();
+}
+
+void ConnectionManager::run()
+{
+	/* we need a tcp connection to the outside world */
+	tcpClient_ = new TcpClient(this);
+
+	/* get notified of anything the tcp server wants to tell us */
+	connect(tcpClient_, SIGNAL(dataArrived(QVariantMap)), this, SLOT(dataArrived(QVariantMap)));
+	connect(tcpClient_, SIGNAL(connected()), this, SLOT(connected()));
+	connect(tcpClient_, SIGNAL(disconnected()), this, SLOT(disconnected()));
+
+	QThread::run();
+}
+
 
 void ConnectionManager::initiateConnection()
 {
-	tcpClient_.start("localhost", 2345);
+	QThread::sleep(1);
+
+	/* call tcpclient asynchronously to ensure thread safety */
+	QMetaObject::invokeMethod(
+				tcpClient_,
+				"start",
+				Qt::QueuedConnection,
+				Q_ARG(QString, "localhost"),
+				Q_ARG(int, 2345)
+				);
 }
 
 void ConnectionManager::connected()
@@ -21,7 +55,7 @@ void ConnectionManager::connected()
 	map.insert(KEY_TYPE, TYPE_REGISTER)	;
 	map.insert(KEY_CONCERNS, CONCERNS_WORLD);
 
-	tcpClient_.sendLine(map);
+	tcpClient_->sendLine(map);
 
 
 	map.clear();
@@ -33,7 +67,7 @@ void ConnectionManager::connected()
 	map.insert(KEY_BEING, "flaky");
 	map.insert(KEY_BEINGS_ACTUATORS, actuator);
 
-	tcpClient_.sendLine(map);
+	tcpClient_->sendLine(map);
 }
 
 void ConnectionManager::disconnected()

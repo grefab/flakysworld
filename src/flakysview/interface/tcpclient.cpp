@@ -20,7 +20,7 @@ TcpClient::~TcpClient()
 	socket_.close();
 }
 
-void TcpClient::start(QString host, quint16 port)
+void TcpClient::start(QString host, int port)
 {
 	qDebug() << "connecting...";
 	socket_.connectToHost(host, port);
