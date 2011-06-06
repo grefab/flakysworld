@@ -22,6 +22,18 @@ void ConnectionManager::connected()
 	map.insert(KEY_CONCERNS, CONCERNS_WORLD);
 
 	tcpClient_.sendLine(map);
+
+
+	map.clear();
+	QVariantMap actuator;
+	QVariantList actuatorNeurons;
+	actuatorNeurons	.append("0.3");
+	actuator.insert("thrl", actuatorNeurons);
+	map.insert(KEY_TYPE, TYPE_ACTUATORINPUT);
+	map.insert(KEY_BEING, "flaky");
+	map.insert(KEY_BEINGS_ACTUATORS, actuator);
+
+	tcpClient_.sendLine(map);
 }
 
 void ConnectionManager::disconnected()
