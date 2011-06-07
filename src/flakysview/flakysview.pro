@@ -1,6 +1,8 @@
 QT += opengl \
 	network
 
+CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
+
 INCLUDEPATH += ../common
 
 HEADERS += \
@@ -14,12 +16,12 @@ HEADERS += \
 	../common/external/qjson/src/parser.h \
 	../common/external/qjson/src/json_scanner.h \
 	../common/external/qjson/src/json_parser.hh \
-    interface/tcpclient.h \
-    ../common/interface/variantbinaryconverter.h \
-    infrastructure/world.h \
-    ../common/constants.h \
-    interface/connectionmanager.h \
-    infrastructure/viewmanager.h
+	interface/tcpclient.h \
+	../common/interface/variantbinaryconverter.h \
+	infrastructure/world.h \
+	../common/constants.h \
+	interface/connectionmanager.h \
+	infrastructure/viewmanager.h
 
 SOURCES += \
 	main.cpp \
@@ -33,11 +35,11 @@ SOURCES += \
 	../common/external/qjson/src/parser.cpp \
 	../common/external/qjson/src/json_scanner.cpp \
 	../common/external/qjson/src/json_parser.cc \
-    interface/tcpclient.cpp \
-    ../common/interface/variantbinaryconverter.cpp \
-    infrastructure/world.cpp \
-    interface/connectionmanager.cpp \
-    infrastructure/viewmanager.cpp
+	interface/tcpclient.cpp \
+	../common/interface/variantbinaryconverter.cpp \
+	infrastructure/world.cpp \
+	interface/connectionmanager.cpp \
+	infrastructure/viewmanager.cpp
 
 FORMS += \
 	gui/surface.ui
