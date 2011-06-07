@@ -65,15 +65,15 @@ void ConnectionManager::connected()
 
 	tcpClient_->sendLine(map);
 
-
+	/* push flaky a bit, so we see action! */
 	map.clear();
-	QVariantMap actuator;
+	QVariantMap actuators;
 	QVariantList actuatorNeurons;
-	actuatorNeurons	.append("0.3");
-	actuator.insert("thrl", actuatorNeurons);
+	actuatorNeurons.append("0.3");
+	actuators.insert("thrl", actuatorNeurons);
 	map.insert(KEY_TYPE, TYPE_ACTUATORINPUT);
 	map.insert(KEY_BEING, "flaky");
-	map.insert(KEY_BEINGS_ACTUATORS, actuator);
+	map.insert(KEY_BEINGS_ACTUATORS, actuators);
 
 	tcpClient_->sendLine(map);
 }
