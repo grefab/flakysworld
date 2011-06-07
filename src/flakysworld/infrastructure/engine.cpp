@@ -2,7 +2,7 @@
 #include <QTimer>
 #include <QTimerEvent>
 
-const float FPS = 50;
+const float FPS = 20;
 
 Engine::Engine(World* world, QObject *parent) :
 		QThread(parent),
