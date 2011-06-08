@@ -1,11 +1,4 @@
-
-flakysworld.pro.user
-.flakysview.pro.swp
-flakysview.pro.user
-.flakysworld.pro.swp
-flakyremote.pro.user
-.flakyremote.pro.swp
+*.pro.user
+.*.pro.swp
 readme.html
-src/flakysview-build-desktop/
-src/flakysworld-build-desktop/
-src/flakyremote-build-desktop/
+*-build-desktop/
