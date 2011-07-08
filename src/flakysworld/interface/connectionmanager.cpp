@@ -92,12 +92,16 @@ void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rot
 void ConnectionManager::newConnection(QTcpSocket* socket)
 {
 	Q_UNUSED(socket)
+
+	qDebug() << "socket" << socket->localAddress() << "connected.";
 }
 
 void ConnectionManager::disconnected(QTcpSocket* socket)
 {
 	neuronReceivers_.remove(socket);
 	worldReceivers_.remove(socket);
+
+	qDebug() << "disconnected: socket" << socket->localAddress();
 }
 
 void ConnectionManager::dataArrived(QTcpSocket* socket, QVariantMap data)
