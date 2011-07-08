@@ -20,9 +20,6 @@ public:
 private:
 	bool looksLikeJSON(const QByteArray& data);
 
-	QJson::Serializer serializer_;
-	QJson::Parser parser_;
-
 };
 
 #endif // VARIANTBINARYCONVERTER_H
