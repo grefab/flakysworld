@@ -21,10 +21,6 @@ public:
 	/* needed for connecting signals */
 	QGraphicsScene* scene() { return &scene_; }
 	GraphicsView* view();
-	QLabel* fpsLabel();
-
-signals:
-	void engageTriggered(qreal leftThruster, qreal rightThruster);
 
 protected:
 	QGraphicsScene scene_;
@@ -32,8 +28,6 @@ protected:
 private:
 	Ui::Surface *ui;
 
-private slots:
-	void on_btn_engage_clicked();
 };
 
 #endif // SURFACE_H

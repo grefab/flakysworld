@@ -27,16 +27,3 @@ GraphicsView* Surface::view()
 {
 	return ui->graphicsView;
 }
-
-QLabel* Surface::fpsLabel()
-{
-	return ui->lFPS;
-}
-
-void Surface::on_btn_engage_clicked()
-{
-	qreal left = (qreal)ui->dial_left->value() / (qreal)ui->dial_left->maximum();
-	qreal right = (qreal)ui->dial_right->value() / (qreal)ui->dial_right->maximum();
-
-	emit engageTriggered( left * 0.01, right * 0.01 );
-}
