@@ -58,24 +58,9 @@ void ConnectionManager::initiateConnection()
 
 void ConnectionManager::connected()
 {
-	/* register on flakysworld server */
-	QVariantMap map;
-	map.insert(KEY_TYPE, TYPE_REGISTER)	;
-	map.insert(KEY_CONCERNS, CONCERNS_WORLD);
-
-	tcpClient_->sendLine(map);
-
-	/* push flaky a bit, so we see action! */
-	map.clear();
-	QVariantMap actuators;
-	QVariantList actuatorNeurons;
-	actuatorNeurons.append("0.3");
-	actuators.insert("thrl", actuatorNeurons);
-	map.insert(KEY_TYPE, TYPE_ACTUATORINPUT);
-	map.insert(KEY_BEING, "flaky");
-	map.insert(KEY_BEINGS_ACTUATORS, actuators);
-
-	tcpClient_->sendLine(map);
+	registerForWorld();
+	registerForSensors();
+	pushFlaky();
 }
 
 void ConnectionManager::disconnected()
@@ -91,4 +76,51 @@ void ConnectionManager::dataArrived(QVariantMap data)
 
 		emit thingUpdate(thingModel);
 	}
+
+	if( data.value(KEY_TYPE).toString() == TYPE_SENSOROUTPUT ) {
+		QString sensorBeingId;
+		QString sensorId;
+		QList<qreal> sensorNeurons;
+		entitySerializer_.deserializeSensor(data, &sensorBeingId, &sensorId, &sensorNeurons);
+
+		if( sensorBeingId == "flaky" && sensorId == "eye" ) {
+			emit eyeUpdate(sensorNeurons);
+		}
+	}
+
+}
+
+void ConnectionManager::registerForWorld()
+{
+	/* register on flakysworld server */
+	QVariantMap map;
+	map.insert(KEY_TYPE, TYPE_REGISTER)	;
+	map.insert(KEY_CONCERNS, CONCERNS_WORLD);
+
+	tcpClient_->sendLine(map);
+}
+
+void ConnectionManager::registerForSensors()
+{
+	/* register on flakysworld server */
+	QVariantMap map;
+	map.insert(KEY_TYPE, TYPE_REGISTER)	;
+	map.insert(KEY_CONCERNS, CONCERNS_SENSORS);
+
+	tcpClient_->sendLine(map);
+}
+
+void ConnectionManager::pushFlaky()
+{
+	/* push flaky a bit, so we see action! */
+	QVariantMap map;
+	QVariantMap actuators;
+	QVariantList actuatorNeurons;
+	actuatorNeurons.append("0.3");
+	actuators.insert("thrl", actuatorNeurons);
+	map.insert(KEY_TYPE, TYPE_ACTUATORINPUT);
+	map.insert(KEY_BEING, "flaky");
+	map.insert(KEY_BEINGS_ACTUATORS, actuators);
+
+	tcpClient_->sendLine(map);
 }

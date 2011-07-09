@@ -17,6 +17,7 @@ public:
 
 signals:
 	void thingUpdate(Thing::Model thingModel);
+	void eyeUpdate(QList<qreal> sensorNeurons);
 
 protected slots:
 	void connected();
@@ -27,6 +28,10 @@ protected:
 	void run();
 
 private:
+	void registerForWorld();
+	void registerForSensors();
+	void pushFlaky();
+
 	TcpClient* tcpClient_;
 	EntitySerializer entitySerializer_;
 
