@@ -121,6 +121,33 @@ void EntitySerializer::deserializeActuator(const QVariant& actuatorSerialized, Q
 	}
 }
 
+void EntitySerializer::deserializeActuators(const QVariant& actuatorSerialized, QString* actuatorBeingId, QMap< QString, QList<qreal> >* actuators) const
+{
+	QVariantMap parsedDataMap = actuatorSerialized.toMap();
+
+	/* find which being is concerned */
+	const QString beingId = parsedDataMap[KEY_BEING].toString();
+	const QVariantMap actuatorMap = parsedDataMap[KEY_BEINGS_ACTUATORS].toMap();
+
+	*actuatorBeingId = beingId;
+
+	/* we interpret every item in that map as a sensor with an array as data. */
+	foreach(QString id, actuatorMap.keys()) {
+		/* this is our data */
+		const QVariantList v_actuatorNeurons = actuatorMap[id].toList();
+
+		/* convert QVariantList to QList<qreal> */
+		QList<qreal> neuronValues;
+		foreach(QVariant v, v_actuatorNeurons) {
+			neuronValues.append(v.toReal());
+		}
+
+		/* fill the pointers */
+		(*actuators).insert(id, neuronValues);
+	}
+}
+
+
 QVariantMap EntitySerializer::serializeThing(QString thingId, const QPolygonF& shape, const QPointF& position, qreal rotation) const
 {
 	/* we need to serailize everything, i.e. id, shape, position and rotation. */

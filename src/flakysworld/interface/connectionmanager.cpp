@@ -119,12 +119,14 @@ void ConnectionManager::dataArrived(QTcpSocket* socket, QVariantMap data)
 	if(type == TYPE_ACTUATORINPUT) {
 		/* decode incoming actuator data */
 		QString beingId;
-		QString actuatorId;
-		QList<qreal> actuatorNeurons;
-		entitySerializer_.deserializeActuator(data, &beingId, &actuatorId, &actuatorNeurons);
+		QMap<QString, QList<qreal> > actuators;
+		entitySerializer_.deserializeActuators(data, &beingId, &actuators);
 
 		/* tell universe */
-		emit actuatorUpdate(beingId, actuatorId, actuatorNeurons);
+		foreach( QString actuatorId, actuators.keys() ) {
+			const QList<qreal> actuatorNeurons = actuators.value(actuatorId);
+			emit actuatorUpdate(beingId, actuatorId, actuatorNeurons);
+		}
 
 		return;
 	}
