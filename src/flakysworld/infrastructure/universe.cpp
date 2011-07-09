@@ -87,16 +87,18 @@ void Universe::sensorSensed(QList<qreal> sensorNeurons)
 
 void Universe::setup()
 {
+	const qreal SCALE = 10.0f;
+
 	/* build a cage */
 	QPolygonF edgePoly;
 	edgePoly <<
-			QPointF(0.0f, 0.5f) <<
-			QPointF(0.0f, -0.5f);
+			QPointF(0.0f * SCALE, 0.5f * SCALE) <<
+			QPointF(0.0f * SCALE, -0.5f * SCALE);
 
-	Body* bodyLeft = new Body(world_, edgePoly, QPointF(-0.5f, 0.0f), 0, Body::Static);
-	Body* bodyRight = new Body(world_, edgePoly, QPointF(0.5f, 0.0f), 0, Body::Static);
-	Body* bodyTop = new Body(world_, edgePoly, QPointF(0.0f, 0.5f), PI / 2.0f, Body::Static);
-	Body* bodyBottom = new Body(world_, edgePoly, QPointF(0.0f, -0.5f), PI / 2.0f, Body::Static);
+	Body* bodyLeft = new Body(world_, edgePoly, QPointF(-0.5f * SCALE, 0.0f * SCALE), 0, Body::Static);
+	Body* bodyRight = new Body(world_, edgePoly, QPointF(0.5f * SCALE, 0.0f * SCALE), 0, Body::Static);
+	Body* bodyTop = new Body(world_, edgePoly, QPointF(0.0f * SCALE, 0.5f * SCALE), PI / 2.0f, Body::Static);
+	Body* bodyBottom = new Body(world_, edgePoly, QPointF(0.0f * SCALE, -0.5f * SCALE), PI / 2.0f, Body::Static);
 
 	world_->addBody(bodyLeft);
 	world_->addBody(bodyRight);
@@ -109,7 +111,7 @@ void Universe::setup()
 	/* construct regular polygons */
 	{
 		const int edges = 6;
-		const qreal radius = 0.03;
+		const qreal radius = 0.03 * SCALE;
 
 		QTransform rotationMap;
 		QPointF edge(0, radius);
@@ -125,8 +127,8 @@ void Universe::setup()
 				world_,
 				regularPoly,
 				QPointF(
-						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f,
-						-0.5 + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f
+						-0.5 * SCALE + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f * SCALE,
+						-0.5 * SCALE + ((qreal)qrand() / (qreal)INT_MAX) * 1.0f * SCALE
 						),
 				0,
 				Body::Dynamic);
