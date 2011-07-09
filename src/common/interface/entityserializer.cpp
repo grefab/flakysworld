@@ -47,16 +47,16 @@ void EntitySerializer::deserializeSensor(const QVariant& sensorSerialized, QStri
 
 	/* find which being is concerned */
 	const QString beingId = parsedDataMap[KEY_BEING].toString();
-	const QVariantMap actuatorMap = parsedDataMap[KEY_BEINGS_ACTUATORS].toMap();
+	const QVariantMap sensorMap = parsedDataMap[KEY_BEINGS_SENSORS].toMap();
 
 	/* we interpret every item in that map as a sensor with an array as data. */
-	foreach(QString id, actuatorMap.keys()) {
+	foreach(QString id, sensorMap.keys()) {
 		/* this is our data */
-		const QVariantList v_actuatorNeurons = actuatorMap[id].toList();
+		const QVariantList v_sensorNeurons = sensorMap[id].toList();
 
 		/* convert QVariantList to QList<qreal> */
 		QList<qreal> neuronValues;
-		foreach(QVariant v, v_actuatorNeurons) {
+		foreach(QVariant v, v_sensorNeurons) {
 			neuronValues.append(v.toReal());
 		}
 
