@@ -43,7 +43,7 @@ void TcpClient::sendLine(const QVariant& data)
 
 	/* tell socket! newline tells that data is finished. */
 	binaryData.append("\n");
-	qDebug() << "write" << socket_.write(binaryData);
+	/*qDebug() << "write" <<*/ socket_.write(binaryData);
 }
 
 void TcpClient::dataAvailable()
