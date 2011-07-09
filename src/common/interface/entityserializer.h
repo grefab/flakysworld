@@ -15,11 +15,14 @@ public:
 	~EntitySerializer();
 
 public:
-	QVariantMap serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons);
-	void deserializeActuator(const QVariant& actuatorSerialized, QString* actuatorBeingId, QString* actuatorId, QList<qreal>* actuatorNeurons);
+	QVariantMap serializeSensor(QString beingId, QString sensorId, const QList<qreal>& sensorNeurons) const;
+	void deserializeSensor(const QVariant& sensorSerialized, QString* sensorBeingId, QString* sensorId, QList<qreal>* sensorNeurons) const;
 
-	QVariantMap serializeThing(QString thingId, const QPolygonF& shape, const QPointF& position, qreal rotation);
-	void deserializeThing(const QVariant& thingSerialized, QString* thingId, QPolygonF* thingShape, QPointF* thingPosition, qreal* thingRotation);
+	QVariantMap serializeActuator(QString beingId, QString actuatorId, const QList<qreal>& actuatorNeurons) const;
+	void deserializeActuator(const QVariant& actuatorSerialized, QString* actuatorBeingId, QString* actuatorId, QList<qreal>* actuatorNeurons) const;
+
+	QVariantMap serializeThing(QString thingId, const QPolygonF& shape, const QPointF& position, qreal rotation) const;
+	void deserializeThing(const QVariant& thingSerialized, QString* thingId, QPolygonF* thingShape, QPointF* thingPosition, qreal* thingRotation) const;
 };
 
 #endif // ENTITYSERIALIZER_H
