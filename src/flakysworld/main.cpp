@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 	ConnectionManager* connectionManager = setupIO(universe);
 
 	/* preparation is done. let if flow! */
+	qDebug() << "started.";
 	return app->exec();
 
 	/* when we reach this, the program is finished. delete everything in reverse order. */
