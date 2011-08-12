@@ -117,50 +117,66 @@ void ConnectionManager::dataArrived(QTcpSocket* socket, QVariantMap data)
 
 	/* we have received an actuator */
 	if(type == TYPE_ACTUATORINPUT) {
-		/* decode incoming actuator data */
-		QString beingId;
-		QMap<QString, QList<qreal> > actuators;
-		entitySerializer_.deserializeActuators(data, &beingId, &actuators);
-
-		/* tell universe */
-		foreach( QString actuatorId, actuators.keys() ) {
-			const QList<qreal> actuatorNeurons = actuators.value(actuatorId);
-			emit actuatorUpdate(beingId, actuatorId, actuatorNeurons);
-		}
-
+		handleActuatorinput(data);
 		return;
 	}
 
 	/* we have received someone who wants to register */
 	if(type == TYPE_REGISTER) {
-		const QString concerns = data[KEY_CONCERNS].toString();
-
-		if(concerns == CONCERNS_SENSORS) {
-			neuronReceivers_.insert(socket);
-			return;
-		}
-		if(concerns == CONCERNS_WORLD) {
-			/* send complete world initally as "keyframe" */
-			sendCompleteWorld(socket);
-			worldReceivers_.insert(socket);
-			return;
-		}
+		handleRegister(data, socket);
 		return;
 	}
 
 	/* we have received someone who wants to unregister */
 	if(type == TYPE_UNREGISTER) {
-		const QString concerns = data[KEY_CONCERNS].toString();
+		handleUnregister(data, socket);
+		return;
+	}
+}
 
-		if(concerns == CONCERNS_SENSORS) {
-			neuronReceivers_.remove(socket);
-			return;
-		}
-		if(concerns == CONCERNS_WORLD) {
-			worldReceivers_.remove(socket);
-			return;
-		}
+void ConnectionManager::handleActuatorinput(const QVariantMap& data)
+{
+	/* decode incoming actuator data */
+	QString beingId;
+	QMap<QString, QList<qreal> > actuators;
+	entitySerializer_.deserializeActuators(data, &beingId, &actuators);
+
+	/* tell universe */
+	foreach( QString actuatorId, actuators.keys() ) {
+		const QList<qreal> actuatorNeurons = actuators.value(actuatorId);
+		emit actuatorUpdate(beingId, actuatorId, actuatorNeurons);
+	}
+}
+
+void ConnectionManager::handleRegister(const QVariantMap& data, QTcpSocket* socket)
+{
+	const QString concerns = data[KEY_CONCERNS].toString();
+
+	if(concerns == CONCERNS_SENSORS) {
+		neuronReceivers_.insert(socket);
 		return;
 	}
 
+	if(concerns == CONCERNS_WORLD) {
+		/* send complete world initally as "keyframe" */
+		sendCompleteWorld(socket);
+		worldReceivers_.insert(socket);
+		return;
+	}
 }
+
+void ConnectionManager::handleUnregister(const QVariantMap& data, QTcpSocket* socket)
+{
+	const QString concerns = data[KEY_CONCERNS].toString();
+
+	if(concerns == CONCERNS_SENSORS) {
+		neuronReceivers_.remove(socket);
+		return;
+	}
+
+	if(concerns == CONCERNS_WORLD) {
+		worldReceivers_.remove(socket);
+		return;
+	}
+}
+

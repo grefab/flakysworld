@@ -36,6 +36,10 @@ protected:
 	void sendCompleteWorld(QTcpSocket* socket);
 
 private:
+	void handleActuatorinput(const QVariantMap& data);
+	void handleRegister(const QVariantMap& data, QTcpSocket* socket);
+	void handleUnregister(const QVariantMap& data, QTcpSocket* socket);
+
 	Universe* universe_;
 	TcpServer* tcpServer_;
 
