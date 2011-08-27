@@ -5,19 +5,22 @@ h2. Introduction
 
 Flaky, the little triangle, lives in a 2D world. It has actuators (tiny little thrusters) and an sensor (an eye that casts rays into the world). The actuators take input and translate it into movement, whereas the sensors take input from the world around Flaky and translate it into output. In-/output is just a set of floating point values between 0 and 1. These could easily be interpreted as e.g. neuron potential.
 
-All elements in the world are subject to a physics simulation. Depending on what Flaky hits on its way, items may move, collide, bounce, etc. This is done continuously in the background (as long as there are items moving).
+All elements in the world are subject to a physics simulation. Depending on what Flaky hits on its way, items may move, collide, bounce, etc. This is done continuously in the background in real time. To save CPU cycles, physics calculation stopf if items are no longer moving.
 
 The purpose of this little simulation is to allow for a connection with some kind of artificial neuronal network, which takes the input and produces output. This way any action that is performed by flaky has a direct impact on sensor data, which in turn can be processed by the neural net.
 
 
 h2. Screenshots
 
-Everyone likes screenshots! This is still in development and it really looks that way. Anyways, have a look:
+Everyone likes screenshots! This one is old, but it is suited to give an impression:
 
 !https://github.com/grefab/flakysworld/raw/master/img/screenshot.png!
 
 
 h2. News
+
+* *2011-08-27*
+Updated this document to reflect everything that has happened in the last few months.
 
 * *2011-03-13*
 Implemented network communication. Described it as interface specification. See below for details.
@@ -36,25 +39,31 @@ Started the project after realizing that playing with ANN requires a simulated w
 
 h2. Technical Details
 
-The application uses Qt heavily for internal processing and depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket, so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
+Currently the project is split in three parts:
+** *flakysworld* is a console application and it is intended to run on a server. It listens on network interfaces for clients such as flakysview or flakysremote. It contains the world and calculates physics.
+** *flakysview* is a Qt GUI application. It tries to connect to a flakysworld server on localhost and displays everything that happens there.
+** *flakysremote* currently simply sends a JSON string to flakysworld server on localhost. This way actuators (the tiny little thrusters) can be engaged.
 
-The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ and a set of widgets and views, the _GUI_. Universe and GUI reside in a separate thread each. The network communication entity is modeled as a simple socket connection that sends and receives JSON data. It ignores everything non-JSON (e.g. HTTP headers), so one can test output generation using a plain browser.
+The applications use Qt heavily for internal processing. Flakysworld adittionally depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket, so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
 
-I've developed and tested everything using OSX 10.6, Ubuntu Linux 10.04, Qt 4.7 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
+The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ within flakysworld. Flakysview models a set of widgets and views, the _GUI_. The network communication entity in each application is modeled as a simple socket connection that sends and receives JSON data. It ignores everything non-JSON (e.g. HTTP headers), so one can test output generation using a plain browser.
+
+I've developed and tested everything using OSX 10.6, 10.7, Ubuntu Linux 10.04, Qt 4.7 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
 
 See below for the JSON interface spec.
 
 
 h2. Current Status
 
-Actuators, visual sensors and physical world interaction are implemented. There is a simple view that shows what happens in Flaky's world. Data from sensors/to actuators can be received/sent using plain JSON over a socket.
+Actuators, visual sensors and physical world interaction are implemented. Flakysview is a simple view that shows what happens in flakysworld. Data from sensors/to actuators can be received/sent using plain JSON over a socket.
 
 
 h2. Future Plans
 
+* *REST interface:* Currently there is only a socket connection. Plans are to use HTTP GET/POST/etc to implement a REST conformous interface.
 * *Configurability:* Port and interface should be configurable.
-* *Dual mode:* Run with or without GUI.
-* *Remote mode:* Let universe and GUI run on different machines
+* *DONE* *Dual mode:* Run with or without GUI.
+* *DONE* *Remote mode:* Let universe and GUI run on different machines
 * *Save/Load* of the universe in a file or into a DB (CouchDB?)
 * *Time flies mode:* Do not keep in sync with real time, but run as fast as possible. May need sync signal for clients attached via network.
 * *Optional compression:* JSON is quite verbose and therefore bandwidth consuming (nothing compared to SOAP, though). It would be nice to optionally compress traffic. The cost (CPU) and benefit (bandwidth savings) should be evaluated first.
@@ -78,28 +87,58 @@ group elements as entity.
 
 mean "one or more" and "zero or more" of the previously described entity. Multiple occurrences of an entity have to be comma separated.
 
+
+h3. Registration for Data Feeds
+
+When connecting to flakysworld, a registration to a data feed is necessary. This is intended to allow applications to choose between world updates (shapes, positions and rotations) or AI relevant updates, i.e. sensors.
+
+Registration is done by sending a JSON string the consists of the following elements:
+
+@{ "type" : "register", "concerns" : ( "WHAT" ) }@
+
+Where @WHAT@ is either @sensors@ or @world@. When registering to sensors, the registering client will receive current sensor status initially and updates when available, i.e. after each time step of physics simulation. When registering to world data, intially the current world is sent to the client completely, followed by updates when objects are moved.
+
+Cients can register to multiple feeds. Disconnecting the socket removes registration. Data feed registration can be cancelled by a client using an unregister command:
+
+@{ "type" : "unregister", "concerns" : ( "WHAT" ) }@
+
+
+h3. Sensor Output
+
 Sensor data is output according to the following scheme:
 
-@{ "being" : "BEING_ID", "sensors" : { ( "SENSOR_ID" : [ REAL* ] )+ } }@
+@{ "type" : "sensoroutput", "being" : "BEING_ID", "sensors" : { ( "SENSOR_ID" : [ REAL* ] )+ } }@
 
 This means: For exactly one being, which is denoted by its ID (@BEING_ID@), there may be multiple sensors defined. Each sensor is described with its ID (@SENSOR_ID@) as key and an array consisting of multiple @REAL@ values as sensor data. We define @REAL@ as a value in [0..1], which is a closed interval.
 
-The same holds for sending actuator data:
 
-@{ "being" : "BEING_ID", "actuators" : { ( "ACTUATOR_ID" : [ REAL* ] )+ } }@
+h3. Actuator Activation
+
+The same scheme that is used for sensors holds for clients sending actuator data to flakysworld:
+
+@{ "type" : "actuatorinput", "being" : "BEING_ID", "actuators" : { ( "ACTUATOR_ID" : [ REAL* ] )+ } }@
 
 For a being, denoted by @BEING_ID@, multiple actuators can be described. Actuator data consists of key (@ACTUATOR_ID@) and value, an array of real values in [0..1].
 
 Multiple data is, as usual in JSON, comma separated. A complete dataset, which has to be a JSON conform object, is finished by a newline. This holds for both directions. This means: Before a newline character, no JSON input is handled by flakysworld, and no complete output should be expected before a newline character.
 
-Non-existing beings or actuators are silently ignored. At the moment, there is only one being, called @flaky@ with only one sensor, called @eye@. Actuators will follow soon.
+Non-existing beings or actuators are silently ignored. At the moment, there is only one being, called @flaky@ with only one sensor, called @eye@ and two actuators @thrl@ and @thrr@ (thruster left and thruster right).
+
+
+h3. World Data
+
+Our world consists of things. A thing is described by the following JSON data:
+
+@{ "type" : "thing", "thing" : "THING_ID", "shape" : [ ( { "x" : REAL, "y" : REAL } )* ], "position" : { "x" : REAL, "y" : REAL }, "rotation" : REAL }@
+
+Where @THING_ID@ is usually a GUID string, except for flaky, where it is @flaky@. Thing's shape is described as an array of points (x and y reals) in thing's coordinates, so they have to be translated and rotated. Currently, a shape cannot be modified. Thing's position is a point, too. Thing's rotation is given in radians.
 
 
 h3. Example
 
 A possible return value for sensor data might look like this:
 
-@{ "being" : "flaky", "sensors" : { "eye" : [ 0.0298899, 0.032246, 0.0359727, 0.255273, 0.256103, 0.264073, 0.258331, 0.252873, 0.253623, 0.261305, 0.668216, 0.676755, 0.687302, 0.329974, 0.212865, 0.201672, 0.197739, 0.197683, 0.201475, 0.21226, 0.177706, 0.166087, 0.161403, 0.159795, 0.160635, 0.164229, 0.172641, 0.73212, 0.288457, 0.272602, 0.269097, 0.272273 ] } }@
+@{ "type" : "sensoroutput", "being" : "flaky", "sensors" : { "eye" : [ 0.0298899, 0.032246, 0.0359727, 0.255273, 0.256103, 0.264073, 0.258331, 0.252873, 0.253623, 0.261305, 0.668216, 0.676755, 0.687302, 0.329974, 0.212865, 0.201672, 0.197739, 0.197683, 0.201475, 0.21226, 0.177706, 0.166087, 0.161403, 0.159795, 0.160635, 0.164229, 0.172641, 0.73212, 0.288457, 0.272602, 0.269097, 0.272273 ] } }@
 
 
 h2. How To Install
@@ -130,13 +169,13 @@ h2. FAQ
 * A: The rendering is done using OpenGL per default. This is set up by ui->graphicsView->setViewport() in surface.cpp. Comment this line if you need to work without OpenGL and use software rendering instead.
 
 * Q: So how do I control Flaky?
-* A: By sending values for the thrusters, one for left and right. This applies a pulse to the corresponding thruster. Currently, this happens using keyboard commands or the UI.
+* A: By sending values for the thrusters, one for left and right. This applies a pulse to the corresponding thruster. Currently, this happens using flakysremote.
 
 * Q: Where is the AI?
 * A: Nowhere here. The idea is to have a simulated world with an easy interface to connect any AI you like. To answer your question: That's your job!
 
-* Q: You call this "controls" in the GUI? Are you serious?
-* A: Yes, they're more than ugly. Their purpose is just to test if interaction works basically. Go on and code a ANN that controls them in a sophisticated way, this is why all this is here!
+* Q: You call this "controls"? Are you serious?
+* A: Yes, steering flaky using JSON strings is more than ugly to play with, but that's okay. The purpose is just to test if interaction works basically. Go on and code a ANN that controls them in a sophisticated way, this is why all this is here!
 
 * Q: Nah, I don't get this.
 * A: Dump all comments, questions and suggestion here: gre@g0r.de.
