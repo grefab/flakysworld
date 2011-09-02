@@ -7,6 +7,7 @@ ViewManager::ViewManager(QGraphicsScene& scene, QObject *parent) :
 	QObject(parent),
 	scene_(scene)
 {
+//	scene_.setBackgroundBrush(QBrush(Qt::black));
 }
 
 void ViewManager::newThingArrived(const Thing* thing)

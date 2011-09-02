@@ -1,12 +1,15 @@
 #include "thingview.h"
 #include <QBrush>
+#include <QPen>
 
 ThingView::ThingView(const Thing& thing, QGraphicsItem *parent) :
 		QGraphicsPolygonItem(parent),
 		thing_(thing)
 {
 	/* colorize! */
-	setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
+//	setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
+	setBrush(Qt::transparent);
+	setPen(QPen(QColor(Qt::black)));
 
 	/* we need the body only to connect to it. no reference is stored. */
 	connect(&thing, SIGNAL(changedPosition(QTransform)), this, SLOT(bodyChanged(QTransform)));
