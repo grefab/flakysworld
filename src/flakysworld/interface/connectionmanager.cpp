@@ -39,37 +39,12 @@ void ConnectionManager::run()
 	QThread::run();
 }
 
-void ConnectionManager::sendCompleteWorld(QTcpSocket* socket)
-{
-	QList<Thing::Model> things = universe_->world()->getThingModels();
-
-	foreach(const Thing::Model& thing, things) {
-		/* get a variant to be sent */
-		QVariantMap sendMe = entitySerializer_.serializeThing(thing.id_, thing.shape_, thing.position_, thing.rotation_);
-
-		/* define type */
-		sendMe.insert(KEY_TYPE, TYPE_THING);
-
-		/* send the data to socket */
-		tcpServer_->send(sendMe, socket);
-	}
-}
-
 void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons)
 {
-	if ( neuronReceivers_.empty() )
+	if ( sensorReceivers_.empty() )
 		return;
 
-	/* get a variant to be sent */
-	QVariantMap sendMe = entitySerializer_.serializeSensor(beingId, sensorId, sensorNeurons);
-
-	/* define type */
-	sendMe.insert(KEY_TYPE, TYPE_SENSOROUTPUT);
-
-	/* tell all interested sockets about our sensor */
-	foreach(QTcpSocket* socket, neuronReceivers_) {
-		tcpServer_->send(sendMe, socket);
-	}
+	sendSensorUpdate(beingId, sensorId, sensorNeurons);
 }
 
 void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rotation)
@@ -77,16 +52,7 @@ void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rot
 	if ( worldReceivers_.empty() )
 		return;
 
-	/* get a variant to be sent */
-	QVariantMap sendMe = entitySerializer_.serializeThing(thingId, QPolygonF(), position, rotation);
-
-	/* define type */
-	sendMe.insert(KEY_TYPE, TYPE_THING);
-
-	/* tell all interested sockets about our updated thing */
-	foreach(QTcpSocket* socket, worldReceivers_) {
-		tcpServer_->send(sendMe, socket);
-	}
+	sendThingUpdate(thingId, position, rotation);
 }
 
 void ConnectionManager::newConnection(QTcpSocket* socket)
@@ -98,7 +64,8 @@ void ConnectionManager::newConnection(QTcpSocket* socket)
 
 void ConnectionManager::disconnected(QTcpSocket* socket)
 {
-	neuronReceivers_.remove(socket);
+	sensorReceivers_.remove(socket);
+	actuatorReceivers_.remove(socket);
 	worldReceivers_.remove(socket);
 
 	qDebug() << "disconnected: socket" << socket->localAddress();
@@ -145,6 +112,11 @@ void ConnectionManager::handleActuatorinput(const QVariantMap& data)
 	foreach( QString actuatorId, actuators.keys() ) {
 		const QList<qreal> actuatorNeurons = actuators.value(actuatorId);
 		emit actuatorUpdate(beingId, actuatorId, actuatorNeurons);
+
+		/* tell registered clients */
+		if ( !actuatorReceivers_.empty() ) {
+			sendActuatorUpdate(beingId, actuatorId, actuatorNeurons);
+		}
 	}
 }
 
@@ -153,7 +125,12 @@ void ConnectionManager::handleRegister(const QVariantMap& data, QTcpSocket* sock
 	const QString concerns = data[KEY_CONCERNS].toString();
 
 	if(concerns == CONCERNS_SENSORS) {
-		neuronReceivers_.insert(socket);
+		sensorReceivers_.insert(socket);
+		return;
+	}
+
+	if(concerns == CONCERNS_ACTUATORS) {
+		actuatorReceivers_.insert(socket);
 		return;
 	}
 
@@ -170,7 +147,12 @@ void ConnectionManager::handleUnregister(const QVariantMap& data, QTcpSocket* so
 	const QString concerns = data[KEY_CONCERNS].toString();
 
 	if(concerns == CONCERNS_SENSORS) {
-		neuronReceivers_.remove(socket);
+		sensorReceivers_.remove(socket);
+		return;
+	}
+
+	if(concerns == CONCERNS_SENSORS) {
+		actuatorReceivers_.remove(socket);
 		return;
 	}
 
@@ -180,3 +162,60 @@ void ConnectionManager::handleUnregister(const QVariantMap& data, QTcpSocket* so
 	}
 }
 
+void ConnectionManager::sendSensorUpdate(const QString& beingId, const QString& sensorId, const QList<qreal>& sensorNeurons)
+{
+	/* get a variant to be sent */
+	QVariantMap sendMe = entitySerializer_.serializeSensor(beingId, sensorId, sensorNeurons);
+
+	/* define type */
+	sendMe.insert(KEY_TYPE, TYPE_SENSOROUTPUT);
+
+	/* tell all interested sockets about our sensor */
+	foreach(QTcpSocket* socket, sensorReceivers_) {
+		tcpServer_->send(sendMe, socket);
+	}
+}
+
+void ConnectionManager::sendActuatorUpdate(const QString& beingId, const QString& actuatorId, const QList<qreal>& actuatorNeurons)
+{
+	/* get a variant to be sent */
+	QVariantMap sendMe = entitySerializer_.serializeActuator(beingId, actuatorId, actuatorNeurons);
+
+	/* define type */
+	sendMe.insert(KEY_TYPE, TYPE_ACTUATOROUTPUT);
+
+	/* tell all interested sockets about our sensor */
+	foreach(QTcpSocket* socket, actuatorReceivers_) {
+		tcpServer_->send(sendMe, socket);
+	}
+}
+
+void ConnectionManager::sendThingUpdate(const QString& thingId, const QPointF& position, qreal rotation)
+{
+	/* get a variant to be sent */
+	QVariantMap sendMe = entitySerializer_.serializeThing(thingId, QPolygonF(), position, rotation);
+
+	/* define type */
+	sendMe.insert(KEY_TYPE, TYPE_THING);
+
+	/* tell all interested sockets about our updated thing */
+	foreach(QTcpSocket* socket, worldReceivers_) {
+		tcpServer_->send(sendMe, socket);
+	}
+}
+
+void ConnectionManager::sendCompleteWorld(QTcpSocket* socket)
+{
+	QList<Thing::Model> things = universe_->world()->getThingModels();
+
+	foreach(const Thing::Model& thing, things) {
+		/* get a variant to be sent */
+		QVariantMap sendMe = entitySerializer_.serializeThing(thing.id_, thing.shape_, thing.position_, thing.rotation_);
+
+		/* define type */
+		sendMe.insert(KEY_TYPE, TYPE_THING);
+
+		/* send the data to socket */
+		tcpServer_->send(sendMe, socket);
+	}
+}

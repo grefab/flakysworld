@@ -24,8 +24,12 @@ These objects can be received by flakysworld:
 
 { "type" : "register",
   "concerns" : ( "sensors" | "world" ) }
+{ "type" : "register",
+  "concerns" : ( "actuators" | "world" ) }
 { "type" : "unregister",
   "concerns" : ( "sensors" | "world" ) }
+{ "type" : "unregister",
+  "concerns" : ( "actuators" | "world" ) }
 { "type" : "actuatorinput",
   "being" : "BEING_ID",
   "actuators" : { ( "ACTUATOR_ID" : [ REAL* ] )+ } }
@@ -36,6 +40,9 @@ If registered to corresponding updates, a client will recieve:
 { "type" : "sensoroutput",
   "being" : "BEING_ID",
   "sensors" : { ( "SENSOR_ID" : [ REAL* ] )+ } }
+{ "type" : "actuatoroutput",
+  "being" : "BEING_ID",
+  "actuators" : { ( "ACTUATOR_ID" : [ REAL* ] )+ } }
 { "type" : "thing",
   "thing" : "THING_ID",
   "shape" : [ ( { "x" : REAL, "y" : REAL } )* ],
@@ -48,12 +55,15 @@ If registered to corresponding updates, a client will recieve:
 /* these are the constants for the things described above */
 const QString KEY_TYPE = "type";
 const QString TYPE_SENSOROUTPUT = "sensoroutput";
+const QString TYPE_ACTUATOROUTPUT = "actuatoroutput";
 const QString TYPE_THING = "thing";
+
 const QString KEY_CONCERNS = "concerns";
 const QString TYPE_REGISTER = "register";
 const QString TYPE_UNREGISTER = "unregister";
 const QString TYPE_ACTUATORINPUT = "actuatorinput";
 const QString CONCERNS_SENSORS = "sensors";
+const QString CONCERNS_ACTUATORS = "actuators";
 const QString CONCERNS_WORLD = "world";
 
 const QString KEY_BEING = "being";

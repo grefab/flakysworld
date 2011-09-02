@@ -33,19 +33,23 @@ protected slots:
 protected:
 	void run();
 
-	void sendCompleteWorld(QTcpSocket* socket);
-
 private:
 	void handleActuatorinput(const QVariantMap& data);
 	void handleRegister(const QVariantMap& data, QTcpSocket* socket);
 	void handleUnregister(const QVariantMap& data, QTcpSocket* socket);
+
+	void sendSensorUpdate(const QString& beingId, const QString& sensorId, const QList<qreal>& sensorNeurons);
+	void sendActuatorUpdate(const QString& beingId, const QString& actuatorId, const QList<qreal>& actuatorNeurons);
+	void sendThingUpdate(const QString& thingId, const QPointF& position, qreal rotation);
+	void sendCompleteWorld(QTcpSocket* socket);
 
 	Universe* universe_;
 	TcpServer* tcpServer_;
 
 	EntitySerializer entitySerializer_;
 
-	QSet<QTcpSocket*> neuronReceivers_;
+	QSet<QTcpSocket*> sensorReceivers_;
+	QSet<QTcpSocket*> actuatorReceivers_;
 	QSet<QTcpSocket*> worldReceivers_;
 };
 
