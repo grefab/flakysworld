@@ -18,6 +18,7 @@ public:
 signals:
 	void thingUpdate(Thing::Model thingModel);
 	void eyeUpdate(QList<qreal> sensorNeurons);
+	void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
 
 protected slots:
 	void connected();
@@ -30,6 +31,7 @@ protected:
 private:
 	void registerForWorld();
 	void registerForSensors();
+	void registerForActuators();
 	void pushFlaky();
 
 	TcpClient* tcpClient_;

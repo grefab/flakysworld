@@ -60,6 +60,7 @@ void ConnectionManager::connected()
 {
 	registerForWorld();
 	registerForSensors();
+	registerForActuators();
 	pushFlaky();
 }
 
@@ -88,6 +89,16 @@ void ConnectionManager::dataArrived(QVariantMap data)
 		}
 	}
 
+	if( data.value(KEY_TYPE).toString() == TYPE_ACTUATOROUTPUT ) {
+		QString actuatorBeingId;
+		QString actuatorId;
+		QList<qreal> actuatorNeurons;
+		entitySerializer_.deserializeActuator(data, &actuatorBeingId, &actuatorId, &actuatorNeurons);
+
+		if( actuatorBeingId == "flaky" ) {
+			emit actuatorUpdate(actuatorId, actuatorNeurons);
+		}
+	}
 }
 
 void ConnectionManager::registerForWorld()
@@ -106,6 +117,16 @@ void ConnectionManager::registerForSensors()
 	QVariantMap map;
 	map.insert(KEY_TYPE, TYPE_REGISTER)	;
 	map.insert(KEY_CONCERNS, CONCERNS_SENSORS);
+
+	tcpClient_->sendLine(map);
+}
+
+void ConnectionManager::registerForActuators()
+{
+	/* register on flakysworld server */
+	QVariantMap map;
+	map.insert(KEY_TYPE, TYPE_REGISTER)	;
+	map.insert(KEY_CONCERNS, CONCERNS_ACTUATORS);
 
 	tcpClient_->sendLine(map);
 }
