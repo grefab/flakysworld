@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QGraphicsPolygonItem>
 #include "thing/thing.h"
-#include <QPointF>
 
 class ThingView : public QObject, public QGraphicsPolygonItem
 {
