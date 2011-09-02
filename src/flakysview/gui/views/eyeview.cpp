@@ -2,27 +2,23 @@
 #include <QPainter>
 #include <QVector>
 
-EyeView::EyeView(const Eye& eye, QGraphicsItem *parent) :
-		QGraphicsObject(parent),
-		eye_(eye)
+EyeView::EyeView(QGraphicsItem *parent) :
+		QGraphicsObject(parent)
 {
+	/* set our position */
+	setPos(QPointF(0.3f, 0.0f));
+
 	/* create our eye-shape */
-	polygon_ << QPointF(-0.01f, 0.0f) << QPointF(0.01f, -0.01f) << QPointF(0.01f, 0.01f);
+	eyeSymbol_ << QPointF(-0.1f, 0.0f) << QPointF(0.1f, -0.1f) << QPointF(0.1f, 0.1f);
 
 	/* populate rays */
-	rays_ = eye_.rays();
+	initRays();
 
 	/* initialize rays and bounding rect */
 	for(int i = 0; i < rays_.size(); ++i) {
 		output_.append(0);
 		boundingRect_ = boundingRect_.united(QRectF(rays_[i].p1(), rays_[i].p2()));
 	}
-
-	/* get notified of position changes */
-	connect(&eye, SIGNAL(positionChanged(QTransform)), this, SLOT(eyePositionChanged(QTransform)));
-
-	/* get notified of sesor input changes */
-	connect(&eye, SIGNAL(updated(QList<qreal>)), this, SLOT(retinaUpdated(QList<qreal>)));
 }
 
 void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -31,7 +27,7 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	Q_UNUSED(widget);
 
 	/* draw a small indicator that we can see the plain eye */
-	painter->drawPolygon(polygon_);
+	painter->drawPolygon(eyeSymbol_);
 
 	/* make the rays a bit transparent */
 	static const QColor color = QColor(0, 0, 0, 16);
@@ -53,6 +49,7 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 		poly << line.p2();
 	}
 
+	/* draw the polygon that is spanned by the lines */
 	painter->drawPolygon(poly);
 	painter->drawLines(drawLines.toVector());
 }
@@ -62,15 +59,32 @@ QRectF EyeView::boundingRect() const
 	return boundingRect_;
 }
 
-void EyeView::eyePositionChanged(QTransform transform)
-{
-	/* mirroring on the x axis to take care for Qt's screen coordinates. */
-	static const QTransform mirror(1, 0, 0, 0, -1, 0, 0, 0, 1);
-
-	setTransform(transform * mirror);
-}
-
 void EyeView::retinaUpdated(QList<qreal> output)
 {
 	output_ = output;
+}
+
+void EyeView::initRays()
+{
+	/* empty rays */
+	rays_ = QList<QLineF>();
+
+	/* constants for display */
+	const qreal visionDegrees = 90;
+	const int rayCount = 32;
+	const qreal length = 6.0f;
+
+	const QPointF origin = QPointF(0, 0);
+	const QPointF destination = QPointF(length, 0.0f);
+
+	/* create rayCount rays that form a visionDegrees° angle in total */
+	for( int i = 0; i < rayCount; ++i ) {
+		const qreal rotation = -visionDegrees / 2.0f + ((qreal)i * (visionDegrees / (qreal)(rayCount -1)));
+
+		QTransform rot;
+		rot.rotate(rotation);
+
+		rays_.append(QLineF(origin, rot.map(destination)));
+
+	}
 }

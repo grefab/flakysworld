@@ -21,7 +21,8 @@ HEADERS += \
 	infrastructure/world.h \
 	../common/constants.h \
 	interface/connectionmanager.h \
-	infrastructure/viewmanager.h
+	infrastructure/viewmanager.h \
+    gui/views/eyeview.h
 
 SOURCES += \
 	main.cpp \
@@ -39,7 +40,8 @@ SOURCES += \
 	../common/interface/variantbinaryconverter.cpp \
 	infrastructure/world.cpp \
 	interface/connectionmanager.cpp \
-	infrastructure/viewmanager.cpp
+	infrastructure/viewmanager.cpp \
+    gui/views/eyeview.cpp
 
 FORMS += \
 	gui/surface.ui
