@@ -8,7 +8,7 @@
 #include "interface/connectionmanager.h"
 #include "infrastructure/viewmanager.h"
 
-Surface* setupGUI(World* world)
+Surface* setupGUI(World* world, ConnectionManager* connectionManager)
 {
 	Surface* surface = new Surface();
 
@@ -16,6 +16,8 @@ Surface* setupGUI(World* world)
 	ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
 
 	QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
+	QObject::connect(connectionManager, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
+
 
 	/* build a corresponding view for flaky's eyes. */
 //	foreach(Sensor* sensor, universe->being("flaky")->sensors()) {
@@ -58,20 +60,19 @@ int main(int argc, char *argv[])
 	/* world contains a collection of things */
 	World* world = new World();
 
-	/* make everything visible */
-	Surface* surface = setupGUI(world);
-
 	/* start neuron IO */
 	ConnectionManager* connectionManager = setupIO(world);
-
 	connectionManager->initiateConnection();
+
+	/* make everything visible */
+	Surface* surface = setupGUI(world, connectionManager);
 
 	/* preparation is done. let if flow! */
 	return app->exec();
 
 	/* when we reach this, the program is finished. delete everything in reverse order. */
+	delete surface;
 	delete connectionManager;
 	delete world;
-	delete surface;
 	delete app;
 }
