@@ -12,9 +12,6 @@ class ThingView : public QObject, public QGraphicsPolygonItem
 public:
 	ThingView(const Thing& thing, QGraphicsItem *parent = 0);
 
-protected:
-	const Thing& thing_;
-
 private slots:
 	void bodyChanged(QTransform transformation);
 

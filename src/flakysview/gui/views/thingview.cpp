@@ -3,8 +3,7 @@
 #include <QPen>
 
 ThingView::ThingView(const Thing& thing, QGraphicsItem *parent) :
-		QGraphicsPolygonItem(parent),
-		thing_(thing)
+		QGraphicsPolygonItem(parent)
 {
 	/* colorize! */
 //	setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
