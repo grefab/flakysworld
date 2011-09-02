@@ -29,7 +29,7 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	painter->drawPolygon(eyeSymbol_);
 
 	/* make the rays a bit transparent */
-	static const QColor color = QColor(0, 0, 0, 16);
+	static const QColor color = QColor(0, 0, 255, 32);
 	painter->setPen(QPen(color));
 	painter->setBrush(QBrush(color));
 
