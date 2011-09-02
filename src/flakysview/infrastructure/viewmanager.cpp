@@ -19,9 +19,9 @@ void ViewManager::newThingArrived(const Thing* thing)
 
 	/* take care for flaky's sensors and actuators */
 	if ( thing->id() == "flaky" ) {
+		/* when adding with parent eyeview is automatically added to the scene. */
 		EyeView* eyeView = new EyeView(thingView);
 		connect(this, SIGNAL(eyeUpdate(QList<qreal>)), eyeView, SLOT(retinaUpdated(QList<qreal>)));
-		scene_.addItem( eyeView );
 	}
 
 	foreach(QGraphicsView* view, scene_.views()) {
