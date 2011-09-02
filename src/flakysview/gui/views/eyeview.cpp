@@ -14,10 +14,9 @@ EyeView::EyeView(QGraphicsItem *parent) :
 	/* populate rays */
 	initRays();
 
-	/* initialize rays and bounding rect */
+	/* initialize rays */
 	for(int i = 0; i < rays_.size(); ++i) {
 		output_.append(0);
-		boundingRect_ = boundingRect_.united(QRectF(rays_[i].p1(), rays_[i].p2()));
 	}
 }
 
@@ -56,7 +55,7 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 QRectF EyeView::boundingRect() const
 {
-	return boundingRect_;
+	return eyeSymbol_.boundingRect();
 }
 
 void EyeView::retinaUpdated(QList<qreal> output)

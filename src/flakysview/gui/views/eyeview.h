@@ -24,7 +24,6 @@ private:
 
 	QPolygonF eyeSymbol_;
 	QList<QLineF> rays_;
-	QRectF boundingRect_;
 	QList<qreal> output_;
 
 };
