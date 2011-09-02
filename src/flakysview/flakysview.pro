@@ -22,7 +22,8 @@ HEADERS += \
 	../common/constants.h \
 	interface/connectionmanager.h \
 	infrastructure/viewmanager.h \
-    gui/views/eyeview.h
+    gui/views/eyeview.h \
+    gui/views/actuatorview.h
 
 SOURCES += \
 	main.cpp \
@@ -41,7 +42,8 @@ SOURCES += \
 	infrastructure/world.cpp \
 	interface/connectionmanager.cpp \
 	infrastructure/viewmanager.cpp \
-    gui/views/eyeview.cpp
+    gui/views/eyeview.cpp \
+    gui/views/actuatorview.cpp
 
 FORMS += \
 	gui/surface.ui
