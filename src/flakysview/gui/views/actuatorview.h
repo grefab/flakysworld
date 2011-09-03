@@ -6,6 +6,7 @@
 #include <QString>
 #include <QPointF>
 #include <QList>
+#include <QTimer>
 
 class ActuatorView : public QObject, public QGraphicsPolygonItem
 {
@@ -17,8 +18,15 @@ public:
 public slots:
 	void actuatorUpdate(QList<qreal> actuatorNeurons);
 
+private slots:
+	void timeout();
+
 private:
 	void setShape(qreal thrusterValue);
+
+	QTimer fadeOutTimer_;
+	qreal fadeOutThrusterValue_;
+
 };
 
 #endif // ACTUATORVIEW_H

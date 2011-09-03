@@ -14,12 +14,18 @@ ActuatorView::ActuatorView(QPointF position, QGraphicsItem *parent) :
 
 	/* init our shape */
 	setShape(0.0f);
+
+	/* timer handling */
+	connect(&fadeOutTimer_, SIGNAL(timeout()), this, SLOT(timeout()));
 }
 
 void ActuatorView::actuatorUpdate(QList<qreal> actuatorNeurons)
 {
 	if( actuatorNeurons.length() == 1 ) {
 		setShape(actuatorNeurons[0]);
+
+		fadeOutThrusterValue_ = actuatorNeurons[0];
+		fadeOutTimer_.start(100);
 	}
 }
 
@@ -31,4 +37,16 @@ void ActuatorView::setShape(qreal thrusterValue)
 
 	/* adept our model's shape */
 	setPolygon(shape);
+}
+
+void ActuatorView::timeout()
+{
+	fadeOutThrusterValue_ -= 0.03;
+
+	if ( fadeOutThrusterValue_ > 0.0f ) {
+		setShape(fadeOutThrusterValue_);
+	} else {
+		setShape(0.0f);
+		fadeOutTimer_.stop();
+	}
 }
