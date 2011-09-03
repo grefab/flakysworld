@@ -17,6 +17,7 @@ Surface* setupGUI(World* world, ConnectionManager* connectionManager)
 
 	QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
 	QObject::connect(connectionManager, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
+	QObject::connect(connectionManager, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
 
 
 	/* build a corresponding view for flaky's eyes. */

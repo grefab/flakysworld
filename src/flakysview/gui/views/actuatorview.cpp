@@ -2,9 +2,8 @@
 #include <QBrush>
 #include <QPen>
 
-ActuatorView::ActuatorView(QString id, QPointF position, QGraphicsItem *parent) :
-	QGraphicsPolygonItem(parent),
-	id_(id)
+ActuatorView::ActuatorView(QPointF position, QGraphicsItem *parent) :
+	QGraphicsPolygonItem(parent)
 {
 	/* locate */
 	setPos(position);

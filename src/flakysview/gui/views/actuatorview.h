@@ -12,14 +12,10 @@ class ActuatorView : public QObject, public QGraphicsPolygonItem
 	Q_OBJECT
 
 public:
-	explicit ActuatorView(QString id, QPointF position, QGraphicsItem *parent = 0);
-	const QString& id() const { return id_; }
+	explicit ActuatorView(QPointF position, QGraphicsItem *parent = 0);
 
 public slots:
 	void actuatorUpdate(QList<qreal> actuatorNeurons);
-
-protected:
-	QString id_;
 
 private:
 	void setShape(qreal thrusterValue);
