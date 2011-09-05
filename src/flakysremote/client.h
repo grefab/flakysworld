@@ -13,13 +13,21 @@ public:
 	explicit Client(QObject *parent = 0);
 	~Client();
 	void start(QHostAddress address, quint16 port);
+	void stop();
 
 public slots:
 	void connected();
+	void disconnected();
+	void error(QAbstractSocket::SocketError socketError);
 	void send(QByteArray data);
 
 private:
+	void retry();
+
+	QHostAddress address_;
+	quint16 port_;
 	QTcpSocket socket;
+	bool wantConnection_;
 
 };
 
