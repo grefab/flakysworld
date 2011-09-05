@@ -10,8 +10,8 @@ Surface::Surface(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	client_ = new Client(this);
-	client_->start(QHostAddress::LocalHost, 2345);
+	client_ = new Client(QHostAddress::LocalHost, 2345, this);
+	client_->start();
 
 }
 

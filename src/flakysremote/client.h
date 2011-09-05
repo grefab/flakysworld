@@ -10,16 +10,18 @@ class Client : public QObject
 {
 	Q_OBJECT
 public:
-	explicit Client(QObject *parent = 0);
+	explicit Client(QHostAddress address, quint16 port, QObject *parent = 0);
 	~Client();
-	void start(QHostAddress address, quint16 port);
-	void stop();
 
 public slots:
+	void start();
+	void stop();
+	void send(QByteArray data);
+
+protected slots:
 	void connected();
 	void disconnected();
 	void error(QAbstractSocket::SocketError socketError);
-	void send(QByteArray data);
 
 private:
 	void retry();
@@ -27,7 +29,9 @@ private:
 	QHostAddress address_;
 	quint16 port_;
 	QTcpSocket socket;
+
 	bool wantConnection_;
+	bool retrying_;
 
 };
 

@@ -5,9 +5,12 @@
 
 #include <QDebug>
 
-Client::Client(QObject* parent) :
+Client::Client(QHostAddress address, quint16 port, QObject* parent) :
 	QObject(parent),
-	wantConnection_(false)
+	address_(address),
+	port_(port),
+	wantConnection_(false),
+	retrying_(false)
 {
 	connect(&socket, SIGNAL(connected()), this, SLOT(connected()));
 	connect(&socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
@@ -21,20 +24,20 @@ Client::~Client()
 	stop();
 }
 
-void Client::start(QHostAddress address, quint16 port)
+void Client::start()
 {
 	wantConnection_ = true;
-
-	address_ = address;
-	port_ = port;
+	retrying_ = false;
 
 	qDebug() << "connecting...";
-	socket.connectToHost(address, port);
+	socket.connectToHost(address_, port_);
 }
 
 void Client::stop()
 {
 	wantConnection_ = false;
+	retrying_ = false;
+
 	disconnect();
 	socket.close();
 }
@@ -48,27 +51,28 @@ void Client::send(QByteArray data)
 void Client::connected()
 {
 	qDebug() << "connected.";
+	retrying_ = false;
 }
 
 void Client::disconnected()
 {
 	qDebug() << "disconnected.";
 
-	if ( wantConnection_ )
-		retry();
+	retry();
 }
 
 void Client::error(QAbstractSocket::SocketError socketError)
 {
 	qDebug() << "error" << socketError;
 
-	if ( wantConnection_ )
-		retry();
+	retry();
 }
 
 void Client::retry()
 {
-	qDebug() << "retrying in 3 seconds...";
-	sleep(3);
-	socket.connectToHost(address_, port_);
+	if ( wantConnection_ && !retrying_ ) {
+		qDebug() << "retrying in 3 seconds...";
+		retrying_ = true;
+		QTimer::singleShot(3000, this, SLOT(start()));
+	}
 }
