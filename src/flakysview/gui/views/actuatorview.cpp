@@ -25,7 +25,7 @@ void ActuatorView::actuatorUpdate(QList<qreal> actuatorNeurons)
 		setShape(actuatorNeurons[0]);
 
 		fadeOutThrusterValue_ = actuatorNeurons[0];
-		fadeOutTimer_.start(100);
+		fadeOutTimer_.start(50);
 	}
 }
 
@@ -41,7 +41,8 @@ void ActuatorView::setShape(qreal thrusterValue)
 
 void ActuatorView::timeout()
 {
-	fadeOutThrusterValue_ -= 0.03;
+	fadeOutThrusterValue_ *= 0.8;
+	fadeOutThrusterValue_ -= 0.005;
 
 	if ( fadeOutThrusterValue_ > 0.0f ) {
 		setShape(fadeOutThrusterValue_);
