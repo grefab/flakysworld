@@ -15,6 +15,8 @@ public:
 private slots:
 	void bodyChanged(QTransform transformation);
 
+private:
+	void setAppearanceDependingOnID(QString id);
 };
 
 #endif // THINGVIEW_H
