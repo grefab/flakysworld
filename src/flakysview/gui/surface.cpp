@@ -8,6 +8,8 @@ Surface::Surface(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	ui->groupBox->hide();
+
 	scene_.setItemIndexMethod(QGraphicsScene::NoIndex);
 	scene_.setBackgroundBrush(Qt::white);
 
