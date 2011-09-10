@@ -14,7 +14,8 @@ h2. Screenshots
 
 Everyone likes screenshots! This one is old, but it is suited to give an impression:
 
-!https://github.com/grefab/flakysworld/raw/master/img/screenshot.png!
+!https://github.com/grefab/flakysworld/raw/master/img/flakysview.png!
+!https://github.com/grefab/flakysworld/raw/master/img/flakysremote.png!
 
 
 h2. News
