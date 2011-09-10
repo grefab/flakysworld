@@ -3,13 +3,13 @@
 #include <QVector>
 
 EyeView::EyeView(QGraphicsItem *parent) :
-		QGraphicsObject(parent)
+	QGraphicsObject(parent)
 {
 	/* set our position */
 	setPos(QPointF(0.3f, 0.0f));
 
 	/* create our eye-shape */
-	eyeSymbol_ << QPointF(-0.1f, 0.0f) << QPointF(0.1f, -0.1f) << QPointF(0.1f, 0.1f);
+	eyeSymbol_ << QPointF(0.0f, 0.0f) << QPointF(0.1f, -0.1f) << QPointF(0.1f, 0.1f);
 
 	/* populate rays */
 	initRays();
@@ -26,12 +26,15 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	Q_UNUSED(widget);
 
 	/* draw a small indicator that we can see the plain eye */
+	static const QColor eyeSymbolColor = QColor(0, 0, 255, 32);
+	painter->setPen(QPen(eyeSymbolColor));
+	painter->setBrush(QBrush(eyeSymbolColor));
 	painter->drawPolygon(eyeSymbol_);
 
 	/* make the rays a bit transparent */
-	static const QColor color = QColor(0, 0, 255, 32);
-	painter->setPen(QPen(color));
-	painter->setBrush(QBrush(color));
+	static const QColor rayPolygonColor = QColor(0, 0, 255, 32);
+	painter->setPen(QPen(rayPolygonColor));
+	painter->setBrush(QBrush(rayPolygonColor));
 
 	/* draw the rays */
 	QPolygonF poly;

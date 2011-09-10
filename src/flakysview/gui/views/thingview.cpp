@@ -28,15 +28,16 @@ void ThingView::bodyChanged(QTransform transformation)
 
 void ThingView::setAppearanceDependingOnID(QString id)
 {
-	if ( id == "flaky") {
-		setBrush(QColor("#FF8000"));
-		setPen(QPen(QColor(Qt::red)));
-	} else {
-		setBrush(Qt::black);
-		setPen(QPen(QColor(Qt::black)));
+	QColor color = Qt::black;
 
+	if ( id == "flaky") {
+		color = QColor("#FF8000");
+	} else {
 		/* random color
-		setBrush(QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128));
+		color = QColor(128 + qrand() % 128, 128 + qrand() % 128, 128 + qrand() % 128);
 		*/
 	}
+
+	setBrush(color);
+	setPen(color);
 }

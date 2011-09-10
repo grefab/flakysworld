@@ -9,8 +9,9 @@ ActuatorView::ActuatorView(QPointF position, QGraphicsItem *parent) :
 	setPos(position);
 
 	/* colorize! */
-	setBrush(Qt::transparent);
-	setPen(QPen(QColor(Qt::red)));
+	QColor color = Qt::red;
+	setBrush(color);
+	setPen(color);
 
 	/* init our shape */
 	setShape(0.0f);
