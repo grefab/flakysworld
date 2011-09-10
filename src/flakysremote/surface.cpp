@@ -10,6 +10,17 @@ Surface::Surface(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	ui->lineEdit->setText(
+		    "{ " \
+			"\"type\" : \"actuatorinput\", "\
+			"\"being\" : \"flaky\", "\
+			"\"actuators\" : "\
+			"{ "\
+			    "\"thrl\" : [0.3], "\
+			    "\"thrr\" : [0.3] "\
+			"} "\
+		    "}");
+
 	client_ = new Client(QHostAddress::LocalHost, 2345, this);
 	client_->start();
 
