@@ -1,17 +1,17 @@
-#ifndef CONNECTIONMANAGER_H
-#define CONNECTIONMANAGER_H
+#ifndef WORLDCLIENT_H
+#define WORLDCLIENT_H
 
 #include <QThread>
 #include "tcpclient.h"
 #include "thing/thing.h"
 #include "interface/entityserializer.h"
 
-class ConnectionManager : public QThread
+class WorldClient : public QThread
 {
     Q_OBJECT
 public:
-    explicit ConnectionManager(QObject* parent = 0);
-    ~ConnectionManager();
+    explicit WorldClient(QObject* parent = 0);
+    ~WorldClient();
 
     void initiateConnection();
 
@@ -40,4 +40,4 @@ private:
     QMutex locker_;
 };
 
-#endif // CONNECTIONMANAGER_H
+#endif // WORLDCLIENT_H

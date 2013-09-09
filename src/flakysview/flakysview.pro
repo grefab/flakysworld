@@ -22,10 +22,10 @@ HEADERS += \
     ../common/interface/variantbinaryconverter.h \
     infrastructure/world.h \
     ../common/constants.h \
-    interface/connectionmanager.h \
     infrastructure/viewmanager.h \
     gui/views/eyeview.h \
-    gui/views/actuatorview.h
+    gui/views/actuatorview.h \
+    interface/worldclient.h
 
 SOURCES += \
     main.cpp \
@@ -42,10 +42,10 @@ SOURCES += \
     interface/tcpclient.cpp \
     ../common/interface/variantbinaryconverter.cpp \
     infrastructure/world.cpp \
-    interface/connectionmanager.cpp \
     infrastructure/viewmanager.cpp \
     gui/views/eyeview.cpp \
-    gui/views/actuatorview.cpp
+    gui/views/actuatorview.cpp \
+    interface/worldclient.cpp
 
 FORMS += \
     gui/surface.ui

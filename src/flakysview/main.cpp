@@ -6,10 +6,10 @@
 //#include "gui/views/eyeview.h"
 
 #include "infrastructure/world.h"
-#include "interface/connectionmanager.h"
+#include "interface/worldclient.h"
 #include "infrastructure/viewmanager.h"
 
-Surface* setupGUI(World* world, ConnectionManager* connectionManager)
+Surface* setupGUI(World* world, WorldClient* worldClient)
 {
     Surface* surface = new Surface();
 
@@ -17,8 +17,8 @@ Surface* setupGUI(World* world, ConnectionManager* connectionManager)
     ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
 
     QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
-    QObject::connect(connectionManager, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
-    QObject::connect(connectionManager, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
+    QObject::connect(worldClient, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
+    QObject::connect(worldClient, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
 
 
     /* build a corresponding view for flaky's eyes. */
@@ -46,13 +46,13 @@ Surface* setupGUI(World* world, ConnectionManager* connectionManager)
     return surface;
 }
 
-ConnectionManager* setupIO(World* world)
+WorldClient* setupIO(World* world)
 {
-    ConnectionManager* connectionManager = new ConnectionManager();
+    WorldClient* worldClient = new WorldClient();
 
-    QObject::connect(connectionManager, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
+    QObject::connect(worldClient, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
 
-    return connectionManager;
+    return worldClient;
 }
 
 int main(int argc, char *argv[])
@@ -63,18 +63,18 @@ int main(int argc, char *argv[])
     World* world = new World();
 
     /* start neuron IO */
-    ConnectionManager* connectionManager = setupIO(world);
-    connectionManager->initiateConnection();
+    WorldClient* worldClient = setupIO(world);
+    worldClient->initiateConnection();
 
     /* make everything visible */
-    Surface* surface = setupGUI(world, connectionManager);
+    Surface* surface = setupGUI(world, worldClient);
 
     /* preparation is done. let if flow! */
     return app->exec();
 
     /* when we reach this, the program is finished. delete everything in reverse order. */
     delete surface;
-    delete connectionManager;
+    delete worldClient;
     delete world;
     delete app;
 }

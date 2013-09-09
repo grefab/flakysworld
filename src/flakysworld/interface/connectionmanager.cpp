@@ -1,7 +1,7 @@
 #include "connectionmanager.h"
 #include "constants.h"
 
-ConnectionManager::ConnectionManager(Universe* universe, QObject *parent) :
+WorldClient::WorldClient(Universe* universe, QObject *parent) :
     QThread(parent),
     universe_(universe)
 {
@@ -10,7 +10,7 @@ ConnectionManager::ConnectionManager(Universe* universe, QObject *parent) :
     start();
 }
 
-ConnectionManager::~ConnectionManager()
+WorldClient::~WorldClient()
 {
     /* do not process further events. */
     quit();
@@ -19,7 +19,7 @@ ConnectionManager::~ConnectionManager()
     wait();
 }
 
-void ConnectionManager::run()
+void WorldClient::run()
 {
     /* we need a tcp connection to the outside world */
     tcpServer_ = new TcpServer(2345, this);
@@ -39,7 +39,7 @@ void ConnectionManager::run()
     QThread::run();
 }
 
-void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons)
+void WorldClient::sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons)
 {
     if ( sensorReceivers_.empty() )
         return;
@@ -47,7 +47,7 @@ void ConnectionManager::sensorUpdate(QString beingId, QString sensorId, QList<qr
     sendSensorUpdate(beingId, sensorId, sensorNeurons);
 }
 
-void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rotation)
+void WorldClient::thingUpdate(QString thingId, QPointF position, qreal rotation)
 {
     if ( worldReceivers_.empty() )
         return;
@@ -55,14 +55,14 @@ void ConnectionManager::thingUpdate(QString thingId, QPointF position, qreal rot
     sendThingUpdate(thingId, position, rotation);
 }
 
-void ConnectionManager::newConnection(QTcpSocket* socket)
+void WorldClient::newConnection(QTcpSocket* socket)
 {
     Q_UNUSED(socket)
 
     qDebug() << "socket" << socket->localAddress() << "connected.";
 }
 
-void ConnectionManager::disconnected(QTcpSocket* socket)
+void WorldClient::disconnected(QTcpSocket* socket)
 {
     sensorReceivers_.remove(socket);
     actuatorReceivers_.remove(socket);
@@ -71,7 +71,7 @@ void ConnectionManager::disconnected(QTcpSocket* socket)
     qDebug() << "disconnected: socket" << socket->localAddress();
 }
 
-void ConnectionManager::dataArrived(QTcpSocket* socket, QVariantMap data)
+void WorldClient::dataArrived(QTcpSocket* socket, QVariantMap data)
 {
     /* a socket can register itself for being notified about
      * - sensor updates
@@ -101,7 +101,7 @@ void ConnectionManager::dataArrived(QTcpSocket* socket, QVariantMap data)
     }
 }
 
-void ConnectionManager::handleActuatorinput(const QVariantMap& data)
+void WorldClient::handleActuatorinput(const QVariantMap& data)
 {
     /* decode incoming actuator data */
     QString beingId;
@@ -120,7 +120,7 @@ void ConnectionManager::handleActuatorinput(const QVariantMap& data)
     }
 }
 
-void ConnectionManager::handleRegister(const QVariantMap& data, QTcpSocket* socket)
+void WorldClient::handleRegister(const QVariantMap& data, QTcpSocket* socket)
 {
     const QString concerns = data[KEY_CONCERNS].toString();
 
@@ -142,7 +142,7 @@ void ConnectionManager::handleRegister(const QVariantMap& data, QTcpSocket* sock
     }
 }
 
-void ConnectionManager::handleUnregister(const QVariantMap& data, QTcpSocket* socket)
+void WorldClient::handleUnregister(const QVariantMap& data, QTcpSocket* socket)
 {
     const QString concerns = data[KEY_CONCERNS].toString();
 
@@ -162,7 +162,7 @@ void ConnectionManager::handleUnregister(const QVariantMap& data, QTcpSocket* so
     }
 }
 
-void ConnectionManager::sendSensorUpdate(const QString& beingId, const QString& sensorId, const QList<qreal>& sensorNeurons)
+void WorldClient::sendSensorUpdate(const QString& beingId, const QString& sensorId, const QList<qreal>& sensorNeurons)
 {
     /* get a variant to be sent */
     QVariantMap sendMe = entitySerializer_.serializeSensor(beingId, sensorId, sensorNeurons);
@@ -176,7 +176,7 @@ void ConnectionManager::sendSensorUpdate(const QString& beingId, const QString& 
     }
 }
 
-void ConnectionManager::sendActuatorUpdate(const QString& beingId, const QString& actuatorId, const QList<qreal>& actuatorNeurons)
+void WorldClient::sendActuatorUpdate(const QString& beingId, const QString& actuatorId, const QList<qreal>& actuatorNeurons)
 {
     /* get a variant to be sent */
     QVariantMap sendMe = entitySerializer_.serializeActuator(beingId, actuatorId, actuatorNeurons);
@@ -190,7 +190,7 @@ void ConnectionManager::sendActuatorUpdate(const QString& beingId, const QString
     }
 }
 
-void ConnectionManager::sendThingUpdate(const QString& thingId, const QPointF& position, qreal rotation)
+void WorldClient::sendThingUpdate(const QString& thingId, const QPointF& position, qreal rotation)
 {
     /* get a variant to be sent */
     QVariantMap sendMe = entitySerializer_.serializeThing(thingId, QPolygonF(), position, rotation);
@@ -204,7 +204,7 @@ void ConnectionManager::sendThingUpdate(const QString& thingId, const QPointF& p
     }
 }
 
-void ConnectionManager::sendCompleteWorld(QTcpSocket* socket)
+void WorldClient::sendCompleteWorld(QTcpSocket* socket)
 {
     QList<Thing::Model> things = universe_->world()->getThingModels();
 

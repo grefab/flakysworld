@@ -10,12 +10,12 @@
 #include "interface/entityserializer.h"
 #include "thing/thing.h"
 
-class ConnectionManager : public QThread
+class WorldClient : public QThread
 {
     Q_OBJECT
 public:
-    explicit ConnectionManager(Universe* universe, QObject *parent = 0);
-    ~ConnectionManager();
+    explicit WorldClient(Universe* universe, QObject *parent = 0);
+    ~WorldClient();
 
 signals:
     void actuatorUpdate(QString beingId, QString actuatorId, QList<qreal> actuatorNeurons);

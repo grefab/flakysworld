@@ -4,9 +4,9 @@
 
 #include "interface/connectionmanager.h"
 
-ConnectionManager* setupIO(Universe* universe)
+WorldClient* setupIO(Universe* universe)
 {
-    ConnectionManager* connectionManager = new ConnectionManager(universe);
+    WorldClient* connectionManager = new WorldClient(universe);
 
     return connectionManager;
 }
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     Universe* universe = new Universe();
 
     /* start neuron IO */
-    ConnectionManager* connectionManager = setupIO(universe);
+    WorldClient* connectionManager = setupIO(universe);
 
     /* preparation is done. let if flow! */
     qDebug() << "started.";

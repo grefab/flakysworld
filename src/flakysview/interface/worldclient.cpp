@@ -1,7 +1,7 @@
-#include "connectionmanager.h"
+#include "worldclient.h"
 #include "constants.h"
 
-ConnectionManager::ConnectionManager(QObject* parent) :
+WorldClient::WorldClient(QObject* parent) :
     QThread(parent)
 {
     /* make sure initateConnection cannot be called yet */
@@ -14,7 +14,7 @@ ConnectionManager::ConnectionManager(QObject* parent) :
     start();
 }
 
-ConnectionManager::~ConnectionManager()
+WorldClient::~WorldClient()
 {
     /* do not process further events. */
     quit();
@@ -23,7 +23,7 @@ ConnectionManager::~ConnectionManager()
     wait();
 }
 
-void ConnectionManager::run()
+void WorldClient::run()
 {
     /* we need a tcp connection to the outside world */
     tcpClient_ = new TcpClient(this);
@@ -40,7 +40,7 @@ void ConnectionManager::run()
 }
 
 
-void ConnectionManager::initiateConnection()
+void WorldClient::initiateConnection()
 {
     /* to avoid race condition in the construction phase. */
     locker_.lock();
@@ -56,7 +56,7 @@ void ConnectionManager::initiateConnection()
                 );
 }
 
-void ConnectionManager::connected()
+void WorldClient::connected()
 {
     registerForWorld();
     registerForSensors();
@@ -64,12 +64,12 @@ void ConnectionManager::connected()
     pushFlaky();
 }
 
-void ConnectionManager::disconnected()
+void WorldClient::disconnected()
 {
 
 }
 
-void ConnectionManager::dataArrived(QVariantMap data)
+void WorldClient::dataArrived(QVariantMap data)
 {
     if( data.value(KEY_TYPE).toString() == TYPE_THING ) {
         Thing::Model thingModel;
@@ -101,7 +101,7 @@ void ConnectionManager::dataArrived(QVariantMap data)
     }
 }
 
-void ConnectionManager::registerForWorld()
+void WorldClient::registerForWorld()
 {
     /* register on flakysworld server */
     QVariantMap map;
@@ -111,7 +111,7 @@ void ConnectionManager::registerForWorld()
     tcpClient_->sendLine(map);
 }
 
-void ConnectionManager::registerForSensors()
+void WorldClient::registerForSensors()
 {
     /* register on flakysworld server */
     QVariantMap map;
@@ -121,7 +121,7 @@ void ConnectionManager::registerForSensors()
     tcpClient_->sendLine(map);
 }
 
-void ConnectionManager::registerForActuators()
+void WorldClient::registerForActuators()
 {
     /* register on flakysworld server */
     QVariantMap map;
@@ -131,7 +131,7 @@ void ConnectionManager::registerForActuators()
     tcpClient_->sendLine(map);
 }
 
-void ConnectionManager::pushFlaky()
+void WorldClient::pushFlaky()
 {
     /* push flaky a bit, so we see action! */
     QVariantMap map;
