@@ -1,5 +1,4 @@
-QT += opengl \
-	network
+QT += opengl network widgets
 
 CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
 
@@ -50,3 +49,5 @@ SOURCES += \
 
 FORMS += \
 	gui/surface.ui
+
+cache()

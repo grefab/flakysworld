@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui widgets network
 
 TARGET = flakyremote
 TEMPLATE = app
@@ -18,3 +18,5 @@ HEADERS  += surface.h \
 	client.h
 
 FORMS    += surface.ui
+
+cache()

@@ -33,6 +33,6 @@ Surface::~Surface()
 
 void Surface::on_pushButton_clicked()
 {
-	client_->send(ui->lineEdit->text().toAscii());
+    client_->send(ui->lineEdit->text().toLocal8Bit());
 
 }

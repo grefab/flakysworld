@@ -27,13 +27,13 @@ void EyeView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 	/* draw a small indicator that we can see the plain eye */
 	static const QColor eyeSymbolColor = QColor(0, 0, 255, 32);
-	painter->setPen(QPen(eyeSymbolColor));
+    painter->setPen(QPen(Qt::NoPen));
 	painter->setBrush(QBrush(eyeSymbolColor));
 	painter->drawPolygon(eyeSymbol_);
 
 	/* make the rays a bit transparent */
 	static const QColor rayPolygonColor = QColor(0, 0, 255, 32);
-	painter->setPen(QPen(rayPolygonColor));
+    painter->setPen(QPen(Qt::NoPen));
 	painter->setBrush(QBrush(rayPolygonColor));
 
 	/* draw the rays */

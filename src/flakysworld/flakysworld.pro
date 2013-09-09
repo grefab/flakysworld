@@ -3,6 +3,7 @@ QT += opengl \
 
 CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
 
+INCLUDEPATH += /usr/local/include
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += ../common
 QMAKE_LIBDIR += /usr/local/lib
@@ -58,3 +59,5 @@ SOURCES += \
 	being/being.cpp \
 	being/actuator.cpp \
 	../common/interface/variantbinaryconverter.cpp
+
+cache()

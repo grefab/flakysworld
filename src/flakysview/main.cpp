@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QtGui>
 
 #include "gui/surface.h"

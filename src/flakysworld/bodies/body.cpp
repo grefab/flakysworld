@@ -41,12 +41,13 @@ void Body::setupB2Fixture()
 	b2PolygonShape shapeDef;
 
 	int n = shape().size();
-	b2Vec2 vertices[n];
+    b2Vec2* vertices = new b2Vec2[n];
 	for ( int i = 0; i < n; ++i ) {
 		const QPointF &p = shape().at(i);
 		vertices[i].Set(p.x(), p.y());
 	}
 	shapeDef.Set(vertices, n);
+    delete vertices;
 
 	/* Fixture is the physical representation of a shape */
 	b2FixtureDef fixtureDef;
