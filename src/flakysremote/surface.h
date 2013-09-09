@@ -4,26 +4,26 @@
 #include <QMainWindow>
 
 namespace Ui {
-	class Surface;
+    class Surface;
 }
 
 class Client;
 
 class Surface : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit Surface(QWidget *parent = 0);
-	~Surface();
+    explicit Surface(QWidget *parent = 0);
+    ~Surface();
 
 private slots:
-	void on_pushButton_clicked();
+    void on_pushButton_clicked();
 
 private:
-	Ui::Surface *ui;
+    Ui::Surface *ui;
 
-	Client* client_;
+    Client* client_;
 };
 
 #endif // SURFACE_H

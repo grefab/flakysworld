@@ -11,17 +11,17 @@
 
 Surface* setupGUI(World* world, ConnectionManager* connectionManager)
 {
-	Surface* surface = new Surface();
+    Surface* surface = new Surface();
 
-	/* viewmanager handles updates of things */
-	ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
+    /* viewmanager handles updates of things */
+    ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
 
-	QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
-	QObject::connect(connectionManager, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
-	QObject::connect(connectionManager, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
+    QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
+    QObject::connect(connectionManager, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
+    QObject::connect(connectionManager, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
 
 
-	/* build a corresponding view for flaky's eyes. */
+    /* build a corresponding view for flaky's eyes. */
 //	foreach(Sensor* sensor, universe->being("flaky")->sensors()) {
 //		Eye* eye = dynamic_cast<Eye*>(sensor);
 //		if ( eye ) {
@@ -29,52 +29,52 @@ Surface* setupGUI(World* world, ConnectionManager* connectionManager)
 //		}
 //	}
 
-	/* show everything */
-	surface->view()->fitInView(surface->scene()->sceneRect(), Qt::KeepAspectRatio);
+    /* show everything */
+    surface->view()->fitInView(surface->scene()->sceneRect(), Qt::KeepAspectRatio);
 
-	/* connect our key events */
+    /* connect our key events */
 //	QObject::connect(surface->view(), SIGNAL(keyPressed(Qt::Key)), universe, SLOT(keyPressHandler(Qt::Key)));
 //	QObject::connect(surface->view(), SIGNAL(keyReleased(Qt::Key)), universe, SLOT(keyReleaseHandler(Qt::Key)));
 
-	/* and our engage button */
-	// TODO: Just provide motoric information and let flaky handle the consequences.
+    /* and our engage button */
+    // TODO: Just provide motoric information and let flaky handle the consequences.
 //	QObject::connect(surface, SIGNAL(engageTriggered(qreal,qreal)), universe, SLOT(thurstersHandler(qreal,qreal)));
 
-	/* show everything */
-	surface->show();
+    /* show everything */
+    surface->show();
 
-	return surface;
+    return surface;
 }
 
 ConnectionManager* setupIO(World* world)
 {
-	ConnectionManager* connectionManager = new ConnectionManager();
+    ConnectionManager* connectionManager = new ConnectionManager();
 
-	QObject::connect(connectionManager, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
+    QObject::connect(connectionManager, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
 
-	return connectionManager;
+    return connectionManager;
 }
 
 int main(int argc, char *argv[])
 {
-	QApplication* app = new QApplication(argc, argv);
+    QApplication* app = new QApplication(argc, argv);
 
-	/* world contains a collection of things */
-	World* world = new World();
+    /* world contains a collection of things */
+    World* world = new World();
 
-	/* start neuron IO */
-	ConnectionManager* connectionManager = setupIO(world);
-	connectionManager->initiateConnection();
+    /* start neuron IO */
+    ConnectionManager* connectionManager = setupIO(world);
+    connectionManager->initiateConnection();
 
-	/* make everything visible */
-	Surface* surface = setupGUI(world, connectionManager);
+    /* make everything visible */
+    Surface* surface = setupGUI(world, connectionManager);
 
-	/* preparation is done. let if flow! */
-	return app->exec();
+    /* preparation is done. let if flow! */
+    return app->exec();
 
-	/* when we reach this, the program is finished. delete everything in reverse order. */
-	delete surface;
-	delete connectionManager;
-	delete world;
-	delete app;
+    /* when we reach this, the program is finished. delete everything in reverse order. */
+    delete surface;
+    delete connectionManager;
+    delete world;
+    delete app;
 }

@@ -7,26 +7,26 @@
 #include <QLabel>
 
 namespace Ui {
-	class Surface;
+    class Surface;
 }
 
 class Surface : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit Surface(QWidget *parent = 0);
-	~Surface();
+    explicit Surface(QWidget *parent = 0);
+    ~Surface();
 
-	/* needed for connecting signals */
-	QGraphicsScene* scene() { return &scene_; }
-	GraphicsView* view();
+    /* needed for connecting signals */
+    QGraphicsScene* scene() { return &scene_; }
+    GraphicsView* view();
 
 protected:
-	QGraphicsScene scene_;
+    QGraphicsScene scene_;
 
 private:
-	Ui::Surface *ui;
+    Ui::Surface *ui;
 
 };
 

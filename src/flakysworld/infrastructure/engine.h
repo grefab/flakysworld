@@ -6,29 +6,29 @@
 
 class Engine : public QThread
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Engine(World* world, QObject *parent = 0);
-	~Engine();
+    Engine(World* world, QObject *parent = 0);
+    ~Engine();
 
-	void start();
+    void start();
 
 signals:
-	void updatedFPS(int fps);
+    void updatedFPS(int fps);
 
 protected:
-	void run();
+    void run();
 
-	World* world_;
+    World* world_;
 
 private slots:
-	/* used internally by our timers */
-	void simulationStep();
-	void printFPS();
+    /* used internally by our timers */
+    void simulationStep();
+    void printFPS();
 
 private:
-	unsigned long stepsPerformed_;
+    unsigned long stepsPerformed_;
 };
 
 #endif // ENGINE_H

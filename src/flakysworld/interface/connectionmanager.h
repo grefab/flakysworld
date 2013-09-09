@@ -12,45 +12,45 @@
 
 class ConnectionManager : public QThread
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit ConnectionManager(Universe* universe, QObject *parent = 0);
-	~ConnectionManager();
+    explicit ConnectionManager(Universe* universe, QObject *parent = 0);
+    ~ConnectionManager();
 
 signals:
-	void actuatorUpdate(QString beingId, QString actuatorId, QList<qreal> actuatorNeurons);
+    void actuatorUpdate(QString beingId, QString actuatorId, QList<qreal> actuatorNeurons);
 
 protected slots:
-	/* this is to get notified by the outside world */
-	void sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons);
-	void thingUpdate(QString thingId, QPointF position, qreal rotation);
+    /* this is to get notified by the outside world */
+    void sensorUpdate(QString beingId, QString sensorId, QList<qreal> sensorNeurons);
+    void thingUpdate(QString thingId, QPointF position, qreal rotation);
 
-	/* this is for connecting to tcp server */
-	void newConnection(QTcpSocket* socket);
-	void disconnected(QTcpSocket* socket);
-	void dataArrived(QTcpSocket* socket, QVariantMap data);
+    /* this is for connecting to tcp server */
+    void newConnection(QTcpSocket* socket);
+    void disconnected(QTcpSocket* socket);
+    void dataArrived(QTcpSocket* socket, QVariantMap data);
 
 protected:
-	void run();
+    void run();
 
 private:
-	void handleActuatorinput(const QVariantMap& data);
-	void handleRegister(const QVariantMap& data, QTcpSocket* socket);
-	void handleUnregister(const QVariantMap& data, QTcpSocket* socket);
+    void handleActuatorinput(const QVariantMap& data);
+    void handleRegister(const QVariantMap& data, QTcpSocket* socket);
+    void handleUnregister(const QVariantMap& data, QTcpSocket* socket);
 
-	void sendSensorUpdate(const QString& beingId, const QString& sensorId, const QList<qreal>& sensorNeurons);
-	void sendActuatorUpdate(const QString& beingId, const QString& actuatorId, const QList<qreal>& actuatorNeurons);
-	void sendThingUpdate(const QString& thingId, const QPointF& position, qreal rotation);
-	void sendCompleteWorld(QTcpSocket* socket);
+    void sendSensorUpdate(const QString& beingId, const QString& sensorId, const QList<qreal>& sensorNeurons);
+    void sendActuatorUpdate(const QString& beingId, const QString& actuatorId, const QList<qreal>& actuatorNeurons);
+    void sendThingUpdate(const QString& thingId, const QPointF& position, qreal rotation);
+    void sendCompleteWorld(QTcpSocket* socket);
 
-	Universe* universe_;
-	TcpServer* tcpServer_;
+    Universe* universe_;
+    TcpServer* tcpServer_;
 
-	EntitySerializer entitySerializer_;
+    EntitySerializer entitySerializer_;
 
-	QSet<QTcpSocket*> sensorReceivers_;
-	QSet<QTcpSocket*> actuatorReceivers_;
-	QSet<QTcpSocket*> worldReceivers_;
+    QSet<QTcpSocket*> sensorReceivers_;
+    QSet<QTcpSocket*> actuatorReceivers_;
+    QSet<QTcpSocket*> worldReceivers_;
 };
 
 #endif // CONNECTIONMANAGER_H

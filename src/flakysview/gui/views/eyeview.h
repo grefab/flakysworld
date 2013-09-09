@@ -8,23 +8,23 @@
 
 class EyeView : public QGraphicsObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit EyeView(QGraphicsItem *parent = 0);
+    explicit EyeView(QGraphicsItem *parent = 0);
 
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const;
 
 protected slots:
-	void retinaUpdated(QList<qreal> output);
+    void retinaUpdated(QList<qreal> output);
 
 private:
-	void initRays();
+    void initRays();
 
-	QPolygonF eyeSymbol_;
-	QList<QLineF> rays_;
-	QList<qreal> output_;
+    QPolygonF eyeSymbol_;
+    QList<QLineF> rays_;
+    QList<qreal> output_;
 
 };
 

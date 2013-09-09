@@ -9,29 +9,29 @@
 
 class TcpServer : public QTcpServer
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit TcpServer(quint16 port, QObject *parent = 0);
+    explicit TcpServer(quint16 port, QObject *parent = 0);
 
 signals:
-	void dataArrived(QTcpSocket* socket, QVariantMap data);
-	void newConnection(QTcpSocket* socket);
-	void disconnected(QTcpSocket* socket);
+    void dataArrived(QTcpSocket* socket, QVariantMap data);
+    void newConnection(QTcpSocket* socket);
+    void disconnected(QTcpSocket* socket);
 
 public slots:
-	void send(QVariant data, QTcpSocket* socket);
+    void send(QVariant data, QTcpSocket* socket);
 
 protected slots:
-	void socketConnected();
-	void socketDisconnected();
-	void socketDataAvailable();
+    void socketConnected();
+    void socketDisconnected();
+    void socketDataAvailable();
 
 protected:
-	QSet<QTcpSocket*> sockets_;
+    QSet<QTcpSocket*> sockets_;
 
 private:
-	VariantBinaryConverter variantBinaryConverter_;
+    VariantBinaryConverter variantBinaryConverter_;
 
 };
 

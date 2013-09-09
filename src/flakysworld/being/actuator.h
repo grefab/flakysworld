@@ -5,12 +5,12 @@
 
 class Actuator : public Organ
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit Actuator(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
+    explicit Actuator(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 public slots:
-	virtual void receiveInput(QList<qreal> input) =0;
+    virtual void receiveInput(QList<qreal> input) =0;
 
 };
 

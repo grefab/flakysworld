@@ -8,36 +8,36 @@
 
 class ConnectionManager : public QThread
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit ConnectionManager(QObject* parent = 0);
-	~ConnectionManager();
+    explicit ConnectionManager(QObject* parent = 0);
+    ~ConnectionManager();
 
-	void initiateConnection();
+    void initiateConnection();
 
 signals:
-	void thingUpdate(Thing::Model thingModel);
-	void eyeUpdate(QList<qreal> sensorNeurons);
-	void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
+    void thingUpdate(Thing::Model thingModel);
+    void eyeUpdate(QList<qreal> sensorNeurons);
+    void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
 
 protected slots:
-	void connected();
-	void disconnected();
-	void dataArrived(QVariantMap data);
+    void connected();
+    void disconnected();
+    void dataArrived(QVariantMap data);
 
 protected:
-	void run();
+    void run();
 
 private:
-	void registerForWorld();
-	void registerForSensors();
-	void registerForActuators();
-	void pushFlaky();
+    void registerForWorld();
+    void registerForSensors();
+    void registerForActuators();
+    void pushFlaky();
 
-	TcpClient* tcpClient_;
-	EntitySerializer entitySerializer_;
+    TcpClient* tcpClient_;
+    EntitySerializer entitySerializer_;
 
-	QMutex locker_;
+    QMutex locker_;
 };
 
 #endif // CONNECTIONMANAGER_H

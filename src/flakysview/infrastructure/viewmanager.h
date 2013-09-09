@@ -9,23 +9,23 @@ class ActuatorView;
 
 class ViewManager : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit ViewManager(QGraphicsScene& scene, QObject *parent = 0);
+    explicit ViewManager(QGraphicsScene& scene, QObject *parent = 0);
 
 public slots:
-	void newThingArrived(const Thing* thing);
-	void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
+    void newThingArrived(const Thing* thing);
+    void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
 
 signals:
-	/* used to forward signals to eye and actuators */
-	void eyeUpdate(QList<qreal> sensorNeurons);
-	void throttleLeftUpdate(QList<qreal> actuatorNeurons);
-	void throttleRightUpdate(QList<qreal> actuatorNeurons);
+    /* used to forward signals to eye and actuators */
+    void eyeUpdate(QList<qreal> sensorNeurons);
+    void throttleLeftUpdate(QList<qreal> actuatorNeurons);
+    void throttleRightUpdate(QList<qreal> actuatorNeurons);
 
 private:
-	QGraphicsScene& scene_;
+    QGraphicsScene& scene_;
 
 };
 

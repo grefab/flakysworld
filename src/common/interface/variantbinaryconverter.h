@@ -10,15 +10,15 @@
 
 class VariantBinaryConverter : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit VariantBinaryConverter(QObject *parent = 0);
+    explicit VariantBinaryConverter(QObject *parent = 0);
 
-	QVariant toVariant(const QByteArray& binaryData);
-	QByteArray toByteArray(const QVariant& variantData);
+    QVariant toVariant(const QByteArray& binaryData);
+    QByteArray toByteArray(const QVariant& variantData);
 
 private:
-	bool looksLikeJSON(const QByteArray& data);
+    bool looksLikeJSON(const QByteArray& data);
 
 };
 

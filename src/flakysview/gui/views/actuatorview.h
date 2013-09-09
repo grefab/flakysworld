@@ -10,22 +10,22 @@
 
 class ActuatorView : public QObject, public QGraphicsPolygonItem
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit ActuatorView(QPointF position, QGraphicsItem *parent = 0);
+    explicit ActuatorView(QPointF position, QGraphicsItem *parent = 0);
 
 public slots:
-	void actuatorUpdate(QList<qreal> actuatorNeurons);
+    void actuatorUpdate(QList<qreal> actuatorNeurons);
 
 private slots:
-	void timeout();
+    void timeout();
 
 private:
-	void setShape(qreal thrusterValue);
+    void setShape(qreal thrusterValue);
 
-	QTimer fadeOutTimer_;
-	qreal fadeOutThrusterValue_;
+    QTimer fadeOutTimer_;
+    qreal fadeOutThrusterValue_;
 
 };
 

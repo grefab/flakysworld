@@ -3,69 +3,69 @@
 #include <QUuid>
 
 Thing::Model::Model(QPolygonF shape, QPointF position, qreal rotation, QString id) :
-	id_(id),
-	shape_(shape),
-	position_(position),
-	rotation_(rotation)
+    id_(id),
+    shape_(shape),
+    position_(position),
+    rotation_(rotation)
 {
-	/* create an id if we have none given */
-	if ( id_ == "" ) {
-		id_ = QUuid::createUuid().toString();
-	}
+    /* create an id if we have none given */
+    if ( id_ == "" ) {
+        id_ = QUuid::createUuid().toString();
+    }
 }
 
 Thing::Model::Model() :
-	id_(""),
-	shape_(QPolygonF()),
-	position_(QPOINTF_INVALID),
-	rotation_(QREAL_INVALID)
+    id_(""),
+    shape_(QPolygonF()),
+    position_(QPOINTF_INVALID),
+    rotation_(QREAL_INVALID)
 {
 }
 
 Thing::Thing(QPolygonF shape, QPointF position, qreal rotation, QString id, QObject *parent) :
-	QObject(parent),
-	model_(shape, position, rotation, id)
+    QObject(parent),
+    model_(shape, position, rotation, id)
 {
-	update();
+    update();
 }
 
 Thing::Thing(const Model model, QObject *parent) :
-	QObject(parent),
-	model_(model)
+    QObject(parent),
+    model_(model)
 {
-	update();
+    update();
 }
 
 void Thing::setPosRot(const QPointF& position, qreal rotation)
 {
-	model_.position_ = position;
-	model_.rotation_ = rotation;
-	update();
+    model_.position_ = position;
+    model_.rotation_ = rotation;
+    update();
 }
 
 void Thing::setPosition(const QPointF& position)
 {
-	model_.position_ = position;
-	update();
+    model_.position_ = position;
+    update();
 }
 
 void Thing::setRotation(qreal rotation)
 {
-	model_.rotation_ = rotation;
-	update();
+    model_.rotation_ = rotation;
+    update();
 }
 
 void Thing::update()
 {
-	updateMapToWorld();
+    updateMapToWorld();
 
-	emit changedPosition(getWorldMap());
-	emit updated(model_.position_, model_.rotation_);
+    emit changedPosition(getWorldMap());
+    emit updated(model_.position_, model_.rotation_);
 }
 
 void Thing::updateMapToWorld()
 {
-	mapToWorld_.reset();
-	mapToWorld_.translate(position().x(), position().y());
-	mapToWorld_.rotateRadians(rotation());
+    mapToWorld_.reset();
+    mapToWorld_.translate(position().x(), position().y());
+    mapToWorld_.rotateRadians(rotation());
 }

@@ -11,11 +11,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-		surface.cpp \
-	client.cpp
+        surface.cpp \
+    client.cpp
 
 HEADERS  += surface.h \
-	client.h
+    client.h
 
 FORMS    += surface.ui
 
