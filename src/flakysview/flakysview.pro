@@ -18,14 +18,14 @@ HEADERS += \
     ../common/external/qjson/src/parser.h \
     ../common/external/qjson/src/json_scanner.h \
     ../common/external/qjson/src/json_parser.hh \
-    interface/tcpclient.h \
+    ../common/interface/tcpclient.h \
     ../common/interface/variantbinaryconverter.h \
     infrastructure/world.h \
     ../common/constants.h \
     infrastructure/viewmanager.h \
     gui/views/eyeview.h \
     gui/views/actuatorview.h \
-    interface/worldclient.h
+    ../common/interface/worldclient.h
 
 SOURCES += \
     main.cpp \
@@ -39,13 +39,13 @@ SOURCES += \
     ../common/external/qjson/src/parser.cpp \
     ../common/external/qjson/src/json_scanner.cpp \
     ../common/external/qjson/src/json_parser.cc \
-    interface/tcpclient.cpp \
+    ../common/interface/tcpclient.cpp \
     ../common/interface/variantbinaryconverter.cpp \
     infrastructure/world.cpp \
     infrastructure/viewmanager.cpp \
     gui/views/eyeview.cpp \
     gui/views/actuatorview.cpp \
-    interface/worldclient.cpp
+    ../common/interface/worldclient.cpp
 
 FORMS += \
     gui/surface.ui

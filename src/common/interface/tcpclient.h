@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtNetwork>
 #include <QTcpSocket>
-#include "interface/variantbinaryconverter.h"
+#include "variantbinaryconverter.h"
 
 class TcpClient : public QObject
 {

@@ -4,7 +4,7 @@
 #include <QThread>
 #include "tcpclient.h"
 #include "thing/thing.h"
-#include "interface/entityserializer.h"
+#include "entityserializer.h"
 
 class WorldClient : public QThread
 {
