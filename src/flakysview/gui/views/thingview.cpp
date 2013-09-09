@@ -39,5 +39,7 @@ void ThingView::setAppearanceDependingOnID(QString id)
     }
 
     setBrush(color);
-    setPen(QPen(Qt::NoPen));
+    QPen pen = QPen(color);
+    pen.setWidthF(0.01);
+    setPen(pen);
 }
