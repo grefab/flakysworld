@@ -20,6 +20,9 @@ signals:
     void eyeUpdated(QList<qreal> sensorNeurons);
     void actuatorUpdated(QString actuatorId, QList<qreal> actuatorNeurons);
 
+public slots:
+    void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
+
 protected slots:
     void connected();
     void disconnected();

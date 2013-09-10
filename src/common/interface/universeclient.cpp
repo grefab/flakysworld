@@ -131,17 +131,25 @@ void UniverseClient::registerForActuators()
     tcpClient_->sendLine(map);
 }
 
-void UniverseClient::pushFlaky()
+void UniverseClient::actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons)
 {
-    /* push flaky a bit, so we see action! */
+    /* prepare and send an actuator singal */
     QVariantMap map;
     QVariantMap actuators;
-    QVariantList actuatorNeurons;
-    actuatorNeurons.append("0.3");
-    actuators.insert("thrl", actuatorNeurons);
+    QVariantList actuatorNeuronList;
+    foreach( qreal actuatorNeuron, actuatorNeurons ) { actuatorNeuronList.append(actuatorNeuron); }
+    actuators.insert(actuatorId, actuatorNeuronList);
     map.insert(KEY_TYPE, TYPE_ACTUATORINPUT);
     map.insert(KEY_BEING, "flaky");
     map.insert(KEY_BEINGS_ACTUATORS, actuators);
 
     tcpClient_->sendLine(map);
+}
+
+void UniverseClient::pushFlaky()
+{
+    /* push flaky a bit, so we see action! */
+    QList<qreal> neurons;
+    neurons.append(0.3);
+    actuatorUpdate("thrl", neurons);
 }
