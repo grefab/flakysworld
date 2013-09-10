@@ -17,8 +17,8 @@ Surface* setupGUI(World* world, UniverseClient* universeClient)
     ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
 
     QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
-    QObject::connect(universeClient, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
-    QObject::connect(universeClient, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
+    QObject::connect(universeClient, SIGNAL(eyeUpdated(QList<qreal>)), viewManager, SIGNAL(eyeUpdated(QList<qreal>)));
+    QObject::connect(universeClient, SIGNAL(actuatorUpdated(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
 
 
     /* build a corresponding view for flaky's eyes. */
@@ -50,7 +50,7 @@ UniverseClient* setupIO(World* world)
 {
     UniverseClient* universeClient = new UniverseClient();
 
-    QObject::connect(universeClient, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
+    QObject::connect(universeClient, SIGNAL(thingUpdated(Thing::Model)), world, SLOT(thingUpdate(Thing::Model)));
 
     return universeClient;
 }

@@ -15,7 +15,7 @@ signals:
     void newThingArrived(const Thing* thing);
 
 protected slots:
-    void thingUpdated(Thing::Model thingModel);
+    void thingUpdate(Thing::Model thingModel);
 
 private:
     /* if a new thing has been added, this thing is returned. otherwise, NULL is returned. */

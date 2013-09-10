@@ -6,7 +6,7 @@ World::World(QObject *parent) :
 {
 }
 
-void World::thingUpdated(Thing::Model thingModel)
+void World::thingUpdate(Thing::Model thingModel)
 {
     Thing* newThing = updateThing(thingModel);
 

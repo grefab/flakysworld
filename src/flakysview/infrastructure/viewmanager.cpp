@@ -22,14 +22,14 @@ void ViewManager::newThingArrived(const Thing* thing)
     if ( thing->id() == "flaky" ) {
         /* when adding with parent eyeview is automatically added to the scene. */
         EyeView* eyeView = new EyeView(thingView);
-        connect(this, SIGNAL(eyeUpdate(QList<qreal>)), eyeView, SLOT(retinaUpdated(QList<qreal>)));
+        connect(this, SIGNAL(eyeUpdated(QList<qreal>)), eyeView, SLOT(retinaUpdated(QList<qreal>)));
 
         /* these are our thrusters */
         ActuatorView* avThrottleLeft = new ActuatorView(QPointF(-0.3f, 0.2f), thingView);
-        connect(this, SIGNAL(throttleLeftUpdate(QList<qreal>)), avThrottleLeft, SLOT(actuatorUpdate(QList<qreal>)));
+        connect(this, SIGNAL(throttleLeftUpdated(QList<qreal>)), avThrottleLeft, SLOT(actuatorUpdate(QList<qreal>)));
 
         ActuatorView* avThrottleRight = new ActuatorView(QPointF(-0.3f, -0.2f), thingView);
-        connect(this, SIGNAL(throttleRightUpdate(QList<qreal>)), avThrottleRight, SLOT(actuatorUpdate(QList<qreal>)));
+        connect(this, SIGNAL(throttleRightUpdated(QList<qreal>)), avThrottleRight, SLOT(actuatorUpdate(QList<qreal>)));
     }
 
     foreach(QGraphicsView* view, scene_.views()) {
@@ -40,10 +40,10 @@ void ViewManager::newThingArrived(const Thing* thing)
 void ViewManager::actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons)
 {
     if ( actuatorId == "thrl" ) {
-        emit throttleLeftUpdate(actuatorNeurons);
+        emit throttleLeftUpdated(actuatorNeurons);
     }
 
     if ( actuatorId == "thrr" ) {
-        emit throttleRightUpdate(actuatorNeurons);
+        emit throttleRightUpdated(actuatorNeurons);
     }
 }

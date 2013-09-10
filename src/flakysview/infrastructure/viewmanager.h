@@ -20,9 +20,9 @@ public slots:
 
 signals:
     /* used to forward signals to eye and actuators */
-    void eyeUpdate(QList<qreal> sensorNeurons);
-    void throttleLeftUpdate(QList<qreal> actuatorNeurons);
-    void throttleRightUpdate(QList<qreal> actuatorNeurons);
+    void eyeUpdated(QList<qreal> sensorNeurons);
+    void throttleLeftUpdated(QList<qreal> actuatorNeurons);
+    void throttleRightUpdated(QList<qreal> actuatorNeurons);
 
 private:
     QGraphicsScene& scene_;

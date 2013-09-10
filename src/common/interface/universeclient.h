@@ -16,9 +16,9 @@ public:
     void initiateConnection();
 
 signals:
-    void thingUpdate(Thing::Model thingModel);
-    void eyeUpdate(QList<qreal> sensorNeurons);
-    void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
+    void thingUpdated(Thing::Model thingModel);
+    void eyeUpdated(QList<qreal> sensorNeurons);
+    void actuatorUpdated(QString actuatorId, QList<qreal> actuatorNeurons);
 
 protected slots:
     void connected();

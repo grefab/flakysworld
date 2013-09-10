@@ -75,7 +75,7 @@ void UniverseClient::dataArrived(QVariantMap data)
         Thing::Model thingModel;
         entitySerializer_.deserializeThing(data, &thingModel.id_, &thingModel.shape_, &thingModel.position_, &thingModel.rotation_);
 
-        emit thingUpdate(thingModel);
+        emit thingUpdated(thingModel);
     }
 
     if( data.value(KEY_TYPE).toString() == TYPE_SENSOROUTPUT ) {
@@ -85,7 +85,7 @@ void UniverseClient::dataArrived(QVariantMap data)
         entitySerializer_.deserializeSensor(data, &sensorBeingId, &sensorId, &sensorNeurons);
 
         if( sensorBeingId == "flaky" && sensorId == "eye" ) {
-            emit eyeUpdate(sensorNeurons);
+            emit eyeUpdated(sensorNeurons);
         }
     }
 
@@ -96,7 +96,7 @@ void UniverseClient::dataArrived(QVariantMap data)
         entitySerializer_.deserializeActuator(data, &actuatorBeingId, &actuatorId, &actuatorNeurons);
 
         if( actuatorBeingId == "flaky" ) {
-            emit actuatorUpdate(actuatorId, actuatorNeurons);
+            emit actuatorUpdated(actuatorId, actuatorNeurons);
         }
     }
 }
