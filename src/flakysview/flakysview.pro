@@ -25,7 +25,7 @@ HEADERS += \
     infrastructure/viewmanager.h \
     gui/views/eyeview.h \
     gui/views/actuatorview.h \
-    ../common/interface/worldclient.h
+    ../common/interface/universeclient.h
 
 SOURCES += \
     main.cpp \
@@ -45,7 +45,7 @@ SOURCES += \
     infrastructure/viewmanager.cpp \
     gui/views/eyeview.cpp \
     gui/views/actuatorview.cpp \
-    ../common/interface/worldclient.cpp
+    ../common/interface/universeclient.cpp
 
 FORMS += \
     gui/surface.ui

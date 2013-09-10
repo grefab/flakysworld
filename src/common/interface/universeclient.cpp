@@ -1,7 +1,7 @@
-#include "worldclient.h"
+#include "universeclient.h"
 #include "constants.h"
 
-WorldClient::WorldClient(QObject* parent) :
+UniverseClient::UniverseClient(QObject* parent) :
     QThread(parent)
 {
     /* make sure initateConnection cannot be called yet */
@@ -14,7 +14,7 @@ WorldClient::WorldClient(QObject* parent) :
     start();
 }
 
-WorldClient::~WorldClient()
+UniverseClient::~UniverseClient()
 {
     /* do not process further events. */
     quit();
@@ -23,7 +23,7 @@ WorldClient::~WorldClient()
     wait();
 }
 
-void WorldClient::run()
+void UniverseClient::run()
 {
     /* we need a tcp connection to the outside world */
     tcpClient_ = new TcpClient(this);
@@ -40,7 +40,7 @@ void WorldClient::run()
 }
 
 
-void WorldClient::initiateConnection()
+void UniverseClient::initiateConnection()
 {
     /* to avoid race condition in the construction phase. */
     locker_.lock();
@@ -56,7 +56,7 @@ void WorldClient::initiateConnection()
                 );
 }
 
-void WorldClient::connected()
+void UniverseClient::connected()
 {
     registerForWorld();
     registerForSensors();
@@ -64,12 +64,12 @@ void WorldClient::connected()
     pushFlaky();
 }
 
-void WorldClient::disconnected()
+void UniverseClient::disconnected()
 {
 
 }
 
-void WorldClient::dataArrived(QVariantMap data)
+void UniverseClient::dataArrived(QVariantMap data)
 {
     if( data.value(KEY_TYPE).toString() == TYPE_THING ) {
         Thing::Model thingModel;
@@ -101,7 +101,7 @@ void WorldClient::dataArrived(QVariantMap data)
     }
 }
 
-void WorldClient::registerForWorld()
+void UniverseClient::registerForWorld()
 {
     /* register on flakysworld server */
     QVariantMap map;
@@ -111,7 +111,7 @@ void WorldClient::registerForWorld()
     tcpClient_->sendLine(map);
 }
 
-void WorldClient::registerForSensors()
+void UniverseClient::registerForSensors()
 {
     /* register on flakysworld server */
     QVariantMap map;
@@ -121,7 +121,7 @@ void WorldClient::registerForSensors()
     tcpClient_->sendLine(map);
 }
 
-void WorldClient::registerForActuators()
+void UniverseClient::registerForActuators()
 {
     /* register on flakysworld server */
     QVariantMap map;
@@ -131,7 +131,7 @@ void WorldClient::registerForActuators()
     tcpClient_->sendLine(map);
 }
 
-void WorldClient::pushFlaky()
+void UniverseClient::pushFlaky()
 {
     /* push flaky a bit, so we see action! */
     QVariantMap map;

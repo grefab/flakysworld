@@ -6,10 +6,10 @@
 //#include "gui/views/eyeview.h"
 
 #include "infrastructure/world.h"
-#include "interface/worldclient.h"
+#include "interface/universeclient.h"
 #include "infrastructure/viewmanager.h"
 
-Surface* setupGUI(World* world, WorldClient* worldClient)
+Surface* setupGUI(World* world, UniverseClient* universeClient)
 {
     Surface* surface = new Surface();
 
@@ -17,8 +17,8 @@ Surface* setupGUI(World* world, WorldClient* worldClient)
     ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
 
     QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
-    QObject::connect(worldClient, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
-    QObject::connect(worldClient, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
+    QObject::connect(universeClient, SIGNAL(eyeUpdate(QList<qreal>)), viewManager, SIGNAL(eyeUpdate(QList<qreal>)));
+    QObject::connect(universeClient, SIGNAL(actuatorUpdate(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
 
 
     /* build a corresponding view for flaky's eyes. */
@@ -46,13 +46,13 @@ Surface* setupGUI(World* world, WorldClient* worldClient)
     return surface;
 }
 
-WorldClient* setupIO(World* world)
+UniverseClient* setupIO(World* world)
 {
-    WorldClient* worldClient = new WorldClient();
+    UniverseClient* universeClient = new UniverseClient();
 
-    QObject::connect(worldClient, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
+    QObject::connect(universeClient, SIGNAL(thingUpdate(Thing::Model)), world, SLOT(thingUpdated(Thing::Model)));
 
-    return worldClient;
+    return universeClient;
 }
 
 int main(int argc, char *argv[])
@@ -63,18 +63,18 @@ int main(int argc, char *argv[])
     World* world = new World();
 
     /* start neuron IO */
-    WorldClient* worldClient = setupIO(world);
-    worldClient->initiateConnection();
+    UniverseClient* universeClient = setupIO(world);
+    universeClient->initiateConnection();
 
     /* make everything visible */
-    Surface* surface = setupGUI(world, worldClient);
+    Surface* surface = setupGUI(world, universeClient);
 
     /* preparation is done. let if flow! */
     return app->exec();
 
     /* when we reach this, the program is finished. delete everything in reverse order. */
     delete surface;
-    delete worldClient;
+    delete universeClient;
     delete world;
     delete app;
 }

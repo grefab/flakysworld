@@ -1,17 +1,17 @@
-#ifndef WORLDCLIENT_H
-#define WORLDCLIENT_H
+#ifndef UNIVERSECLIENT_H
+#define UNIVERSECLIENT_H
 
 #include <QThread>
 #include "tcpclient.h"
 #include "thing/thing.h"
 #include "entityserializer.h"
 
-class WorldClient : public QThread
+class UniverseClient : public QThread
 {
     Q_OBJECT
 public:
-    explicit WorldClient(QObject* parent = 0);
-    ~WorldClient();
+    explicit UniverseClient(QObject* parent = 0);
+    ~UniverseClient();
 
     void initiateConnection();
 
@@ -40,4 +40,4 @@ private:
     QMutex locker_;
 };
 
-#endif // WORLDCLIENT_H
+#endif // UNIVERSECLIENT_H
