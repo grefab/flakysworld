@@ -2,13 +2,13 @@
 
 #include "infrastructure/universe.h"
 
-#include "interface/connectionmanager.h"
+#include "interface/universeserver.h"
 
-WorldClient* setupIO(Universe* universe)
+UniverseServer* setupIO(Universe* universe)
 {
-    WorldClient* connectionManager = new WorldClient(universe);
+    UniverseServer* universeServer = new UniverseServer(universe);
 
-    return connectionManager;
+    return universeServer;
 }
 
 int main(int argc, char *argv[])
@@ -19,14 +19,14 @@ int main(int argc, char *argv[])
     Universe* universe = new Universe();
 
     /* start neuron IO */
-    WorldClient* connectionManager = setupIO(universe);
+    UniverseServer* universeServer = setupIO(universe);
 
     /* preparation is done. let if flow! */
     qDebug() << "started.";
     return app->exec();
 
     /* when we reach this, the program is finished. delete everything in reverse order. */
-    delete connectionManager;
+    delete universeServer;
     delete universe;
     delete app;
 }

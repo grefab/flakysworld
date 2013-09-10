@@ -1,5 +1,5 @@
-#ifndef CONNECTIONMANAGER_H
-#define CONNECTIONMANAGER_H
+#ifndef UNIVERSESERVER_H
+#define UNIVERSESERVER_H
 
 #include <QThread>
 #include <QTcpSocket>
@@ -10,12 +10,12 @@
 #include "interface/entityserializer.h"
 #include "thing/thing.h"
 
-class WorldClient : public QThread
+class UniverseServer : public QThread
 {
     Q_OBJECT
 public:
-    explicit WorldClient(Universe* universe, QObject *parent = 0);
-    ~WorldClient();
+    explicit UniverseServer(Universe* universe, QObject *parent = 0);
+    ~UniverseServer();
 
 signals:
     void actuatorUpdate(QString beingId, QString actuatorId, QList<qreal> actuatorNeurons);
@@ -53,4 +53,4 @@ private:
     QSet<QTcpSocket*> worldReceivers_;
 };
 
-#endif // CONNECTIONMANAGER_H
+#endif // UNIVERSESERVER_H

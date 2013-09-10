@@ -13,7 +13,6 @@ QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.7
 QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
 
 HEADERS += \
-    interface/connectionmanager.h \
     infrastructure/world.h \
     infrastructure/universe.h \
     infrastructure/engine.h \
@@ -34,11 +33,11 @@ HEADERS += \
     being/being.h \
     being/actuator.h \
     ../common/interface/variantbinaryconverter.h \
-    ../common/constants.h
+    ../common/constants.h \
+    interface/universeserver.h
 
 SOURCES += \
     main.cpp \
-    interface/connectionmanager.cpp \
     infrastructure/world.cpp \
     infrastructure/universe.cpp \
     infrastructure/engine.cpp \
@@ -58,6 +57,7 @@ SOURCES += \
     being/organ.cpp \
     being/being.cpp \
     being/actuator.cpp \
-    ../common/interface/variantbinaryconverter.cpp
+    ../common/interface/variantbinaryconverter.cpp \
+    interface/universeserver.cpp
 
 cache()
