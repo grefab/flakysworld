@@ -5,3 +5,6 @@ Brain::Brain(QObject *parent) :
 {
 }
 
+void Brain::eyeUpdate(QList<qreal> sensorNeurons)
+{
+}

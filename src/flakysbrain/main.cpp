@@ -7,7 +7,8 @@ UniverseClient* setupIO(Brain* brain)
 {
     UniverseClient* universeClient = new UniverseClient();
 
-    QObject::connect(universeClient, SIGNAL(thingUpdate(Thing::Model)), brain, SLOT(thingUpdated(Thing::Model)));
+    QObject::connect(universeClient, SIGNAL(eyeUpdated(QList<qreal>)), brain, SLOT(eyeUpdate(QList<qreal>)));
+    QObject::connect(brain, SIGNAL(actuatorUpdated(QString,QList<qreal>)), universeClient, SLOT(actuatorUpdate(QString,QList<qreal>)));
 
     return universeClient;
 }
