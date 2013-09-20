@@ -17,7 +17,7 @@ Surface* setupGUI(World* world, UniverseClient* universeClient)
     ViewManager* viewManager = new ViewManager(*surface->scene(), surface);
 
     QObject::connect(world, SIGNAL(newThingArrived(const Thing*)), viewManager, SLOT(newThingArrived(const Thing*)));
-    QObject::connect(universeClient, SIGNAL(eyeUpdated(QList<qreal>)), viewManager, SIGNAL(eyeUpdated(QList<qreal>)));
+    QObject::connect(universeClient, SIGNAL(sensorUpdated(QString,QList<qreal>)), viewManager, SLOT(sensorUpdate(QString,QList<qreal>)));
     QObject::connect(universeClient, SIGNAL(actuatorUpdated(QString,QList<qreal>)), viewManager, SLOT(actuatorUpdate(QString,QList<qreal>)));
 
 

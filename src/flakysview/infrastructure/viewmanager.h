@@ -17,6 +17,7 @@ public:
 public slots:
     void newThingArrived(const Thing* thing);
     void actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeurons);
+    void sensorUpdate(QString sensorId, QList<qreal> sensorNeurons);
 
 signals:
     /* used to forward signals to eye and actuators */

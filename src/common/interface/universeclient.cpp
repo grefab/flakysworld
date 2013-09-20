@@ -84,8 +84,8 @@ void UniverseClient::dataArrived(QVariantMap data)
         QList<qreal> sensorNeurons;
         entitySerializer_.deserializeSensor(data, &sensorBeingId, &sensorId, &sensorNeurons);
 
-        if( sensorBeingId == "flaky" && sensorId == "eye" ) {
-            emit eyeUpdated(sensorNeurons);
+        if( sensorBeingId == "flaky" ) {
+            emit sensorUpdated(sensorId, sensorNeurons);
         }
     }
 

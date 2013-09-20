@@ -47,3 +47,10 @@ void ViewManager::actuatorUpdate(QString actuatorId, QList<qreal> actuatorNeuron
         emit throttleRightUpdated(actuatorNeurons);
     }
 }
+
+void ViewManager::sensorUpdate(QString sensorId, QList<qreal> sensorNeurons)
+{
+    if ( sensorId == "eye" ) {
+        emit eyeUpdated(sensorNeurons);
+    }
+}

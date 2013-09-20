@@ -17,7 +17,7 @@ public:
 
 signals:
     void thingUpdated(Thing::Model thingModel);
-    void eyeUpdated(QList<qreal> sensorNeurons);
+    void sensorUpdated(QString sensorId, QList<qreal> sensorNeurons);
     void actuatorUpdated(QString actuatorId, QList<qreal> actuatorNeurons);
 
 public slots:

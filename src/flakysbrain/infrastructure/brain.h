@@ -11,7 +11,7 @@ signals:
     void actuatorUpdated(QString actuatorId, QList<qreal> actuatorNeurons);
 
 public slots:
-    void eyeUpdate(QList<qreal> sensorNeurons);
+    void sensorUpdate(QString sensorId, QList<qreal> sensorNeurons);
 
 public:
     explicit Brain(QObject *parent = 0);
