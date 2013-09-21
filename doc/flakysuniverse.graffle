@@ -823,30 +823,6 @@
 					<dict>
 						<key>fill</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<string>1</string>
-								<key>g</key>
-								<string>0.650309</string>
-								<key>r</key>
-								<string>0.727291</string>
-							</dict>
-							<key>Draws</key>
-							<string>NO</string>
-							<key>FillType</key>
-							<integer>2</integer>
-							<key>GradientAngle</key>
-							<real>90</real>
-							<key>GradientColor</key>
-							<dict>
-								<key>b</key>
-								<string>0.727062</string>
-								<key>g</key>
-								<string>0.290394</string>
-								<key>r</key>
-								<string>0.384375</string>
-							</dict>
 							<key>MiddleFraction</key>
 							<real>0.4523809552192688</real>
 						</dict>
@@ -925,30 +901,6 @@
 					<dict>
 						<key>fill</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<string>1</string>
-								<key>g</key>
-								<string>0.650309</string>
-								<key>r</key>
-								<string>0.727291</string>
-							</dict>
-							<key>Draws</key>
-							<string>NO</string>
-							<key>FillType</key>
-							<integer>2</integer>
-							<key>GradientAngle</key>
-							<real>90</real>
-							<key>GradientColor</key>
-							<dict>
-								<key>b</key>
-								<string>0.727062</string>
-								<key>g</key>
-								<string>0.290394</string>
-								<key>r</key>
-								<string>0.384375</string>
-							</dict>
 							<key>MiddleFraction</key>
 							<real>0.4523809552192688</real>
 						</dict>
@@ -2445,7 +2397,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-09-21 08:19:17 +0000</string>
+	<string>2013-09-21 09:44:22 +0000</string>
 	<key>Modifier</key>
 	<string>Gregor Fabritius</string>
 	<key>NotesVisible</key>
