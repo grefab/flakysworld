@@ -191,7 +191,7 @@ All the code in *Flakysworld*, except its dependencies which have separate licen
 
 *Qt and its libraries* are licensed (as one possibility) under the LGPL. See "Nokias licesing page":http://qt.nokia.com/products/licensing/ for details.
 
-"*QJson":https://github.com/flavio/qjson is LGPL 2.1 licensed. A copy of version 0.5.0 is present in flakysworld's code.
+"*QJson*":https://github.com/flavio/qjson is LGPL 2.1 licensed. A copy of version 0.5.0 is present in flakysworld's code.
 
 "*Box2D*":http://www.box2d.org/ has its own license:
 
