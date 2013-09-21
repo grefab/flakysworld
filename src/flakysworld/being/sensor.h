@@ -8,26 +8,26 @@
 
 class Sensor : public Organ
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit Sensor(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
+    explicit Sensor(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
 signals:
-	void updated(QList<qreal> output) const;
+    void updated(QList<qreal> output) const;
 
 public slots:
-	virtual void performSensing() const =0;
+    virtual void performSensing() const =0;
 
 protected:
-	void updateIfNeeded(const QList<qreal>& newOutput) const;
-	bool isUpdateNeeded(const QList<qreal>& newOutput) const;
+    void updateIfNeeded(const QList<qreal>& newOutput) const;
+    bool isUpdateNeeded(const QList<qreal>& newOutput) const;
 
 private:
-	/* really, really private, because we modify this but promise everyone
-	 * we are const in updateIfNeeded(). this serves for sending only different output.
-	 */
-	QList<qreal> lastOutput_;
+    /* really, really private, because we modify this but promise everyone
+     * we are const in updateIfNeeded(). this serves for sending only different output.
+     */
+    QList<qreal> lastOutput_;
 
 };
 

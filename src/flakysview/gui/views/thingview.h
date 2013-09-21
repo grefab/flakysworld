@@ -7,16 +7,16 @@
 
 class ThingView : public QObject, public QGraphicsPolygonItem
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ThingView(const Thing& thing, QGraphicsItem *parent = 0);
+    ThingView(const Thing& thing, QGraphicsItem *parent = 0);
 
 private slots:
-	void bodyChanged(QTransform transformation);
+    void bodyChanged(QTransform transformation);
 
 private:
-	void setAppearanceDependingOnID(QString id);
+    void setAppearanceDependingOnID(QString id);
 };
 
 #endif // THINGVIEW_H

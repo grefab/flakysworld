@@ -2,77 +2,77 @@
 
 QVariantMap qpointf2qvariant(const QPointF& point)
 {
-	QVariantMap result;
+    QVariantMap result;
 
-	result.insert("x", point.x());
-	result.insert("y", point.y());
+    result.insert("x", point.x());
+    result.insert("y", point.y());
 
-	return result;
+    return result;
 }
 
 QPointF qvariant2qpointf(const QVariant& var)
 {
-	QVariantMap map = var.toMap();
+    QVariantMap map = var.toMap();
 
-	if(!map.contains("x") || !map.contains("y")) {
-		return QPOINTF_INVALID;
-	}
+    if(!map.contains("x") || !map.contains("y")) {
+        return QPOINTF_INVALID;
+    }
 
-	QPointF point = QPointF(map["x"].toFloat(), map["y"].toFloat());
+    QPointF point = QPointF(map["x"].toFloat(), map["y"].toFloat());
 
-	return point;
+    return point;
 }
 
 QVariantMap qrectf2qvariant(const QRectF& rect)
 {
-	QVariantMap result;
+    QVariantMap result;
 
-	result.insert("topleft", qpointf2qvariant(rect.topLeft()));
-	result.insert("bottomright", qpointf2qvariant(rect.bottomRight()));
+    result.insert("topleft", qpointf2qvariant(rect.topLeft()));
+    result.insert("bottomright", qpointf2qvariant(rect.bottomRight()));
 
-	return result;
+    return result;
 }
 
 QRectF qvariant2qrectf(const QVariant& var)
 {
-	QVariantMap map = var.toMap();
+    QVariantMap map = var.toMap();
 
-	if(!map.contains("topleft") || !map.contains("bottomright")) {
-		return QRectF();
-	}
+    if(!map.contains("topleft") || !map.contains("bottomright")) {
+        return QRectF();
+    }
 
-	QRectF rect = QRectF(
-			qvariant2qpointf(map["topleft"].toMap()),
-			qvariant2qpointf(map["bottomright"].toMap())
-			);
+    QRectF rect = QRectF(
+            qvariant2qpointf(map["topleft"].toMap()),
+            qvariant2qpointf(map["bottomright"].toMap())
+            );
 
-	return rect;
+    return rect;
 }
 
 QVariantList qpolygonf2qvariant(const QPolygonF& polygon)
 {
-	QVariantList result;
+    QVariantList result;
 
-	foreach(QPointF point, polygon.toList()) {
-		result << qpointf2qvariant(point);
-	}
+    foreach(QPointF point, polygon.toList()) {
+        result << qpointf2qvariant(point);
+    }
 
-	return result;
+    return result;
 }
 
 QPolygonF qvariant2qpolygonf(const QVariant& var)
 {
-	QVariantList list = var.toList();
+    QVariantList list = var.toList();
 
-	if(list.isEmpty()) {
-		return QPolygonF();
-	}
+    if(list.isEmpty()) {
+        return QPolygonF();
+    }
 
-	QPolygonF poly;
+    QPolygonF poly;
 
-	foreach(QVariant item, list) {
-		poly.append(qvariant2qpointf(item));
-	}
+    foreach(QVariant item, list) {
+        poly.append(qvariant2qpointf(item));
+    }
 
-	return poly;
+    return poly;
 }

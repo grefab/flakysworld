@@ -13,61 +13,61 @@ class Engine;
 
 class World : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	friend class Engine;
+    friend class Engine;
 
 public:
-	explicit World(QObject *parent = 0);
-	~World();
+    explicit World(QObject *parent = 0);
+    ~World();
 
-	/* we take ownership of the body! */
-	Body* addBody(Body* body);
+    /* we take ownership of the body! */
+    Body* addBody(Body* body);
 
-	b2World* world() const;
-	QList<Body*> bodies() const;
+    b2World* world() const;
+    QList<Body*> bodies() const;
 
-	/* this contains the nearest hit from the ray cast origin. */
-	struct RayHit
-	{
-		RayHit(Body* body, QPointF point, qreal fraction) :
-				body(body),
-				point(point),
-				fraction(fraction)
-		{}
+    /* this contains the nearest hit from the ray cast origin. */
+    struct RayHit
+    {
+        RayHit(Body* body, QPointF point, qreal fraction) :
+                body(body),
+                point(point),
+                fraction(fraction)
+        {}
 
-		Body* body;
-		QPointF point;
-		qreal fraction;
-	};
+        Body* body;
+        QPointF point;
+        qreal fraction;
+    };
 
-	RayHit rayCast(const QLineF& ray) const;
-	QList<RayHit> rayCast(const QList<QLineF>& rays) const;
+    RayHit rayCast(const QLineF& ray) const;
+    QList<RayHit> rayCast(const QList<QLineF>& rays) const;
 
-	QList<Thing::Model> getThingModels() const;
+    QList<Thing::Model> getThingModels() const;
 
 signals:
-	void worldChanged();
-	void thingUpdate(QString thingId, QPointF position, qreal rotation);
+    void worldChanged();
+    void thingUpdate(QString thingId, QPointF position, qreal rotation);
 
 protected slots:
-	void thingUpdated(QPointF position, qreal rotation);
+    void thingUpdated(QPointF position, qreal rotation);
 
 protected:
-	void performSimulationStep(float32 timestep);
+    void performSimulationStep(float32 timestep);
 
-	QHash<QString, Body*> bodies_;
-	b2World *world_;
+    QHash<QString, Body*> bodies_;
+    b2World *world_;
 
 private:
-	/* private because this is not thread safe */
-	RayHit internal_rayCast(const QLineF& ray) const;
+    /* private because this is not thread safe */
+    RayHit internal_rayCast(const QLineF& ray) const;
 
-	/* so we know about our engine, just used for thread comparison. */
-	void setEngine(Engine* engine) { engine_ = engine; }
-	Engine* engine_;
+    /* so we know about our engine, just used for thread comparison. */
+    void setEngine(Engine* engine) { engine_ = engine; }
+    Engine* engine_;
 
-	QMutex mutex_;
+    QMutex mutex_;
 };
 
 #endif // WORLD_H

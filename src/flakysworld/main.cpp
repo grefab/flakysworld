@@ -2,31 +2,31 @@
 
 #include "infrastructure/universe.h"
 
-#include "interface/connectionmanager.h"
+#include "interface/universeserver.h"
 
-ConnectionManager* setupIO(Universe* universe)
+UniverseServer* setupIO(Universe* universe)
 {
-	ConnectionManager* connectionManager = new ConnectionManager(universe);
+    UniverseServer* universeServer = new UniverseServer(universe);
 
-	return connectionManager;
+    return universeServer;
 }
 
 int main(int argc, char *argv[])
 {
-	QCoreApplication* app = new QCoreApplication(argc, argv);
+    QCoreApplication* app = new QCoreApplication(argc, argv);
 
-	/* our universe. it manages world and engine that keeps world alive. */
-	Universe* universe = new Universe();
+    /* our universe. it manages world and engine that keeps world alive. */
+    Universe* universe = new Universe();
 
-	/* start neuron IO */
-	ConnectionManager* connectionManager = setupIO(universe);
+    /* start neuron IO */
+    UniverseServer* universeServer = setupIO(universe);
 
-	/* preparation is done. let if flow! */
-	qDebug() << "started.";
-	return app->exec();
+    /* preparation is done. let if flow! */
+    qDebug() << "started.";
+    return app->exec();
 
-	/* when we reach this, the program is finished. delete everything in reverse order. */
-	delete connectionManager;
-	delete universe;
-	delete app;
+    /* when we reach this, the program is finished. delete everything in reverse order. */
+    delete universeServer;
+    delete universe;
+    delete app;
 }

@@ -2,3 +2,4 @@
 .*.pro.swp
 readme.html
 *-build-desktop/
+build-*/

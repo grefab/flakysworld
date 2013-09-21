@@ -7,34 +7,34 @@
 
 class Organ : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit Organ(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
+    explicit Organ(const Being& being, const QPointF position, qreal rotation, QString id = "", QObject *parent = 0);
 
-	QString id() const;
-	const Being& being() const { return being_; }
+    QString id() const;
+    const Being& being() const { return being_; }
 
-	const QTransform& mapToWorld() const;
+    const QTransform& mapToWorld() const;
 
 signals:
-	void positionChanged(QTransform mapToWorld);
+    void positionChanged(QTransform mapToWorld);
 
 public slots:
-	void setMapParentToWorld(const QTransform& mapParentToWorld);
+    void setMapParentToWorld(const QTransform& mapParentToWorld);
 
 protected:
-	const Being& being_;
-	QPointF position_;
-	qreal rotation_;
+    const Being& being_;
+    QPointF position_;
+    qreal rotation_;
 
 private:
-	QString id_;
+    QString id_;
 
-	QTransform mapToParent_;
-	QTransform mapParentToWorld_;
-	void updateMapToWorld();
-	QTransform mapToWorld_;
+    QTransform mapToParent_;
+    QTransform mapParentToWorld_;
+    void updateMapToWorld();
+    QTransform mapToWorld_;
 
 };
 

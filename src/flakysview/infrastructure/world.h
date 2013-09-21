@@ -7,21 +7,21 @@
 
 class World : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit World(QObject *parent = 0);
+    explicit World(QObject *parent = 0);
 
 signals:
-	void newThingArrived(const Thing* thing);
+    void newThingArrived(const Thing* thing);
 
 protected slots:
-	void thingUpdated(Thing::Model thingModel);
+    void thingUpdate(Thing::Model thingModel);
 
 private:
-	/* if a new thing has been added, this thing is returned. otherwise, NULL is returned. */
-	Thing* updateThing(const Thing::Model& thingModel);
+    /* if a new thing has been added, this thing is returned. otherwise, NULL is returned. */
+    Thing* updateThing(const Thing::Model& thingModel);
 
-	QMap<QString, Thing*> things_;
+    QMap<QString, Thing*> things_;
 };
 
 #endif // WORLD_H

@@ -9,13 +9,13 @@ class World;
 
 class Flaky : public Being
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit Flaky(World* world, QObject *parent = 0);
-	~Flaky();
+    explicit Flaky(World* world, QObject *parent = 0);
+    ~Flaky();
 
 private:
-	Body* setupBody(World* world);
+    Body* setupBody(World* world);
 
 };
 
