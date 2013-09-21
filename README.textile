@@ -61,6 +61,10 @@ h2. Current Status
 
 Actuators, visual sensors and physical world interaction are implemented. Flakysview is a simple view that shows what happens in flakysworld. Data from sensors/to actuators can be received/sent using plain JSON over a socket. Development of brain has started, but will take a while.
 
+Below you see an overview of the components of this whole projects, their curent development status and which kind of communication they have to handle.
+
+!https://github.com/grefab/flakysworld/raw/master/doc/flakysuniverse.png!
+
 
 h2. Future Plans
 
