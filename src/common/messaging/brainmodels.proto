@@ -1,0 +1,22 @@
+package Flakysworld.Brain;
+
+message Neuron
+{
+    required string id = 1;
+    optional double potential = 2;
+}
+
+message Dendrite
+{
+    required string id = 1;
+}
+
+message Axon
+{
+    required string id = 1;
+}
+
+message Synapse
+{
+    required string id = 1;
+}

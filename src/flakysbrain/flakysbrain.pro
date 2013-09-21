@@ -17,7 +17,10 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 INCLUDEPATH += ../common
+INCLUDEPATH += /usr/local/include
 
+QMAKE_LIBDIR += /usr/local/lib
+LIBS += -lprotobuf
 
 HEADERS += \
     ../common/thing/thing.h \
@@ -31,7 +34,8 @@ HEADERS += \
     ../common/interface/variantbinaryconverter.h \
     ../common/constants.h \
     ../common/interface/universeclient.h \
-    infrastructure/brain.h
+    infrastructure/brain.h \
+    ../common/messaging/cpp/brainmodels.pb.h
 
 
 SOURCES += \
@@ -46,6 +50,10 @@ SOURCES += \
     ../common/interface/tcpclient.cpp \
     ../common/interface/variantbinaryconverter.cpp \
     ../common/interface/universeclient.cpp \
-    infrastructure/brain.cpp
+    infrastructure/brain.cpp \
+    ../common/messaging/cpp/brainmodels.pb.cc
 
 cache()
+
+OTHER_FILES += \
+    ../common/messaging/brainmodels.proto
