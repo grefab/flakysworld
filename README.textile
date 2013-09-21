@@ -20,6 +20,9 @@ Everyone likes screenshots! This one is old, but it is suited to give an impress
 
 h2. News
 
+* *2013-09-21*
+It's been a while! Updated the whole project to work with Qt 5.1, cleaned up some internal structure and updated documentation. Moved Client/Server controllers to separate shared classes and started work on flakysbrain.
+
 * *2011-08-27*
 Updated this document to reflect everything that has happened in the last few months.
 
@@ -42,32 +45,29 @@ h2. Technical Details
 
 Currently the project is split in three parts:
 ** *flakysworld* is a console application and it is intended to run on a server. It listens on network interfaces for clients such as flakysview or flakysremote. It contains the world and calculates physics.
-** *flakysview* is a Qt GUI application. It tries to connect to a flakysworld server on localhost and displays everything that happens there.
-** *flakysremote* currently simply sends a JSON string to flakysworld server on localhost. This way actuators (the tiny little thrusters) can be engaged.
+** *flakysview* is a Qt GUI application. It tries to connect to a flakysworld server (currently on localhost) and displays everything that happens there.
+** *flakysremote* controls the actuators of Flaky. It currently simply sends a JSON string to flakysworld server on localhost. This way actuators (the tiny little thrusters) can be engaged.
 
-The applications use Qt heavily for internal processing. Flakysworld adittionally depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket, so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
+The applications use Qt heavily for internal processing. Flakysworld additionally depends on Box2D for physics simulation. In-/output is given via JSON-wrapped objects over a socket, so the processing neuronal net does not have any technical dependencies. It even runs asynchronously by default.
 
 The entities in the system communicate via Qt signal/slots wherever possible to keep a) the code clean and b) to allow for multiple threads without the hassle of mutexes. This way the application is basically divided into a processing unit, the _universe_ within flakysworld. Flakysview models a set of widgets and views, the _GUI_. The network communication entity in each application is modeled as a simple socket connection that sends and receives JSON data. It ignores everything non-JSON (e.g. HTTP headers), so one can test output generation using a plain browser.
 
-I've developed and tested everything using OSX 10.6, 10.7, Ubuntu Linux 10.04, Qt 4.7 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
+I've developed and tested everything using OSX 10.8, Qt 5.1 and Box2D 2.1.2. Qt and Box2D are platform independent, so feel free to run this on your windows/linux machine.
 
 See below for the JSON interface spec.
 
 
 h2. Current Status
 
-Actuators, visual sensors and physical world interaction are implemented. Flakysview is a simple view that shows what happens in flakysworld. Data from sensors/to actuators can be received/sent using plain JSON over a socket.
+Actuators, visual sensors and physical world interaction are implemented. Flakysview is a simple view that shows what happens in flakysworld. Data from sensors/to actuators can be received/sent using plain JSON over a socket. Development of brain has started, but will take a while.
 
 
 h2. Future Plans
 
-* *REST interface:* Currently there is only a socket connection. Plans are to use HTTP GET/POST/etc to implement a REST conformous interface.
+* *Google Protocol Buffers + ZeroMQ interface:* Currently there is a socket connection using JSON for serialization. Other projects have shown that GPB and ZeroMQ are easier to maintain and more stable.
 * *Configurability:* Port and interface should be configurable.
-* *DONE* *Dual mode:* Run with or without GUI.
-* *DONE* *Remote mode:* Let universe and GUI run on different machines
-* *Save/Load* of the universe in a file or into a DB (CouchDB?)
+* *Save/Load* of the universe in a file or into a DB.
 * *Time flies mode:* Do not keep in sync with real time, but run as fast as possible. May need sync signal for clients attached via network.
-* *Optional compression:* JSON is quite verbose and therefore bandwidth consuming (nothing compared to SOAP, though). It would be nice to optionally compress traffic. The cost (CPU) and benefit (bandwidth savings) should be evaluated first.
 
 
 h2. Interface Specification
@@ -145,7 +145,7 @@ A possible return value for sensor data might look like this:
 h2. How To Install
 
 # Check out the code of Flakysworld.
-# Make sure you have Qt SDK installed. I use 4.7. This includes Qt Creator, which I use as IDE.
+# Make sure you have Qt SDK installed. I use 5.1. This includes Qt Creator, which I use as IDE.
 # Make sure to have Box2D installed. On my machine it resides in /usr/local/include/Box2D and /usr/local/lib. This can be adjusted in the flakysworld.pro file to fit your needs.
 # Load the .pro file with Qt Creator.
 # Build and run.
@@ -157,11 +157,11 @@ To allow for easy comprehension and modification of this project the source is o
 
 * @being/@ Abstract being with its organs, i.e. sensors and actuators.
 * @bodies/@ Body, wich is an object in Box2D's physics world. Contains specialized bodies (ellipse, polygon) as well.
-* @external/@ External libraries/headers. Currently contains only Box2D.
+* @external/@ External libraries/headers. Currently contains Box2D for physics and QJson for serialization.
 * @flaky/@ Flaky is a being with specialized sensor eye.
 * @gui/@ Qt's GUI stuff. Contains view classes for bodies and organs in further subdirectories.
 * @infrastructure/@ World (i.e. Box2D wrapper), engine (physics simulation thread) and universe (manages world and engine)
-* @interface/@ Serialization and TCP communication
+* @interface/@ Serialization and TCP communication. Universe server and client are intended as interface so applications do not have to care for connections and serialization.
 
 
 h2. FAQ
@@ -190,6 +190,8 @@ h2. Licenses
 All the code in *Flakysworld*, except its dependencies which have separate licenses (see below), is published under the MIT License. See "here":http://www.opensource.org/licenses/mit-license for details. Basically you can do whatever you like with it.
 
 *Qt and its libraries* are licensed (as one possibility) under the LGPL. See "Nokias licesing page":http://qt.nokia.com/products/licensing/ for details.
+
+"*QJson":https://github.com/flavio/qjson is LGPL 2.1 licensed. A copy of version 0.5.0 is present in flakysworld's code.
 
 "*Box2D*":http://www.box2d.org/ has its own license:
 
