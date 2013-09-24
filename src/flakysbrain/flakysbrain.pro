@@ -8,13 +8,14 @@ QT       += core network
 
 QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.7
 QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
-CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
 
 TARGET = flakysbrain
-CONFIG   += console
-CONFIG   -= app_bundle
-
 TEMPLATE = app
+
+CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
+CONFIG += console
+CONFIG -= app_bundle
+CONFIG += c++11
 
 INCLUDEPATH += ../common
 

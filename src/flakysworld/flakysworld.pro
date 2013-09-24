@@ -1,16 +1,23 @@
 QT += opengl \
     network
 
+QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.7
+QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
+
+TARGET = flakysworld
+
 CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
+CONFIG += console
+CONFIG -= app_bundle
+CONFIG += c++11
 
 INCLUDEPATH += /usr/local/include
 INCLUDEPATH += /usr/local/include/Box2D
 INCLUDEPATH += ../common
+
 QMAKE_LIBDIR += /usr/local/lib
 LIBS += -lBox2D
 
-QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.7
-QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
 
 HEADERS += \
     infrastructure/world.h \

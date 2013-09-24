@@ -6,9 +6,11 @@
 
 QT       += core gui widgets network
 
-TARGET = flakyremote
+TARGET = flakysremote
 TEMPLATE = app
 
+CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
+CONFIG += c++11
 
 SOURCES += main.cpp\
         surface.cpp \
