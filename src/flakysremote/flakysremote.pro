@@ -10,6 +10,7 @@ TARGET = flakysremote
 TEMPLATE = app
 
 CONFIG(release, debug|release):QMAKE_CXXFLAGS_RELEASE += -O3
+CONFIG -= app_bundle
 CONFIG += c++11
 
 SOURCES += main.cpp\
