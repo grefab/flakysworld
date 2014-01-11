@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core network
+QT       += core network widgets
 
 QMAKE_CFLAGS_X86_64 += -mmacosx-version-min=10.7
 QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
@@ -31,7 +31,14 @@ HEADERS += \
     ../common/interface/variantbinaryconverter.h \
     ../common/constants.h \
     ../common/interface/universeclient.h \
-    infrastructure/brain.h
+    infrastructure/brain.h \
+    actionobjects/actionobject.h \
+    actionobjects/neuron.h \
+    controllers/engine.h \
+    gui/surface.h \
+    helpers/id.h \
+    helpers/message.h \
+    helpers/timer.h
 
 
 SOURCES += \
@@ -46,6 +53,19 @@ SOURCES += \
     ../common/interface/tcpclient.cpp \
     ../common/interface/variantbinaryconverter.cpp \
     ../common/interface/universeclient.cpp \
-    infrastructure/brain.cpp
+    infrastructure/brain.cpp \
+    actionobjects/actionobject.cpp \
+    actionobjects/neuron.cpp \
+    controllers/engine.cpp \
+    gui/surface.cpp \
+    helpers/id.cpp \
+    helpers/message.cpp \
+    helpers/timer.cpp
 
 cache()
+
+OTHER_FILES += \
+    ../common/messaging/brainmodels.proto
+
+FORMS += \
+    gui/surface.ui
