@@ -1,7 +1,10 @@
-#include <QCoreApplication>
+#include <QApplication>
 
 #include "interface/universeclient.h"
 #include "infrastructure/brain.h"
+#include "controllers/engine.h"
+#include "gui/surface.h"
+
 
 UniverseClient* setupIO(Brain* brain)
 {
@@ -15,10 +18,19 @@ UniverseClient* setupIO(Brain* brain)
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication* app = new QCoreApplication(argc, argv);
+//    QCoreApplication app = new QCoreApplication(argc, argv);
+    QApplication app(argc, argv);
+    Surface surface;
+    surface.show();
 
     /* brain contains a collection of things */
     Brain* brain = new Brain();
+
+    /* engine drives brain */
+    Engine engine(&app);
+    QObject::connect(&engine, SIGNAL(finished()), &app, SLOT(quit()));
+    QObject::connect(&app, SIGNAL(aboutToQuit()), &engine, SLOT(terminate()));
+    engine.start();
 
     /* start neuron IO */
     UniverseClient* universeClient = setupIO(brain);
@@ -26,10 +38,14 @@ int main(int argc, char *argv[])
 
     /* preparation is done. let if flow! */
     qDebug() << "started.";
-    return app->exec();
+    int returnValue = app.exec();
+
+    engine.quit();
+    engine.wait();
 
     /* when we reach this, the program is finished. delete everything in reverse order. */
     delete universeClient;
     delete brain;
-    delete app;
+
+    return returnValue;
 }
